@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><title>2026-11-10 标讯筛选页</title><style>
+:root{color-scheme:light;--ink:#243343;--muted:#687889;--line:#e3e9ef;--blue:#225bc7;--pale:#edf3ff}
+*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:var(--ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",Arial,sans-serif}main{max-width:1120px;margin:auto;padding:32px 28px 48px}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #80adff;outline-offset:3px}[hidden]{display:none!important}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}.brand-mark{display:grid;place-items:center;background:var(--blue);color:white;border-radius:9px;width:32px;height:32px}.brand-en{font-size:11px;letter-spacing:2px;color:var(--muted);font-weight:500}.hero{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:26px 0 24px}.eyebrow{margin:0 0 5px;color:var(--muted)}h1{font-size:28px;letter-spacing:.3px;margin:0;line-height:1.5}.total{display:flex;align-items:baseline;gap:8px;white-space:nowrap}.total strong{font-size:32px;font-weight:600}.total span{color:var(--muted)}
+.filters{padding:24px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 20px #26385305}fieldset{border:0;padding:0;margin:0 0 20px;min-width:0}legend{font-size:13px;font-weight:600;margin:0 0 10px;padding:0}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--line);background:white;border-radius:8px;padding:7px 12px;color:#516172;max-width:100%;white-space:normal;text-align:left}.chip:hover{border-color:#a6bce3}.chip[aria-pressed="true"]{background:var(--pale);border-color:#a4bfee;color:var(--blue);font-weight:600}.chip .count{margin-left:6px;font-size:12px;opacity:.8}
+.search-row{display:flex;align-items:end;gap:14px;border-top:1px solid var(--line);padding-top:20px}.search-row label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:0}.search-label{flex:1}.search-row input,.search-row select{height:42px;border:1px solid #d4dee8;border-radius:8px;background:#fff;color:var(--ink);padding:8px 12px;min-width:0;width:100%}.search-row select{min-width:160px}.reset{height:42px;background:white;color:var(--blue);border:0;padding:8px 4px;white-space:nowrap}.results-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:24px 0 12px;color:var(--muted);font-size:13px}.results-bar p{margin:0}.results-bar label{display:flex;align-items:center;gap:8px;white-space:nowrap}.results-bar select{border:1px solid var(--line);background:white;border-radius:6px;padding:5px;color:var(--ink)}
+.notices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.notice{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.notice-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.badge{padding:3px 8px;background:#f0f3f7;color:#516172;border-radius:5px;font-size:11px}.badge.tender,.badge.purchase{background:#edf3ff;color:#225bc7}.badge.results,.badge.candidates{background:#ebf6f0;color:#28704d}.badge.updates{background:#fff2e9;color:#9d5626}.notice time{font-size:12px;color:var(--muted);white-space:nowrap}.notice h2{font-size:16px;line-height:1.7;margin:0 0 9px;font-weight:600}.notice a{color:var(--ink);text-decoration:none}.notice a:hover{color:var(--blue);text-decoration:underline}.source,.metadata,.project-number{font-size:12px;color:var(--muted);margin:4px 0}.source{color:#48617b}.notice dl{border-top:1px solid #edf0f4;margin:16px 0 0;padding-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.notice dt{font-size:11px;color:var(--muted)}.notice dd{font-size:13px;margin:2px 0 0;color:var(--ink)}.pagination{display:flex;align-items:center;justify-content:center;gap:20px;margin:28px 0 0;font-size:13px}.pagination button{padding:8px 14px;border:1px solid #d4dee8;border-radius:7px;background:white;color:var(--ink)}.pagination button:disabled{opacity:.4;cursor:default}.empty{text-align:center;padding:60px 16px;background:white;border:1px solid var(--line);border-radius:12px}.empty h2{font-size:18px;margin:0 0 8px}.empty p{color:var(--muted);margin:0}.warning{background:#fff7e7;border-radius:8px;padding:12px 16px;margin-top:20px;color:#80511c;overflow-wrap:anywhere}
+@media(max-width:680px){main{padding:20px 16px 32px}.hero{gap:12px;margin:22px 0}h1{font-size:22px}.total strong{font-size:25px}.total{flex-direction:column;gap:0;align-items:center}.filters{padding:18px 14px}.chips{gap:7px}.chip{font-size:12px;padding:7px 9px}.search-row{flex-wrap:wrap;gap:12px}.search-label{flex-basis:100%}.search-row label:not(.search-label){flex:1}.search-row select{min-width:0}.search-row .reset{padding:8px 10px}.notices{grid-template-columns:minmax(0,1fr)}.notice{padding:18px}.notice h2{font-size:15px}.results-bar{font-size:12px;align-items:start}.results-bar label{gap:4px}.pagination{gap:14px}}
+@media print{body{background:white}main{padding:0;max-width:none}.filters,.pagination,.results-bar label{display:none}.notice{break-inside:avoid;box-shadow:none}.notices{display:block}.notice{margin-bottom:12px}}
+</style></head>
+<body><main><header><div class="brand"><span class="brand-mark">标</span>标讯邮差 <span class="brand-en">BIDFLOW</span></div>
+<div class="hero"><div><p class="eyebrow">2026-11-10</p><h1>找到您关心的标讯</h1></div><div class="total"><strong>159</strong><span>条公告</span></div></div></header>
+<section class="filters" aria-label="公告筛选">
+<fieldset><legend>平台来源</legend><div class="chips"><button type="button" class="chip" data-group="source" data-value="" aria-pressed="true">全部 <span class="count">159</span></button><button type="button" class="chip" data-group="source" data-value="嘉兴公共资源交易平台" aria-pressed="false">嘉兴公共资源交易平台 <span class="count">15</span></button><button type="button" class="chip" data-group="source" data-value="禾采联 HCL" aria-pressed="false">禾采联 HCL <span class="count">60</span></button><button type="button" class="chip" data-group="source" data-value="浙江省统一招采" aria-pressed="false">浙江省统一招采 <span class="count">47</span></button><button type="button" class="chip" data-group="source" data-value="浙江省地市平台" aria-pressed="false">浙江省地市平台 <span class="count">37</span></button></div></fieldset>
+<fieldset><legend>公告类型</legend><div class="chips"><button type="button" class="chip" data-group="category" data-value="" aria-pressed="true">全部 <span class="count">159</span></button><button type="button" class="chip" data-group="category" data-value="tender" aria-pressed="false">招标公告 <span class="count">23</span></button><button type="button" class="chip" data-group="category" data-value="purchase" aria-pressed="false">采购公告 <span class="count">9</span></button><button type="button" class="chip" data-group="category" data-value="candidates" aria-pressed="false">候选人公示 <span class="count">19</span></button><button type="button" class="chip" data-group="category" data-value="results" aria-pressed="false">中标 / 成交结果 <span class="count">47</span></button><button type="button" class="chip" data-group="category" data-value="updates" aria-pressed="false">变更 / 终止 <span class="count">17</span></button><button type="button" class="chip" data-group="category" data-value="consultation" aria-pressed="false">采购预告 / 意见征集 <span class="count">15</span></button><button type="button" class="chip" data-group="category" data-value="disclosure" aria-pressed="false">其他公示 <span class="count">29</span></button></div></fieldset>
+<div class="search-row"><label class="search-label" for="keyword">关键词<input type="search" id="keyword" placeholder="搜索标题、项目编号或单位" autocomplete="off"></label>
+<label for="region">地区<select id="region"><option value="">全部地区</option><option value="南湖区">南湖区</option><option value="嘉兴市">嘉兴市</option><option value="嘉善县">嘉善县</option><option value="平湖市">平湖市</option><option value="桐乡市">桐乡市</option><option value="海宁市">海宁市</option><option value="海盐县">海盐县</option><option value="秀洲区">秀洲区</option><option value="__unknown__">地区未列明</option></select></label>
+<button type="button" id="reset" class="reset">清空筛选</button></div></section>
+<div class="results-bar"><p id="result-count" role="status" aria-live="polite">共 159 条公告</p><label for="page-size">每页<select id="page-size"><option value="20">20 条</option><option value="50">50 条</option><option value="100">100 条</option></select></label></div>
+<noscript><p class="warning">当前浏览器未启用 JavaScript，筛选暂不可用。</p></noscript>
+<section id="notices" class="notices" aria-label="公告列表"><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="浙江国华工程管理有限公司关于长水街道2026-2029年度社区公共环境病媒生物防制项目的公开招标公告 330418263040010000054-zjgh-2026-20 嘉兴公共资源交易平台  采购公告 嘉兴市南湖区人民政府长水街道办事处 " data-index="0">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=hcklh0L8uwH7pZLzSFprLQ==" target="_blank" rel="noopener noreferrer">浙江国华工程管理有限公司关于长水街道2026-2029年度社区公共环境病媒生物防制项目的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+<p class="project-number">项目编号 330418263040010000054-ZJGH-2026-20</p>
+<dl><div><dt>投标截止</dt><dd>2026-11-30 14:30</dd></div><div><dt>预算金额</dt><dd>1250000元</dd></div><div><dt>最高限价</dt><dd>1250000元</dd></div></dl></article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="浙江求是招标代理有限公司关于嘉兴市公安局尸体检验中心建设项目的公开招标公告 330400260470010000118 嘉兴公共资源交易平台  采购公告 嘉兴市公安局 " data-index="1">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=hahQ0zuakbbv6tnVw6HiDg==" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于嘉兴市公安局尸体检验中心建设项目的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+<p class="project-number">项目编号 330400260470010000118</p>
+<dl><div><dt>投标截止</dt><dd>2026-12-01 09:30</dd></div><div><dt>预算金额</dt><dd>6478046.7元</dd></div><div><dt>最高限价</dt><dd>6478046.7元</dd></div></dl></article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="浙江中惠工程管理有限公司关于南湖区城建档案信息管理系统信创迁移改造项目的公开招标公告 330402260360010000023-中惠-2026-34号 嘉兴公共资源交易平台  采购公告 嘉兴市南湖区住房和城乡建设局 " data-index="2">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=V+JkuboGnfE1/unVUR4UiQ==" target="_blank" rel="noopener noreferrer">浙江中惠工程管理有限公司关于南湖区城建档案信息管理系统信创迁移改造项目的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+<p class="project-number">项目编号 330402260360010000023-中惠-2026-34号</p>
+<dl><div><dt>投标截止</dt><dd>2026-12-01 09:30</dd></div><div><dt>预算金额</dt><dd>650000元</dd></div><div><dt>最高限价</dt><dd>650000元</dd></div></dl></article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="嘉兴市建新工程造价咨询事务所有限公司关于嘉兴市第一医院管道五金采购项目的公开招标公告 330400260660200000139-建新-jxsj-2026-123 嘉兴公共资源交易平台  采购公告 嘉兴市第一医院 " data-index="3">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=cUd5cQ608uCu549gY6gR5w==" target="_blank" rel="noopener noreferrer">嘉兴市建新工程造价咨询事务所有限公司关于嘉兴市第一医院管道五金采购项目的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+<p class="project-number">项目编号 330400260660200000139-建新-JXSJ-2026-123</p>
+<dl><div><dt>投标截止</dt><dd>2026-12-02 14:00</dd></div><div><dt>预算金额</dt><dd>2500000元</dd></div><div><dt>最高限价</dt><dd>2499990元</dd></div></dl></article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="嘉兴市公共资源交易中心关于嘉兴烈士纪念馆2027年度物业管理服务项目的公开招标公告 330400261080020000015-嘉政采招（2026）第100号 嘉兴公共资源交易平台  采购公告 嘉兴市退役军人服务中心 " data-index="4">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=67JGzuNwGn0o1STssvnxjg==" target="_blank" rel="noopener noreferrer">嘉兴市公共资源交易中心关于嘉兴烈士纪念馆2027年度物业管理服务项目的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+<p class="project-number">项目编号 330400261080020000015-嘉政采招（2026）第100号</p>
+<dl><div><dt>投标截止</dt><dd>2026-12-01 09:30</dd></div><div><dt>预算金额</dt><dd>650000元</dd></div><div><dt>最高限价</dt><dd>650000元</dd></div></dl></article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="浙江国际招投标有限公司关于嘉兴市王店人民医院宫腔镜系统的公开招标公告  嘉兴公共资源交易平台  采购公告  " data-index="5">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="http://zjylxx.zcygov.cn/luban/detail?parentId=623152&amp;articleId=fXZgrncqa2f3XORgZ4n99Q==" target="_blank" rel="noopener noreferrer">浙江国际招投标有限公司关于嘉兴市王店人民医院宫腔镜系统的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="purchase" data-region="" data-search="浙江华耀建设咨询有限公司关于内河船舶驾驶实操模拟器技术改造服务项目的公开招标公告 330400260760060000139-华耀-2026-07号 嘉兴公共资源交易平台  采购公告 嘉兴市港航管理服务中心 " data-index="6">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=teBzap5I+EFRCNabPnwq3w==" target="_blank" rel="noopener noreferrer">浙江华耀建设咨询有限公司关于内河船舶驾驶实操模拟器技术改造服务项目的公开招标公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+<p class="project-number">项目编号 330400260760060000139-华耀-2026-07号</p>
+<dl><div><dt>投标截止</dt><dd>2026-11-30 14:00</dd></div><div><dt>预算金额</dt><dd>800000元</dd></div><div><dt>最高限价</dt><dd>800000元</dd></div></dl></article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="浙江求是招标代理有限公司关于嘉兴市农村产权市域一体化交易服务项目中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="7">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=lEoiQpr1ls5S6tWzRGGzYw==" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于嘉兴市农村产权市域一体化交易服务项目中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="浙江求是招标代理有限公司关于全自动染色仪（抗酸、革兰）等设备中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="8">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="http://zjylxx.zcygov.cn/luban/detail?parentId=623152&amp;articleId=MQ3s7dD27VooPHFBfeDpbg==" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于全自动染色仪（抗酸、革兰）等设备中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="浙江中明工程咨询有限公司关于2026-2027年度文博未来社区运营项目中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="9">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=JANHYCLgYpGuVNduJbJziA==" target="_blank" rel="noopener noreferrer">浙江中明工程咨询有限公司关于2026-2027年度文博未来社区运营项目中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="浙江求是招标代理有限公司关于检验科相关设备采购项目中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="10">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="http://zjylxx.zcygov.cn/luban/detail?parentId=623152&amp;articleId=SIfr3qG0+iNGqHeRqOYWsw==" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于检验科相关设备采购项目中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="嘉兴市银建工程咨询评估有限公司关于嘉兴市交通运输行政执法队水上直属队新址业务用房及港航船员考场业务用房修缮项目中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="11">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=XvZKQObocWbFwkCaT18lhA==" target="_blank" rel="noopener noreferrer">嘉兴市银建工程咨询评估有限公司关于嘉兴市交通运输行政执法队水上直属队新址业务用房及港航船员考场业务用房修缮项目中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="嘉兴市公共资源交易中心关于嘉兴市中医医院医技住院综合楼办公家具采购项目中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="12">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=8ww3ZBleFt4za3THnaM8PA==" target="_blank" rel="noopener noreferrer">嘉兴市公共资源交易中心关于嘉兴市中医医院医技住院综合楼办公家具采购项目中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="浙江圣加工程管理咨询有限公司关于2026年新塍分区市政设施维修养护工程中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="13">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=T6GfeJrSx1LEA3fQcjb5wA==" target="_blank" rel="noopener noreferrer">浙江圣加工程管理咨询有限公司关于2026年新塍分区市政设施维修养护工程中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="嘉兴公共资源交易平台" data-category="results" data-region="" data-search="嘉兴市建新工程造价咨询事务所有限公司关于嘉兴市第一医院冷源系统节电设备采购项目(第二次)中标(成交)结果公告  嘉兴公共资源交易平台  中标成功公告  " data-index="14">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://zfcg.czt.zj.gov.cn/luban/detail?parentId=600007&amp;articleId=ZfbAlruEtjTg07HB9x3tEA==" target="_blank" rel="noopener noreferrer">嘉兴市建新工程造价咨询事务所有限公司关于嘉兴市第一医院冷源系统节电设备采购项目(第二次)中标(成交)结果公告</a></h2><p class="source">嘉兴公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="青林河河道开挖零星工程开标结果公示  禾采联 hcl 嘉善县 开标结果公示  " data-index="15">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001006/20261110/e2998d2f-9dc9-421c-b7f8-9f3d6847238a.html" target="_blank" rel="noopener noreferrer">青林河河道开挖零星工程开标结果公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="秀洲区" data-search="嘉兴秀安电子小型项目集成及服务2026-2027年度框架协议项目（标项三  施救清障车辆和保管场地租赁服务）开标结果公示  禾采联 hcl 秀洲区 开标结果公示  " data-index="16">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003006/20261110/4f1ed7a1-0119-4dfb-ab65-a56ed0b71303.html" target="_blank" rel="noopener noreferrer">嘉兴秀安电子小型项目集成及服务2026-2027年度框架协议项目（标项三  施救清障车辆和保管场地租赁服务）开标结果公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="updates" data-region="桐乡市" data-search="新能源重卡充电站建设项目（第一批）  禾采联 hcl 桐乡市 变更公告  " data-index="17">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001002/20261110/553fdfa4-bf10-4cd1-9a58-3ee4cc2008dc.html" target="_blank" rel="noopener noreferrer">新能源重卡充电站建设项目（第一批）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="updates" data-region="嘉兴市" data-search="“浙港通”嘉兴子平台政务云服务采购项目  禾采联 hcl 嘉兴市 变更公告  " data-index="18">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003002/20261110/d2ec6de7-0252-4aeb-91f9-844331e598f7.html" target="_blank" rel="noopener noreferrer">“浙港通”嘉兴子平台政务云服务采购项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="秀洲区" data-search="2026-2027年度秀湖公园绿化养护项目开标结果公示  禾采联 hcl 秀洲区 开标结果公示  " data-index="19">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003006/20261110/0bf91440-437f-4d66-8923-dc2add82ab49.html" target="_blank" rel="noopener noreferrer">2026-2027年度秀湖公园绿化养护项目开标结果公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="海宁市" data-search="丁桥镇2027年度未来乡村零星配套提升工程 dq2026033 号 禾采联 hcl 海宁市 招标公告 海宁市丁桥新市镇建设有限公司 " data-index="20">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/2f61eb9d-0c8a-4ae7-99df-f4082ee2c82e.html" target="_blank" rel="noopener noreferrer">丁桥镇2027年度未来乡村零星配套提升工程</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">海宁市 · 工程类 · 公开招标</p>
+<p class="project-number">项目编号 DQ2026033 号</p>
+<dl><div><dt>投标截止</dt><dd>2026-11-19 09:30:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="秀洲区" data-search="嘉兴市绿能环保科技有限公司总磷、总氮在线分析仪采购安装项目 2026-105 禾采联 hcl 秀洲区 招标公告 嘉兴市绿能环保科技有限公司 " data-index="21">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/2240fef9-1782-4717-bcc7-c78fdef86591.html" target="_blank" rel="noopener noreferrer">嘉兴市绿能环保科技有限公司总磷、总氮在线分析仪采购安装项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 工程类 · 公开招标</p>
+<p class="project-number">项目编号 2026-105</p>
+<dl><div><dt>投标截止</dt><dd>2026-11-12 16:30:00</dd></div><div><dt>最高限价</dt><dd>104600 元（大写： 壹拾万肆仟陆佰元整 ）</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="浙江省桐乡市高级中学2026级美术特长班辅导服务项目  禾采联 hcl 桐乡市 招标公告 浙江省桐乡市高级中学 " data-index="22">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003001/20261110/c4eb9c3d-f7de-4024-b829-09bd177142e1.html" target="_blank" rel="noopener noreferrer">浙江省桐乡市高级中学2026级美术特长班辅导服务项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 服务类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-30 14:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="purchase" data-region="嘉兴市" data-search="嘉枫市域a、b组填料dc02采购项目 jtlhdc-26012 禾采联 hcl 嘉兴市 采购公告 嘉兴市嘉铁联合新材料科技有限公司 " data-index="23">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001002/001002002/001002002001/20261110/669d9f57-ca91-4e22-80ec-0a37ade7becc.html" target="_blank" rel="noopener noreferrer">嘉枫市域A、B组填料DC02采购项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 货物类 · 询价</p>
+<p class="project-number">项目编号 JTLHDC-26012</p>
+<dl><div><dt>报价截止</dt><dd>2026-11-17 14:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="嘉兴市" data-search="嘉兴市青少年宫校外教育成长阵地室内装饰改造工程方案设计、初步设计及施工图设计招标公告  禾采联 hcl 嘉兴市 招标公告 嘉兴市青少年宫 " data-index="24">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/318629ab-4b39-4de1-a96b-32e8a6d6f8a9.html" target="_blank" rel="noopener noreferrer">嘉兴市青少年宫校外教育成长阵地室内装饰改造工程方案设计、初步设计及施工图设计招标公告</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-17 14:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="秀洲区" data-search="农贸市场大门改造项目  禾采联 hcl 秀洲区 招标公告  " data-index="25">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/2a77b018-fbe2-4b49-8add-cecb9eddb6ac.html" target="_blank" rel="noopener noreferrer">农贸市场大门改造项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-12 16:30:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="海宁市" data-search="海宁市长安镇逸品福邸视频监控系统升级改造  禾采联 hcl 海宁市 招标公告 海宁市长安镇逸品福邸物业管理委员会 " data-index="26">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/25855144-4dd0-4a16-9d34-dcd2f1c5dc81.html" target="_blank" rel="noopener noreferrer">海宁市长安镇逸品福邸视频监控系统升级改造</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">海宁市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-20 10:30:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="purchase" data-region="桐乡市" data-search="桐乡市桐卫医疗器械有限公司医疗设备（第六十批）采购项目 twylqx20261110001 禾采联 hcl 桐乡市 采购公告  " data-index="27">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001002/001002002/001002002001/20261110/3bac85f5-2c58-43ff-84d4-7bd8037aa1fb.html" target="_blank" rel="noopener noreferrer">桐乡市桐卫医疗器械有限公司医疗设备（第六十批）采购项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 货物类 · 竞争性磋商</p>
+<p class="project-number">项目编号 TWYLQX20261110001</p>
+<dl><div><dt>响应截止</dt><dd>2026-11-20 08:30:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="桐乡市日用杂品有限责任公司茶叶店装修工程  禾采联 hcl 桐乡市 招标公告  " data-index="28">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/92b3b26e-c5ec-4d86-b46a-5224af6a406b.html" target="_blank" rel="noopener noreferrer">桐乡市日用杂品有限责任公司茶叶店装修工程</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-17 14:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="disclosure" data-region="嘉兴市" data-search="市域铁路运营公司采购商务车事项单一来源采购公示  禾采联 hcl 嘉兴市 采购公告  " data-index="29">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001002/001002002/001002002001/20261110/516cec09-2b2f-4f86-8e4f-39631100d273.html" target="_blank" rel="noopener noreferrer">市域铁路运营公司采购商务车事项单一来源采购公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 货物类 · 单一来源</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="海宁市" data-search="泾长家宴中心维修改造项目  禾采联 hcl 海宁市 招标公告 海宁市海昌街道泾长社区集体经济组织 " data-index="30">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/fb741f3b-a84e-49cd-9321-93bf8df52877.html" target="_blank" rel="noopener noreferrer">泾长家宴中心维修改造项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">海宁市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-20 15:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="2027-2029年度世界互联网人才大厦委托运营项目  禾采联 hcl 桐乡市 招标公告 浙江凤凰湖实业有限公司 " data-index="31">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003001/20261110/060636c8-fedb-49b0-9483-dd6a1164c514.html" target="_blank" rel="noopener noreferrer">2027-2029年度世界互联网人才大厦委托运营项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 服务类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-12-01 14:00:00</dd></div><div><dt>预算金额</dt><dd>1万元</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="濮院镇公共场所垃圾桶及果壳箱采购项目  禾采联 hcl 桐乡市 招标公告 桐乡市弘瑞物业管理有限公司 " data-index="32">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002001/20261110/5e972000-3768-4591-93c5-c28080e2fcfb.html" target="_blank" rel="noopener noreferrer">濮院镇公共场所垃圾桶及果壳箱采购项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 货物类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-12-01 14:00:00</dd></div><div><dt>预算金额</dt><dd>1万元</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="桐乡市屠甸辅警大队接处警大厅、综合指挥室改造项目工程总承包  禾采联 hcl 桐乡市 招标公告 桐乡市屠甸轻纺工业园区开发有限公司 " data-index="33">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/5afdb96b-23ec-465b-9e32-8b6085ba73a2.html" target="_blank" rel="noopener noreferrer">桐乡市屠甸辅警大队接处警大厅、综合指挥室改造项目工程总承包</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-17 14:00:00</dd></div><div><dt>最高限价</dt><dd>68.0394万元</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="秀洲区" data-search="人才智库建设（洪合镇）框架协议单位征集项目  禾采联 hcl 秀洲区 招标公告 嘉兴英才人力资源服务有限公司 " data-index="34">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003001/20261110/8e5b7f68-7ac6-4c29-b1c1-c74f9ae4ff85.html" target="_blank" rel="noopener noreferrer">人才智库建设（洪合镇）框架协议单位征集项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-18 14:30:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="海宁市" data-search="兴城村通组道路提升工程项目  禾采联 hcl 海宁市 招标公告 海宁市长安镇兴城村集体经济组织 " data-index="35">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/3614acde-503e-4aa2-b252-b707e6fca2d9.html" target="_blank" rel="noopener noreferrer">兴城村通组道路提升工程项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">海宁市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-20 15:30:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="桐乡市凤鸣街道合星村道路改造工程招标公告  禾采联 hcl 桐乡市 招标公告  " data-index="36">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001001/20261110/257878d6-1c39-48d5-9d94-21ea8908bce2.html" target="_blank" rel="noopener noreferrer">桐乡市凤鸣街道合星村道路改造工程招标公告</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+<dl><div><dt>投标截止</dt><dd>2026-11-17 14:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="桐乡市" data-search="庆丰北路900号东兴生活广场5幢物业管理项目 同诚-金凤凰（2026）126号 禾采联 hcl 桐乡市 招标公告 桐乡市金汇资产管理有限公司 " data-index="37">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003001/20261110/a30c06b1-d15e-44bd-a2e2-3cbf8af9addd.html" target="_blank" rel="noopener noreferrer">庆丰北路900号东兴生活广场5幢物业管理项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 服务类 · 公开招标</p>
+<p class="project-number">项目编号 同诚-金凤凰（2026）126号</p>
+<dl><div><dt>投标截止</dt><dd>2026-11-23 14:00:00</dd></div><div><dt>预算金额</dt><dd>1万元</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="tender" data-region="嘉兴市" data-search="嘉兴银行离任董事及高级管理人员履职情况审计服务采购项目（重新发布）公开招标采购公告 富昱jxyh-2026042 禾采联 hcl 嘉兴市 招标公告 嘉兴银行股份有限公司 " data-index="38">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003001/20261110/d287bc82-8412-4127-ae88-0bf33d9f1101.html" target="_blank" rel="noopener noreferrer">嘉兴银行离任董事及高级管理人员履职情况审计服务采购项目（重新发布）公开招标采购公告</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 服务类 · 公开招标</p>
+<p class="project-number">项目编号 富昱JXYH-2026042</p>
+<dl><div><dt>投标截止</dt><dd>2026-11-30 17:00:00</dd></div></dl></article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="罗星街道马家桥村配套用房室内装修项目开标结果公示  禾采联 hcl 嘉善县 开标结果公示  " data-index="39">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001006/20261110/1a521bbf-7fbb-49ef-8012-603c80756223.html" target="_blank" rel="noopener noreferrer">罗星街道马家桥村配套用房室内装修项目开标结果公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="桐乡市" data-search="桐乡市高中服务能力提升工程（一期）——桐乡一中改扩建工程方案设计、初步设计及后续服务项目中标候选人公示  禾采联 hcl 桐乡市 中标候选人公示  " data-index="40">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/a816d26c-8f93-4165-b4c4-5222bc9694e6.html" target="_blank" rel="noopener noreferrer">桐乡市高中服务能力提升工程（一期）——桐乡一中改扩建工程方案设计、初步设计及后续服务项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="秀洲区" data-search="洪合码头工程可行性研究报告编制  禾采联 hcl 秀洲区 中标结果公示  " data-index="41">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/17dbcd66-fbcc-4aba-adf3-8e223e739008.html" target="_blank" rel="noopener noreferrer">洪合码头工程可行性研究报告编制</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="南湖区" data-search="云萃府邻里商业中心招商运营管理服务中标候选人公示  禾采联 hcl 南湖区 中标候选人公示  " data-index="42">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/c1257a23-81e0-40dd-8f22-bdc104d586ab.html" target="_blank" rel="noopener noreferrer">云萃府邻里商业中心招商运营管理服务中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">南湖区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="南湖区" data-search="余新镇两创中心2026年度物业服务项目中标候选人公示  禾采联 hcl 南湖区 中标候选人公示  " data-index="43">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/9916225a-5f39-4fbe-a7ff-66e02899304f.html" target="_blank" rel="noopener noreferrer">余新镇两创中心2026年度物业服务项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">南湖区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="秀洲区" data-search="2026-2027年度秀湖公园绿化养护项目中标候选人公示  禾采联 hcl 秀洲区 中标候选人公示  " data-index="44">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/e1753fb3-8685-47e5-9de8-b3a41eac1fd8.html" target="_blank" rel="noopener noreferrer">2026-2027年度秀湖公园绿化养护项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉兴市" data-search="嘉通高速2026年车辆更新项目（第3标段）  禾采联 hcl 嘉兴市 中标结果公示  " data-index="45">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002004/20261110/a054bb0e-37cd-4e00-b12f-56d2c6da6408.html" target="_blank" rel="noopener noreferrer">嘉通高速2026年车辆更新项目（第3标段）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="嘉兴市" data-search="嘉通高速2027年度车辆维修保养服务项目标段一中标候选人公示  禾采联 hcl 嘉兴市 中标候选人公示  " data-index="46">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/836e06da-121c-4270-8655-bd4f270f68dd.html" target="_blank" rel="noopener noreferrer">嘉通高速2027年度车辆维修保养服务项目标段一中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="桐乡市" data-search="桐乡市2027年度取水实时监控运行维护技术服务中标候选人公示  禾采联 hcl 桐乡市 中标候选人公示  " data-index="47">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/b76d8790-7256-40ea-b73c-a6ffb59d3020.html" target="_blank" rel="noopener noreferrer">桐乡市2027年度取水实时监控运行维护技术服务中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉兴市" data-search="嘉通高速2026年车辆更新项目（第1标段）  禾采联 hcl 嘉兴市 中标结果公示  " data-index="48">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002004/20261110/db3b2138-4c5c-497a-90a0-038feef74857.html" target="_blank" rel="noopener noreferrer">嘉通高速2026年车辆更新项目（第1标段）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="嘉兴市" data-search="嘉通高速2027年度车辆维修保养服务项目标段二中标候选人公示  禾采联 hcl 嘉兴市 中标候选人公示  " data-index="49">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/7f3b2360-3685-45c4-b7e8-4447ee6231b4.html" target="_blank" rel="noopener noreferrer">嘉通高速2027年度车辆维修保养服务项目标段二中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="南湖区" data-search="三塔里开业前零星工程项目中标候选人公示  禾采联 hcl 南湖区 中标候选人公示  " data-index="50">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/f1ca9238-2fef-48c0-84e6-49b413bf88bb.html" target="_blank" rel="noopener noreferrer">三塔里开业前零星工程项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">南湖区 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉兴市" data-search="嘉兴市嘉睿投资管理有限公司某在管基金诉讼代理专项法律服务项目  禾采联 hcl 嘉兴市 中标结果公示  " data-index="51">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/4b2b4502-a5ab-41a5-b16d-89f497b3fc07.html" target="_blank" rel="noopener noreferrer">嘉兴市嘉睿投资管理有限公司某在管基金诉讼代理专项法律服务项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="秀洲区" data-search="嘉兴秀安电子小型项目集成及服务2026-2027年度框架协议项目（标项三  施救清障车辆和保管场地租赁服务）中标候选人公示  禾采联 hcl 秀洲区 中标候选人公示  " data-index="52">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/c3c4ba91-0b0e-45a1-b736-67ab076aff84.html" target="_blank" rel="noopener noreferrer">嘉兴秀安电子小型项目集成及服务2026-2027年度框架协议项目（标项三  施救清障车辆和保管场地租赁服务）中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="2026年嘉善经济技术开发区（姚庄片区）生态环境技术服务项目‬‬‬‬‬  禾采联 hcl 嘉善县 中标结果公示  " data-index="53">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/5e0964ac-280e-4c48-8929-bbdae3faa26e.html" target="_blank" rel="noopener noreferrer">2026年嘉善经济技术开发区（姚庄片区）生态环境技术服务项目‬‬‬‬‬</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="2026年嘉善县大云镇高标准农田建设项目（县级）  禾采联 hcl 嘉善县 中标结果公示  " data-index="54">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001004/20261110/e00d225c-7938-40ff-ae08-b46e4981924a.html" target="_blank" rel="noopener noreferrer">2026年嘉善县大云镇高标准农田建设项目（县级）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="秀洲区" data-search="嘉兴市绿能环保科技有限公司200吨工业级混合油（泔水油脂）销售招标项目中标候选人公示  禾采联 hcl 秀洲区 中标候选人公示  " data-index="55">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002003/20261110/d2d01852-a974-485a-8892-4780bbcfdc15.html" target="_blank" rel="noopener noreferrer">嘉兴市绿能环保科技有限公司200吨工业级混合油（泔水油脂）销售招标项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="桐乡市" data-search="桐乡市公安局崇福派出所2026-2028年餐饮服务（劳务）外包服务采购项目中标候选人公示  禾采联 hcl 桐乡市 中标候选人公示  " data-index="56">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/57bbaa81-423f-4b94-908e-d646276abf1c.html" target="_blank" rel="noopener noreferrer">桐乡市公安局崇福派出所2026-2028年餐饮服务（劳务）外包服务采购项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="桐乡市" data-search="桐乡市凤栖经贸有限公司工程用高压直挂充电桩安装入围项目中标候选人公示  禾采联 hcl 桐乡市 中标候选人公示  " data-index="57">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/47a7964e-60d0-4368-a130-ac0f8ff39d24.html" target="_blank" rel="noopener noreferrer">桐乡市凤栖经贸有限公司工程用高压直挂充电桩安装入围项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉兴市" data-search="梅湾街二期项目提资改造项目中标人公示  禾采联 hcl 嘉兴市 中标结果公示  " data-index="58">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001002/001002001/001002001003/20261110/c6d4bf80-53c1-48dd-b1d3-d69697c69d0e.html" target="_blank" rel="noopener noreferrer">梅湾街二期项目提资改造项目中标人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 工程类 · 单一来源</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="秀洲区" data-search="秀宏集团江南摩尔商圈2026年度财产一切险中标候选人公示  禾采联 hcl 秀洲区 中标候选人公示  " data-index="59">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003003/20261110/f69397f9-e3ec-499d-b4c8-0af0c90907fb.html" target="_blank" rel="noopener noreferrer">秀宏集团江南摩尔商圈2026年度财产一切险中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="嘉兴市" data-search="嘉兴市商品交易产业园-物流公共服务中心重卡充电站管线配套项目中标候选人公示  禾采联 hcl 嘉兴市 中标候选人公示  " data-index="60">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/d2db93ca-0b63-4396-9151-07b7770e4791.html" target="_blank" rel="noopener noreferrer">嘉兴市商品交易产业园-物流公共服务中心重卡充电站管线配套项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="秀洲区" data-search="嘉兴市海绵城市投资有限公司及下属各级公司2026-2028年财务报表审计及2027-2029年度季报审阅和其他相关服务采购项目  禾采联 hcl 秀洲区 中标结果公示  " data-index="61">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/322eefc1-9a6b-4b03-8d3c-69727ad02856.html" target="_blank" rel="noopener noreferrer">嘉兴市海绵城市投资有限公司及下属各级公司2026-2028年财务报表审计及2027-2029年度季报审阅和其他相关服务采购项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="嘉善县民兵训练基地设备采购及升级项目（二期）施工  禾采联 hcl 嘉善县 中标结果公示  " data-index="62">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001004/20261110/2c3c3e98-305a-4c1e-a0f3-b88f8e26e2a0.html" target="_blank" rel="noopener noreferrer">嘉善县民兵训练基地设备采购及升级项目（二期）施工</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="南湖区" data-search="城北青年人才保障性租赁用房项目（洋帅地块）空调采购及安装中标候选人公示  禾采联 hcl 南湖区 中标候选人公示  " data-index="63">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002003/20261110/6413a345-7846-40b2-a9ab-5004f6f45e8a.html" target="_blank" rel="noopener noreferrer">城北青年人才保障性租赁用房项目（洋帅地块）空调采购及安装中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">南湖区 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="嘉善云禾酒店管理有限公司酒店分公司食材采购配送入围项目（蔬菜类、水果类等部分）  禾采联 hcl 嘉善县 中标结果公示  " data-index="64">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/8f33b063-0b43-4500-b615-f7ff9e99546d.html" target="_blank" rel="noopener noreferrer">嘉善云禾酒店管理有限公司酒店分公司食材采购配送入围项目（蔬菜类、水果类等部分）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="嘉善县" data-search="罗星街道马家桥村配套用房室内装修项目中标候选人公示  禾采联 hcl 嘉善县 中标候选人公示  " data-index="65">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/dd6e3a42-ea30-4c12-987b-43b7920545a1.html" target="_blank" rel="noopener noreferrer">罗星街道马家桥村配套用房室内装修项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="嘉善云禾酒店管理有限公司酒店分公司食材采购配送入围项目（肉类、冷冻品类等部分）  禾采联 hcl 嘉善县 中标结果公示  " data-index="66">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/c20fc663-4e5c-4e2c-acbe-fa40189a1f65.html" target="_blank" rel="noopener noreferrer">嘉善云禾酒店管理有限公司酒店分公司食材采购配送入围项目（肉类、冷冻品类等部分）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉善县" data-search="嘉善县姚庄镇现代化农事服务中心运营  禾采联 hcl 嘉善县 中标结果公示  " data-index="67">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/6f015c5b-f142-481a-887c-48c1b98f0a12.html" target="_blank" rel="noopener noreferrer">嘉善县姚庄镇现代化农事服务中心运营</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉兴市" data-search="嘉兴银行2026年度商户巡检外包服务框架协议采购项目（重新发布）中标结果公告  禾采联 hcl 嘉兴市 中标结果公示  " data-index="68">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001003/001001003004/20261110/d64889ac-b844-49f7-93c1-ce22ed0b2798.html" target="_blank" rel="noopener noreferrer">嘉兴银行2026年度商户巡检外包服务框架协议采购项目（重新发布）中标结果公告</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 服务类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="嘉兴市" data-search="嘉通高速2026年车辆更新项目（第2标段）  禾采联 hcl 嘉兴市 中标结果公示  " data-index="69">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002004/20261110/d95ec0fe-913b-497b-a8c9-3a1a0d558148.html" target="_blank" rel="noopener noreferrer">嘉通高速2026年车辆更新项目（第2标段）</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="桐乡市" data-search="桐乡市凤栖经贸有限公司贸易经营性物资（ 膜车间自控设备）采购项目中标候选人公示  禾采联 hcl 桐乡市 中标候选人公示  " data-index="70">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002003/20261110/b6b5257b-cd64-4dfe-bfa0-42145e071fcb.html" target="_blank" rel="noopener noreferrer">桐乡市凤栖经贸有限公司贸易经营性物资（ 膜车间自控设备）采购项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="秀洲区" data-search="嘉兴市绿能环保科技有限公司分时电表安装工程项目  禾采联 hcl 秀洲区 中标结果公示  " data-index="71">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001004/20261110/26bf900a-c030-4fee-8883-9820813a6874.html" target="_blank" rel="noopener noreferrer">嘉兴市绿能环保科技有限公司分时电表安装工程项目</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="桐乡市" data-search="2026年桐乡市河山镇高标准农田建设项目中标候选人公示  禾采联 hcl 桐乡市 中标候选人公示  " data-index="72">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/42c56b1b-f122-4e32-8335-d20e2691c498.html" target="_blank" rel="noopener noreferrer">2026年桐乡市河山镇高标准农田建设项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">桐乡市 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="嘉善县" data-search="青林河河道开挖零星工程中标候选人公示  禾采联 hcl 嘉善县 中标候选人公示  " data-index="73">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001001/001001001003/20261110/20f78d48-64ff-4107-be7a-392d11d82e49.html" target="_blank" rel="noopener noreferrer">青林河河道开挖零星工程中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉善县 · 工程类 · 公开招标</p>
+
+</article><article class="notice" data-source="禾采联 HCL" data-category="results" data-region="秀洲区" data-search="长三角水稻新品种展示示范试验田晚稻谷 公开销售事宜  禾采联 hcl 秀洲区 中标结果公示  " data-index="74">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002004/20261110/48b95814-8ab9-4e2f-a072-5ca20220e41d.html" target="_blank" rel="noopener noreferrer">长三角水稻新品种展示示范试验田晚稻谷 公开销售事宜</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">秀洲区 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉兴市" data-search="[招标文件]高新区洪高厂房改造提升项目设计采购施工总承包（epc）招标文件公示[a3300000090012127002001] a3300000090012127002001 浙江省统一招采 嘉兴市 招标文件公示 嘉兴秀洲光伏小镇开发建设有限公司 " data-index="75">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/368469cc-070c-44db-b9de-2cdd7374983a.html" target="_blank" rel="noopener noreferrer">[招标文件]高新区洪高厂房改造提升项目设计采购施工总承包（EPC）招标文件公示[A3300000090012127002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090012127002001</p>
+<dl><div><dt>最高限价</dt><dd>78717800 元，其中设计费限价 元，建安；（招标控制价-暂列金额-暂估价）×（1-</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="嘉善县" data-search="罗星街道入河排污口整治及管网改造提升工程（大坝头小区、家英小区、李家北区、徐家港小区、潘家浜小区二期入河排污口整治及管网改造提升）工程总承包项目招标公告[a3300000090009302002001] a3300000090009302002001 浙江省统一招采 嘉善县 招标公告  " data-index="76">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/b1f5d3ed-5a4a-451a-8ea6-97165cc2dca7.html" target="_blank" rel="noopener noreferrer">罗星街道入河排污口整治及管网改造提升工程（大坝头小区、家英小区、李家北区、徐家港小区、潘家浜小区二期入河排污口整治及管网改造提升）工程总承包项目招标公告[A3300000090009302002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+<p class="project-number">项目编号 A3300000090009302002001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="海宁市" data-search="许村镇许巷村邻里中心项目招标异常公告[a3300000090009913001001] a3300000090009913001001 浙江省统一招采 海宁市 招标异常公告  " data-index="77">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/3068a5cb-7073-445b-bd3c-7b9e0fa19c70.html" target="_blank" rel="noopener noreferrer">许村镇许巷村邻里中心项目招标异常公告[A3300000090009913001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090009913001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="results" data-region="嘉兴市" data-search="2026年运河湾城投集团经营性资产改造维修提升工程——运河记忆汇1#-4#改造中标结果公告[a3300000090008532002001]  浙江省统一招采 嘉兴市 中标结果公告  " data-index="78">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001005/20261110/bd89c90d-f2ae-408a-a484-91e2cbcf133d.html" target="_blank" rel="noopener noreferrer">2026年运河湾城投集团经营性资产改造维修提升工程——运河记忆汇1#-4#改造中标结果公告[A3300000090008532002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="results" data-region="嘉兴市" data-search="2026年运河湾城投集团经营性资产改造维修提升工程——运河记忆汇1#-4#改造评分公示[a3300000090008532002001]  浙江省统一招采 嘉兴市 定量评审结果公示  " data-index="79">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001014/20261110/bd89c90d-f2ae-408a-a484-91e2cbcf133dpfgs.html" target="_blank" rel="noopener noreferrer">2026年运河湾城投集团经营性资产改造维修提升工程——运河记忆汇1#-4#改造评分公示[A3300000090008532002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="海宁市" data-search="海宁市2026-2028年中心城区（海洲街道）老旧小区提升改造项目-基隆墩招标公告[a3300000090009798002001] a3300000090009798002001 浙江省统一招采 海宁市 招标公告  " data-index="80">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/9a67365a-3262-453d-ae2d-4f59f0f09d5c.html" target="_blank" rel="noopener noreferrer">海宁市2026-2028年中心城区（海洲街道）老旧小区提升改造项目-基隆墩招标公告[A3300000090009798002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090009798002001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉兴市" data-search="嘉善至西塘市域铁路轨道和声屏障工程施工监理招标计划  浙江省统一招采 嘉兴市 招标计划 嘉兴市市域铁路投资有限公司 " data-index="81">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/a0c04d06-a9e8-41f6-bc3f-f973b7b9617d.html" target="_blank" rel="noopener noreferrer">嘉善至西塘市域铁路轨道和声屏障工程施工监理招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="杭浦高速公路海盐联络线（一期）绿化工程第lh01标段招标异常公告[a3300000090010018001001] a3300000090010018001001 浙江省统一招采 嘉兴市 招标异常公告  " data-index="82">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/290829fd-7465-4809-b232-e2737dbaed3e.html" target="_blank" rel="noopener noreferrer">杭浦高速公路海盐联络线（一期）绿化工程第LH01标段招标异常公告[A3300000090010018001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090010018001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="杭浦高速公路海盐联络线（一期）绿化工程第lh02标段招标异常公告[a3300000090010018001002] a3300000090010018001002 浙江省统一招采 嘉兴市 招标异常公告  " data-index="83">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/bb3fbc63-ea9e-439a-b281-0b89e4167b2a.html" target="_blank" rel="noopener noreferrer">杭浦高速公路海盐联络线（一期）绿化工程第LH02标段招标异常公告[A3300000090010018001002]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090010018001002</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉善县" data-search="高铁新城商住综合体项目（暂定）[a3300000090008562002001]  浙江省统一招采 嘉善县 澄清修改信息  " data-index="84">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/6955b62e-bb6b-4a60-b539-737afc1d7306.html" target="_blank" rel="noopener noreferrer">高铁新城商住综合体项目（暂定）[A3300000090008562002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉善县" data-search="大云镇产业振兴道路提质项目(卡帕路南延伸道路新建工程)设计施工总承包招标计划  浙江省统一招采 嘉善县 招标计划 嘉善大云村镇建设开发有限公司 " data-index="85">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/73d3f95b-da6c-49bf-8535-a2a7295ade04.html" target="_blank" rel="noopener noreferrer">大云镇产业振兴道路提质项目(卡帕路南延伸道路新建工程)设计施工总承包招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="嘉善县" data-search="大云镇产业振兴道路提质项目（卡帕路南延伸道路新建工程）[a3300000090012348]  浙江省统一招采 嘉善县 项目登记信息  " data-index="86">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001008/20261110/92d42950-0058-4fd6-826e-2235a78f87c3.html" target="_blank" rel="noopener noreferrer">大云镇产业振兴道路提质项目（卡帕路南延伸道路新建工程）[A3300000090012348]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="海宁市" data-search="海宁经济开发区航空产业及高端装备改造提升项目[a3300000090010314001001]  浙江省统一招采 海宁市 澄清修改信息  " data-index="87">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/9ecc81d9-29af-44d2-a7c3-2cad72ef666f.html" target="_blank" rel="noopener noreferrer">海宁经济开发区航空产业及高端装备改造提升项目[A3300000090010314001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉善县" data-search="嘉善至西塘市域铁路轨道和声屏障工程施工监理招标计划  浙江省统一招采 嘉善县 招标计划 嘉兴市市域铁路投资有限公司 " data-index="88">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/d0b1413c-fd26-45d0-8a62-32d349184e01.html" target="_blank" rel="noopener noreferrer">嘉善至西塘市域铁路轨道和声屏障工程施工监理招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="嘉兴市" data-search="嘉通所辖高速2026年度收费设施及桥涵监控改造项目招标公告[a3300000090010759001001] a3300000090010759001001 浙江省统一招采 嘉兴市 招标公告  " data-index="89">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/7810a735-41c4-45b5-bf3f-f713ccf92614.html" target="_blank" rel="noopener noreferrer">嘉通所辖高速2026年度收费设施及桥涵监控改造项目招标公告[A3300000090010759001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090010759001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="平湖市" data-search="徐家埭片区城市有机更新工程—平湖市林埭镇卫生院迁建基础配套工程招标计划  浙江省统一招采 平湖市 招标计划 平湖市林埭镇村镇建设开发有限公司 " data-index="90">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/ed213375-7afe-46ce-a65f-a498f32eaa10.html" target="_blank" rel="noopener noreferrer">徐家埭片区城市有机更新工程—平湖市林埭镇卫生院迁建基础配套工程招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉善县" data-search="[招标文件]长三角废钢铁回收体系（江海联运枢纽）建设工程项目仓储标段工程总承包项目招标文件公示[a3300000090011975001001] a3300000090011975001001 浙江省统一招采 嘉善县 招标文件公示 嘉兴陶庄城市矿产资源有限公司 " data-index="91">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/2f729340-05d2-4a9e-8956-0fe3bd188feb.html" target="_blank" rel="noopener noreferrer">[招标文件]长三角废钢铁回收体系（江海联运枢纽）建设工程项目仓储标段工程总承包项目招标文件公示[A3300000090011975001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+<p class="project-number">项目编号 A3300000090011975001001</p>
+<dl><div><dt>最高限价</dt><dd>90432511.00 元；85336425 元，其中设计费限价 1800000.00；90432511.00 元，保留两位小数</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="海宁市" data-search="海宁市长安镇虹金新村点四期配套基础设施工程--室外附属工程招标公告[a3300000090006079001001] a3300000090006079001001 浙江省统一招采 海宁市 招标公告  " data-index="92">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/8cd22310-267e-4cb4-8734-57dc842fbc92.html" target="_blank" rel="noopener noreferrer">海宁市长安镇虹金新村点四期配套基础设施工程--室外附属工程招标公告[A3300000090006079001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090006079001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="海宁市" data-search="硖许快速路（高架段-北沙路延伸）工程施工图勘察设计招标异常公告[a3300000090010820002001] a3300000090010820002001 浙江省统一招采 海宁市 招标异常公告  " data-index="93">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/deadb80f-a1f0-4ded-9e06-27de59885b1a.html" target="_blank" rel="noopener noreferrer">硖许快速路（高架段-北沙路延伸）工程施工图勘察设计招标异常公告[A3300000090010820002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090010820002001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="平湖市" data-search="徐家埭片区城市有机更新工程[a3300000090012343]  浙江省统一招采 平湖市 项目登记信息  " data-index="94">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001008/20261110/c4194e66-8750-449d-bb56-61f3bcd28316.html" target="_blank" rel="noopener noreferrer">徐家埭片区城市有机更新工程[A3300000090012343]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="海盐县" data-search="海盐县古城复兴杨家弄绮园文旅区改造提升项目—梅园路西侧基础设施改造（暂命名）勘察设计招标公告[a3300000090011735001001] a3300000090011735001001 浙江省统一招采 海盐县 招标公告  " data-index="95">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/0ffa1bcc-1794-473a-b590-0d1fe8ff4020.html" target="_blank" rel="noopener noreferrer">海盐县古城复兴杨家弄绮园文旅区改造提升项目—梅园路西侧基础设施改造（暂命名）勘察设计招标公告[A3300000090011735001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海盐县 · 工程类</p>
+<p class="project-number">项目编号 A3300000090011735001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="嘉兴市" data-search="嘉兴港区临港综合体[a3300000090006867001001]  浙江省统一招采 嘉兴市 合同信息公开  " data-index="96">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/956493f7-b108-4e21-b4cc-888c2ff15211.html" target="_blank" rel="noopener noreferrer">嘉兴港区临港综合体[A3300000090006867001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="嘉兴市" data-search="嘉兴发电厂三期分布式光伏发电项目[a3300000090008118001001]  浙江省统一招采 嘉兴市 合同信息公开  " data-index="97">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/82ad3238-bf77-43bd-8c70-77b3407ea2e3.html" target="_blank" rel="noopener noreferrer">嘉兴发电厂三期分布式光伏发电项目[A3300000090008118001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="results" data-region="嘉兴市" data-search="嘉兴国际商务区投资建设集团有限公司嘉兴国际金融广场7#地块ab幢裙房三楼装修工程嘉兴国际商务区投资建设集团有限公司嘉兴国际金融广场7#地块ab幢裙房三楼装修工程开标记录[a3300000090010037001001]  浙江省统一招采 嘉兴市 开标结果公示  " data-index="98">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001003/20261110/6ebc55b9-4fac-44b9-807c-e3e46bce8573.html" target="_blank" rel="noopener noreferrer">嘉兴国际商务区投资建设集团有限公司嘉兴国际金融广场7#地块AB幢裙房三楼装修工程嘉兴国际商务区投资建设集团有限公司嘉兴国际金融广场7#地块AB幢裙房三楼装修工程开标记录[A3300000090010037001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉兴市" data-search="[招标文件]综保区北卡口西侧地块制造基地项目全过程工程咨询服务项目招标文件公示[a3300000090011616001001] a3300000090011616001001 浙江省统一招采 嘉兴市 招标文件公示 嘉兴湾北科创发展集团有限公司；嘉兴湾北科创发展集团有限公司 （单位 " data-index="99">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/d57d08ce-f986-42b4-aa86-447b1d7470f2.html" target="_blank" rel="noopener noreferrer">[招标文件]综保区北卡口西侧地块制造基地项目全过程工程咨询服务项目招标文件公示[A3300000090011616001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+<p class="project-number">项目编号 A3300000090011616001001</p>
+<dl><div><dt>最高限价</dt><dd>2069957 元，四舍五入，保留两位小数；168.1810万元；造价咨询费最高投标限价为38.8147万元</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="results" data-region="嘉善县" data-search="中国电信长三角国家枢纽嘉兴算力中心b5楼一期装修改造工程中国电信长三角国家枢纽嘉兴算力中心b5楼一期装修改造工程开标记录[a3300000090009825001001]  浙江省统一招采 嘉善县 开标结果公示  " data-index="100">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001003/20261110/5ddba987-dda4-44c6-bc76-e924b03e49ca.html" target="_blank" rel="noopener noreferrer">中国电信长三角国家枢纽嘉兴算力中心B5楼一期装修改造工程中国电信长三角国家枢纽嘉兴算力中心B5楼一期装修改造工程开标记录[A3300000090009825001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="平湖塘东部公共码头项目初步设计招标异常公告[a3300000090011003002001] a3300000090011003002001 浙江省统一招采 嘉兴市 招标异常公告  " data-index="101">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/51e08bb9-aabc-4b33-94b3-0da745b012ec.html" target="_blank" rel="noopener noreferrer">平湖塘东部公共码头项目初步设计招标异常公告[A3300000090011003002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090011003002001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="高新区柳青路厂房改造项目[a3300000090009229001001]  浙江省统一招采 嘉兴市 澄清修改信息  " data-index="102">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/c2e6f76c-2859-45dd-a421-f8a846c32830.html" target="_blank" rel="noopener noreferrer">高新区柳青路厂房改造项目[A3300000090009229001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="海宁市2025-2027年老旧小区供水管道改造提升工程-2026年老旧小区供水管道改造提升工程[a3304810620100963001004]  浙江省地市平台 海宁市 合同信息公开  " data-index="103">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/036c4f4f-fe2e-4fff-8260-4440dc4f431a.html" target="_blank" rel="noopener noreferrer">海宁市2025-2027年老旧小区供水管道改造提升工程-2026年老旧小区供水管道改造提升工程[A3304810620100963001004]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="桐乡市" data-search="[招标文件]濮院国际毛衫时尚产业高能级服务业创新发展区国际毛衫数字贸易核心区项目一期-创意街区项目（暂名）一阶段全过程工程咨询服务招标文件公示[a3300000090012291001001] a3300000090012291001001 浙江省统一招采 桐乡市 招标文件公示 桐乡市濮院针织产业发展有限公司；桐乡市濮院针织产业发展有限公司 （单 " data-index="104">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/4faf2671-447a-4e4a-bbec-bb14a03c758f.html" target="_blank" rel="noopener noreferrer">[招标文件]濮院国际毛衫时尚产业高能级服务业创新发展区国际毛衫数字贸易核心区项目一期-创意街区项目（暂名）一阶段全过程工程咨询服务招标文件公示[A3300000090012291001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">桐乡市 · 服务类</p>
+<p class="project-number">项目编号 A3300000090012291001001</p>
+<dl><div><dt>最高限价</dt><dd>1590546 元，四舍五入，保留两位小数</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="海宁市" data-search="[招标文件]黄湾新貌“千万工程”共富建设项目-新建新城路东侧道路及桃园桥提升改造工程招标文件公示[a3300000090010894001001] a3300000090010894001001 浙江省统一招采 海宁市 招标文件公示 海宁市尖山新区开发有限公司 " data-index="105">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/0dcd9b2c-8d4b-4322-bbfd-cd633d5c6a3c.html" target="_blank" rel="noopener noreferrer">[招标文件]黄湾新貌“千万工程”共富建设项目-新建新城路东侧道路及桃园桥提升改造工程招标文件公示[A3300000090010894001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090010894001001</p>
+<dl><div><dt>最高限价</dt><dd>19393739 元，四舍五入</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉兴市" data-search="嘉善至西塘市域铁路轨道和声屏障工程施工监理招标计划  浙江省统一招采 嘉兴市 招标计划 嘉兴市市域铁路投资有限公司 " data-index="106">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/3cae086c-0435-490b-8850-0283c1047e47.html" target="_blank" rel="noopener noreferrer">嘉善至西塘市域铁路轨道和声屏障工程施工监理招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="蓝箭商业航天中心屋顶光伏安装项目[a3300000090010721001001]  浙江省统一招采 嘉兴市 澄清修改信息  " data-index="107">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/528dc198-bf08-4940-813b-1297786e1b9e.html" target="_blank" rel="noopener noreferrer">蓝箭商业航天中心屋顶光伏安装项目[A3300000090010721001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉善县" data-search="魏塘街道入河排污口整治及管网改造提升工程[a3300000090010118001001]  浙江省统一招采 嘉善县 澄清修改信息  " data-index="108">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/c3435b1d-6c5d-4ef6-8857-f64e978bda83.html" target="_blank" rel="noopener noreferrer">魏塘街道入河排污口整治及管网改造提升工程[A3300000090010118001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="平湖市" data-search="[招标文件]长三角大数据创新应用中心办公楼十-十三层装修工程工程总承包招标文件公示[a3300000090012144001001] a3300000090012144001001 浙江省统一招采 平湖市 招标文件公示 平湖市新裕建设有限公司 " data-index="109">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/dbb33a71-46fe-4721-86a5-d002657aa702.html" target="_blank" rel="noopener noreferrer">[招标文件]长三角大数据创新应用中心办公楼十-十三层装修工程工程总承包招标文件公示[A3300000090012144001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090012144001001</p>
+<dl><div><dt>最高限价</dt><dd>5742000 元，其中设计费限价 元，建安；（招标控制价-暂列金额-暂估价）×（1-</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="平湖市" data-search="[招标文件]科创园办公楼九-十二层装修工程工程总承包招标文件公示[a3300000090012163001001] a3300000090012163001001 浙江省统一招采 平湖市 招标文件公示 平湖市新隽资产经营管理有限公司 " data-index="110">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001011/20261110/63625e9d-5a18-4ad5-b3d3-5d8e099338c8.html" target="_blank" rel="noopener noreferrer">[招标文件]科创园办公楼九-十二层装修工程工程总承包招标文件公示[A3300000090012163001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090012163001001</p>
+<dl><div><dt>最高限价</dt><dd>5372000 元，其中设计费限价 元，建安；（招标控制价-暂列金额-暂估价）×（1-</dd></div></dl></article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="嘉兴市" data-search="2026年南湖区新丰镇高标准农田改造提升建设项目工程总承包招标公告[a3300000090011840001001] a3300000090011840001001 浙江省统一招采 嘉兴市 招标公告  " data-index="111">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/315f4eb1-1237-40a4-8259-0ba7479d19f6.html" target="_blank" rel="noopener noreferrer">2026年南湖区新丰镇高标准农田改造提升建设项目工程总承包招标公告[A3300000090011840001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090011840001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="高新区柳青路厂房改造项目[a3300000090009229001001]  浙江省统一招采 嘉兴市 澄清修改信息  " data-index="112">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/503d14c7-d306-47b5-b27c-6b73f670f93d.html" target="_blank" rel="noopener noreferrer">高新区柳青路厂房改造项目[A3300000090009229001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="平湖市" data-search="徐家埭片区城市有机更新工程—平湖市林埭镇卫生院迁建基础配套工程招标计划  浙江省统一招采 平湖市 招标计划 平湖市林埭镇村镇建设开发有限公司 " data-index="113">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/5dd09a77-6c2e-4285-b49a-4b7f388c8420.html" target="_blank" rel="noopener noreferrer">徐家埭片区城市有机更新工程—平湖市林埭镇卫生院迁建基础配套工程招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="嘉兴市" data-search="嘉兴市域天然气高压管网系统完善一期工程天然气管道完整性检验与评价服务招标异常公告[a3300000090009507001001] a3300000090009507001001 浙江省统一招采 嘉兴市 招标异常公告  " data-index="114">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/510d23f9-a797-4d88-b2c9-5c2eb47bfa65.html" target="_blank" rel="noopener noreferrer">嘉兴市域天然气高压管网系统完善一期工程天然气管道完整性检验与评价服务招标异常公告[A3300000090009507001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090009507001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="tender" data-region="嘉善县" data-search="嘉善经开区数字经济产业园（七期）项目工程总承包项目招标公告[a3300000090009589001001] a3300000090009589001001 浙江省统一招采 嘉善县 招标公告  " data-index="115">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001001/20261110/b2ae9515-424e-4b48-9fe2-ad1abadb2ab8.html" target="_blank" rel="noopener noreferrer">嘉善经开区数字经济产业园（七期）项目工程总承包项目招标公告[A3300000090009589001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉善县 · 工程类</p>
+<p class="project-number">项目编号 A3300000090009589001001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="平湖市" data-search="徐家埭片区城市有机更新工程[a3300000090012324]  浙江省统一招采 平湖市 项目登记信息  " data-index="116">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001008/20261110/55845f5c-861e-4d7f-aff9-a97505483fc9.html" target="_blank" rel="noopener noreferrer">徐家埭片区城市有机更新工程[A3300000090012324]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="海宁市" data-search="马桥街道全域整治提升改造项目——新丰社区5、6期新塘、利众、民胜村等组安置区块一期桩基工程招标计划  浙江省统一招采 海宁市 招标计划 海宁市绿洲投资开发建设有限公司 " data-index="117">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/dbc46668-837e-466e-bc7f-0a773392c30f.html" target="_blank" rel="noopener noreferrer">马桥街道全域整治提升改造项目——新丰社区5、6期新塘、利众、民胜村等组安置区块一期桩基工程招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="海宁市" data-search="海宁市马桥街道全域整治提升改造项目[a3300000090012314]  浙江省统一招采 海宁市 项目登记信息  " data-index="118">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001008/20261110/22460a96-4dec-4b41-b4ae-e42d78e3cedf.html" target="_blank" rel="noopener noreferrer">海宁市马桥街道全域整治提升改造项目[A3300000090012314]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="下沙至长安市域铁路工程[a3304810620100838018001]  浙江省地市平台 海宁市 合同信息公开  " data-index="119">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/745cc3e6-9dad-4180-a7eb-e2e32dd234f8.html" target="_blank" rel="noopener noreferrer">下沙至长安市域铁路工程[A3304810620100838018001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="丰士邻里中心设计[a3304810620101135001001]  浙江省地市平台 海宁市 合同信息公开  " data-index="120">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/60ddf50a-5b50-44f0-90d9-5f66c87b0f12.html" target="_blank" rel="noopener noreferrer">丰士邻里中心设计[A3304810620101135001001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="上塘河流域许村镇龙渡湖片区水质提升与生态修复项目设计施工一体化[a3304810620101149001001]  浙江省地市平台 海宁市 合同信息公开  " data-index="121">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/9e987bed-1c43-494f-bbe5-49b8a79094e6.html" target="_blank" rel="noopener noreferrer">上塘河流域许村镇龙渡湖片区水质提升与生态修复项目设计施工一体化[A3304810620101149001001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="海宁市鹃湖片区水生态修复项目[a3304810620100961002001]  浙江省地市平台 海宁市 合同信息公开  " data-index="122">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/b7dd2bd4-7b2d-4146-a09a-bf64d3192858.html" target="_blank" rel="noopener noreferrer">海宁市鹃湖片区水生态修复项目[A3304810620100961002001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="国际合作教育样板区科创枢纽（都市创新园及配套基础设施）项目[a3304810620100813004001]  浙江省地市平台 海宁市 合同信息公开  " data-index="123">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/e8c50c17-e5a1-4d2b-9554-39694de12c9d.html" target="_blank" rel="noopener noreferrer">国际合作教育样板区科创枢纽（都市创新园及配套基础设施）项目[A3304810620100813004001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="海宁皮革城a座及精品展示中心改造项目[a3304810620101153001001]  浙江省地市平台 海宁市 合同信息公开  " data-index="124">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/0cef868a-4123-45c6-ad1c-b6ba52785f9a.html" target="_blank" rel="noopener noreferrer">海宁皮革城A座及精品展示中心改造项目[A3304810620101153001001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="龙山村花莳佳苑二期室外配套建设工程[a3304810620101145001001]  浙江省地市平台 海宁市 合同信息公开  " data-index="125">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001009/20261110/ca269da8-cf27-498a-8c1e-8766d61fd72c.html" target="_blank" rel="noopener noreferrer">龙山村花莳佳苑二期室外配套建设工程[A3304810620101145001001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="浙商银行嘉兴分行装修工程[a3300000090006889001001]  浙江省地市平台 嘉兴市 定量评审结果公示  " data-index="126">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001014/20261110/5a08d410-fdf7-424d-adf4-b754eb4b79ea.html" target="_blank" rel="noopener noreferrer">浙商银行嘉兴分行装修工程[A3300000090006889001001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="桐乡市" data-search="桐乡经济开发区（高桥街道）自由路（高新一路-高新二路）道路工程招标异常公告[a3300000090006913002001] a3300000090006913002001 浙江省统一招采 桐乡市 招标异常公告  " data-index="127">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/c52d97b6-cc74-487b-98a8-b353e703a1d3.html" target="_blank" rel="noopener noreferrer">桐乡经济开发区（高桥街道）自由路（高新一路-高新二路）道路工程招标异常公告[A3300000090006913002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">桐乡市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090006913002001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="嘉兴市" data-search="综保区北卡口西侧地块制造基地项目招标计划  浙江省统一招采 嘉兴市 招标计划 嘉兴湾北科创发展集团有限公司 " data-index="128">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261110/417864d5-e82a-4b2e-bc9a-1d9e9ce07f70.html" target="_blank" rel="noopener noreferrer">综保区北卡口西侧地块制造基地项目招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="桐乡市" data-search="桐乡市2025～2027年老旧小区改造项目（濮院镇）（佳源中心小区）招标异常公告[a3300000090009299002001] a3300000090009299002001 浙江省统一招采 桐乡市 招标异常公告  " data-index="129">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001015/20261110/d5f02aeb-d3db-4e39-ad64-42a5e11bbb64.html" target="_blank" rel="noopener noreferrer">桐乡市2025～2027年老旧小区改造项目（濮院镇）（佳源中心小区）招标异常公告[A3300000090009299002001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">桐乡市 · 工程类</p>
+<p class="project-number">项目编号 A3300000090009299002001</p>
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="平湖市" data-search="平湖新农都农产品批发市场（长三角农博汇农批市场二期）[a3300000090006114001001]  浙江省统一招采 平湖市 澄清修改信息  " data-index="130">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261110/62af0c95-2b01-471c-86ef-90acbe326747.html" target="_blank" rel="noopener noreferrer">平湖新农都农产品批发市场（长三角农博汇农批市场二期）[A3300000090006114001001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">平湖市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="2026年运河湾城投集团经营性资产改造维修提升工程——运河记忆汇1#-4#改造[a3300000090008532002001]  浙江省地市平台 嘉兴市 定量评审结果公示  " data-index="131">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001014/20261110/98229025-1a10-43ad-82a8-c8b574f3c9e0.html" target="_blank" rel="noopener noreferrer">2026年运河湾城投集团经营性资产改造维修提升工程——运河记忆汇1#-4#改造[A3300000090008532002001]</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="海盐县" data-search="浙江恒跃建设管理有限公司关于海盐县人民医院一批电脑租赁服务项目中标(成交)结果公告  浙江省地市平台 海盐县 中标成交公告  " data-index="132">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/4d0069bf-32ce-48b1-aa10-e526325d1366.html" target="_blank" rel="noopener noreferrer">浙江恒跃建设管理有限公司关于海盐县人民医院一批电脑租赁服务项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海盐县 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="桐乡市" data-search="浙江荣正建设管理有限公司关于桐乡市公安局特种车辆采购项目中标(成交)结果公告  浙江省地市平台 桐乡市 中标成交公告  " data-index="133">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/6e73da08-f397-4ff6-9c7a-1d5457f4522b.html" target="_blank" rel="noopener noreferrer">浙江荣正建设管理有限公司关于桐乡市公安局特种车辆采购项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">桐乡市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="海盐县" data-search="浙江圣加工程管理咨询有限公司关于海盐县中医医院患者雷达建设项目中标(成交)结果公告  浙江省地市平台 海盐县 中标成交公告  " data-index="134">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/21957e4a-23de-4e7e-bdd3-a09617b363bc.html" target="_blank" rel="noopener noreferrer">浙江圣加工程管理咨询有限公司关于海盐县中医医院患者雷达建设项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海盐县 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉兴市" data-search="巡特警支队特警障碍场建设合同  浙江省地市平台 嘉兴市 采购合同  " data-index="135">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/e118ec90-7c10-4687-acc4-67915cc2c8da.html" target="_blank" rel="noopener noreferrer">巡特警支队特警障碍场建设合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉兴市" data-search="嘉兴市第二医院智慧药房相关设备采购项目合同  浙江省地市平台 嘉兴市 采购合同  " data-index="136">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/77721d58-14da-41fa-95bc-b8bcfe9c296f.html" target="_blank" rel="noopener noreferrer">嘉兴市第二医院智慧药房相关设备采购项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉兴市" data-search="嘉兴市第二医院耳鼻咽喉科相关设备采购项目合同  浙江省地市平台 嘉兴市 采购合同  " data-index="137">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/0191d56b-2eb4-40ba-9a24-c574406cd891.html" target="_blank" rel="noopener noreferrer">嘉兴市第二医院耳鼻咽喉科相关设备采购项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="浙江求是招标代理有限公司关于嘉兴市农村产权市域一体化交易服务项目中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="138">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/0a454a5c-ab28-4608-8c45-9ee1d27c1987.html" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于嘉兴市农村产权市域一体化交易服务项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="浙江求是招标代理有限公司关于全自动染色仪（抗酸、革兰）等设备中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="139">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/3981ca8e-c2d8-4bc9-b1d6-5f3afee4eb67.html" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于全自动染色仪（抗酸、革兰）等设备中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="水利部河湖库地物遥感图斑核查技术支撑项目合同  浙江省地市平台 海宁市 采购合同  " data-index="140">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/54b39d74-7903-4e23-aac9-9ca90e08a933.html" target="_blank" rel="noopener noreferrer">水利部河湖库地物遥感图斑核查技术支撑项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="浙江中明工程咨询有限公司关于2026-2027年度文博未来社区运营项目中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="141">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/0c7cd602-16dd-4716-8a78-4fef0f4a03f4.html" target="_blank" rel="noopener noreferrer">浙江中明工程咨询有限公司关于2026-2027年度文博未来社区运营项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="浙江求是招标代理有限公司关于检验科相关设备采购项目中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="142">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/dcd63318-9c2b-47a2-b114-c41e24543e1c.html" target="_blank" rel="noopener noreferrer">浙江求是招标代理有限公司关于检验科相关设备采购项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="平湖市" data-search="嘉兴市公共资源交易中心关于平湖市第二人民医院2026年物业管理服务项目中标(成交)结果公告  浙江省地市平台 平湖市 中标成交公告  " data-index="143">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/8d8504b1-a097-44c5-8491-a54dfe247cc6.html" target="_blank" rel="noopener noreferrer">嘉兴市公共资源交易中心关于平湖市第二人民医院2026年物业管理服务项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">平湖市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="嘉兴市银建工程咨询评估有限公司关于嘉兴市交通运输行政执法队水上直属队新址业务用房及港航船员考场业务用房修缮项目中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="144">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/41f39a3f-6c04-49bd-b6a4-84844117af0c.html" target="_blank" rel="noopener noreferrer">嘉兴市银建工程咨询评估有限公司关于嘉兴市交通运输行政执法队水上直属队新址业务用房及港航船员考场业务用房修缮项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="海宁市斜桥镇、丁桥镇及马桥街道村（社区）居家养老服务照料中心社会化服务联合采购项目合同  浙江省地市平台 海宁市 采购合同  " data-index="145">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/951cb597-038c-4509-8284-b302c640aa94.html" target="_blank" rel="noopener noreferrer">海宁市斜桥镇、丁桥镇及马桥街道村（社区）居家养老服务照料中心社会化服务联合采购项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="嘉兴市公共资源交易中心关于嘉兴市中医医院医技住院综合楼办公家具采购项目中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="146">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/d1d8019e-5540-47a5-93f4-6b7b786b9515.html" target="_blank" rel="noopener noreferrer">嘉兴市公共资源交易中心关于嘉兴市中医医院医技住院综合楼办公家具采购项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="海宁市动物疫病预防控制中心实验室改造提升项目（第二次）合同  浙江省地市平台 海宁市 采购合同  " data-index="147">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/efa18d4b-d1d8-4a45-ae32-b15328e7e87c.html" target="_blank" rel="noopener noreferrer">海宁市动物疫病预防控制中心实验室改造提升项目（第二次）合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉兴市" data-search="嘉兴市中医医院放射设备搬迁拆装服务项目合同  浙江省地市平台 嘉兴市 采购合同  " data-index="148">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/8e1e965f-e5fb-4722-bb8d-89a4faafb73e.html" target="_blank" rel="noopener noreferrer">嘉兴市中医医院放射设备搬迁拆装服务项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉兴市" data-search="长水街道2026年-2028年交通协管服务项目合同  浙江省地市平台 嘉兴市 采购合同  " data-index="149">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/74b5289d-ea75-4ca0-9d12-d0b9cce5baab.html" target="_blank" rel="noopener noreferrer">长水街道2026年-2028年交通协管服务项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="桐乡市" data-search="桐乡市妇幼保健院保洁服务采购项目z2054合同  浙江省地市平台 桐乡市 采购合同  " data-index="150">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/47158607-074c-475c-8ae6-05ff5b94613a.html" target="_blank" rel="noopener noreferrer">桐乡市妇幼保健院保洁服务采购项目Z2054合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">桐乡市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="2026-2028年海宁市综合行政执法局养犬管理服务外包项目采购合同  浙江省地市平台 海宁市 采购合同  " data-index="151">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/7a996187-a7d2-494e-82b1-c153232d789b.html" target="_blank" rel="noopener noreferrer">2026-2028年海宁市综合行政执法局养犬管理服务外包项目采购合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="浙江圣加工程管理咨询有限公司关于2026年新塍分区市政设施维修养护工程中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="152">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/27387cba-e363-46db-bd06-c585fe315034.html" target="_blank" rel="noopener noreferrer">浙江圣加工程管理咨询有限公司关于2026年新塍分区市政设施维修养护工程中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="桐乡市" data-search="浙江联羿工程科技管理有限公司关于桐乡市第一人民医院椎间孔镜系统采购项目中标(成交)结果公告  浙江省地市平台 桐乡市 中标成交公告  " data-index="153">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/b9bbb598-6e01-46cb-b20f-88897984ca05.html" target="_blank" rel="noopener noreferrer">浙江联羿工程科技管理有限公司关于桐乡市第一人民医院椎间孔镜系统采购项目中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">桐乡市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="results" data-region="嘉兴市" data-search="嘉兴市建新工程造价咨询事务所有限公司关于嘉兴市第一医院冷源系统节电设备采购项目(第二次)中标(成交)结果公告  浙江省地市平台 嘉兴市 中标成交公告  " data-index="154">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002002/20261110/9d728d94-8445-4262-b7b1-923ac4948d05.html" target="_blank" rel="noopener noreferrer">嘉兴市建新工程造价咨询事务所有限公司关于嘉兴市第一医院冷源系统节电设备采购项目(第二次)中标(成交)结果公告</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 货物类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉善县" data-search="第十六届县运会开幕式广告宣传服务合同  浙江省地市平台 嘉善县 采购合同  " data-index="155">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/588ef53a-3edf-4028-ab89-d598cad1831c.html" target="_blank" rel="noopener noreferrer">第十六届县运会开幕式广告宣传服务合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉善县 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="桐乡市" data-search="桐乡市梧桐街道社区卫生服务中心物业管理服务采购项目z2059合同  浙江省地市平台 桐乡市 采购合同  " data-index="156">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/72e5fbef-f2aa-4689-9aeb-e865cb97334d.html" target="_blank" rel="noopener noreferrer">桐乡市梧桐街道社区卫生服务中心物业管理服务采购项目Z2059合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">桐乡市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="桐乡市" data-search="桐乡市妇幼保健院2026年-2028年洗涤服务采购项目合同  浙江省地市平台 桐乡市 采购合同  " data-index="157">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/7171aa0e-8635-4386-88e2-27b6b572ba75.html" target="_blank" rel="noopener noreferrer">桐乡市妇幼保健院2026年-2028年洗涤服务采购项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">桐乡市 · 服务类</p>
+
+</article><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="海宁市" data-search="海宁市房地产与住房保障管理服务中心城镇住房综合保险服务合同  浙江省地市平台 海宁市 采购合同  " data-index="158">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-10</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261110/e55ff871-d016-4faf-9b36-39e496637fe5.html" target="_blank" rel="noopener noreferrer">海宁市房地产与住房保障管理服务中心城镇住房综合保险服务合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">海宁市 · 服务类</p>
+
+</article></section>
+<section id="empty" class="empty" hidden><h2>没有符合条件的公告</h2><p>换个关键词，或清空筛选再看看。</p></section>
+<nav class="pagination" aria-label="翻页"><button type="button" id="previous">上一页</button><span id="page-status"></span><button type="button" id="next">下一页</button></nav>
+</main><script>
+(() => {
+  'use strict';
+  const cards = [...document.querySelectorAll('.notice')];
+  const chips = [...document.querySelectorAll('.chip')];
+  const selected = { source: new Set(), category: new Set() };
+  const keyword = document.getElementById('keyword');
+  const region = document.getElementById('region');
+  const pageSize = document.getElementById('page-size');
+  const previous = document.getElementById('previous');
+  const next = document.getElementById('next');
+  let page = 1;
+  function matches(card, except) {
+    for (const group of ['source', 'category']) {
+      if (group !== except && selected[group].size && !selected[group].has(card.dataset[group])) return false;
+    }
+    if (region.value === '__unknown__') {
+      if (card.dataset.region) return false;
+    } else if (region.value && card.dataset.region !== region.value) {
+      return false;
+    }
+    return keyword.value.trim().toLowerCase().split(/\s+/).filter(Boolean).every(word => card.dataset.search.includes(word));
+  }
+  function render() {
+    const matching = cards.filter(card => matches(card));
+    const size = Number(pageSize.value);
+    const pages = Math.max(1, Math.ceil(matching.length / size));
+    page = Math.max(1, Math.min(page, pages));
+    const visible = new Set(matching.slice((page - 1) * size, page * size));
+    cards.forEach(card => { card.hidden = !visible.has(card); });
+    const active = selected.source.size || selected.category.size || region.value || keyword.value.trim();
+    const start = matching.length ? (page - 1) * size + 1 : 0;
+    const end = Math.min(page * size, matching.length);
+    document.getElementById('result-count').textContent = (active ? '筛选到 ' : '共 ') + matching.length + ' 条公告' + (matching.length ? ' · 显示 ' + start + '–' + end + ' 条' : '');
+    document.getElementById('page-status').textContent = page + ' / ' + pages;
+    document.getElementById('empty').hidden = matching.length !== 0;
+    document.querySelector('.pagination').hidden = matching.length <= size;
+    previous.disabled = page === 1;
+    next.disabled = page === pages;
+    for (const chip of chips) {
+      const { group, value } = chip.dataset;
+      chip.setAttribute('aria-pressed', String(value ? selected[group].has(value) : !selected[group].size));
+      chip.querySelector('.count').textContent = cards.filter(card => matches(card, group) && (!value || card.dataset[group] === value)).length;
+    }
+  }
+  for (const chip of chips) chip.addEventListener('click', () => {
+    const { group, value } = chip.dataset;
+    if (!value) selected[group].clear();
+    else if (selected[group].has(value)) selected[group].delete(value);
+    else selected[group].add(value);
+    page = 1; render();
+  });
+  keyword.addEventListener('input', () => { page = 1; render(); });
+  region.addEventListener('change', () => { page = 1; render(); });
+  pageSize.addEventListener('change', () => { page = 1; render(); });
+  document.getElementById('reset').addEventListener('click', () => {
+    selected.source.clear(); selected.category.clear(); keyword.value = ''; region.value = ''; page = 1; render();
+  });
+  previous.addEventListener('click', () => { page -= 1; render(); document.getElementById('result-count').scrollIntoView({block:'start'}); });
+  next.addEventListener('click', () => { page += 1; render(); document.getElementById('result-count').scrollIntoView({block:'start'}); });
+  render();
+})();
+</script></body></html>
