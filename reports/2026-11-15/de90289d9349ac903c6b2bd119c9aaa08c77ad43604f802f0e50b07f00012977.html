@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><title>2026-11-15 标讯筛选页</title><style>
+:root{color-scheme:light;--ink:#243343;--muted:#687889;--line:#e3e9ef;--blue:#225bc7;--pale:#edf3ff}
+*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:var(--ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",Arial,sans-serif}main{max-width:1120px;margin:auto;padding:32px 28px 48px}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #80adff;outline-offset:3px}[hidden]{display:none!important}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}.brand-mark{display:grid;place-items:center;background:var(--blue);color:white;border-radius:9px;width:32px;height:32px}.brand-en{font-size:11px;letter-spacing:2px;color:var(--muted);font-weight:500}.hero{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:26px 0 24px}.eyebrow{margin:0 0 5px;color:var(--muted)}h1{font-size:28px;letter-spacing:.3px;margin:0;line-height:1.5}.total{display:flex;align-items:baseline;gap:8px;white-space:nowrap}.total strong{font-size:32px;font-weight:600}.total span{color:var(--muted)}
+.filters{padding:24px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 20px #26385305}fieldset{border:0;padding:0;margin:0 0 20px;min-width:0}legend{font-size:13px;font-weight:600;margin:0 0 10px;padding:0}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--line);background:white;border-radius:8px;padding:7px 12px;color:#516172;max-width:100%;white-space:normal;text-align:left}.chip:hover{border-color:#a6bce3}.chip[aria-pressed="true"]{background:var(--pale);border-color:#a4bfee;color:var(--blue);font-weight:600}.chip .count{margin-left:6px;font-size:12px;opacity:.8}
+.search-row{display:flex;align-items:end;gap:14px;border-top:1px solid var(--line);padding-top:20px}.search-row label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:0}.search-label{flex:1}.search-row input,.search-row select{height:42px;border:1px solid #d4dee8;border-radius:8px;background:#fff;color:var(--ink);padding:8px 12px;min-width:0;width:100%}.search-row select{min-width:160px}.reset{height:42px;background:white;color:var(--blue);border:0;padding:8px 4px;white-space:nowrap}.results-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:24px 0 12px;color:var(--muted);font-size:13px}.results-bar p{margin:0}.results-bar label{display:flex;align-items:center;gap:8px;white-space:nowrap}.results-bar select{border:1px solid var(--line);background:white;border-radius:6px;padding:5px;color:var(--ink)}
+.notices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.notice{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.notice-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.badge{padding:3px 8px;background:#f0f3f7;color:#516172;border-radius:5px;font-size:11px}.badge.tender,.badge.purchase{background:#edf3ff;color:#225bc7}.badge.results,.badge.candidates{background:#ebf6f0;color:#28704d}.badge.updates{background:#fff2e9;color:#9d5626}.notice time{font-size:12px;color:var(--muted);white-space:nowrap}.notice h2{font-size:16px;line-height:1.7;margin:0 0 9px;font-weight:600}.notice a{color:var(--ink);text-decoration:none}.notice a:hover{color:var(--blue);text-decoration:underline}.source,.metadata,.project-number{font-size:12px;color:var(--muted);margin:4px 0}.source{color:#48617b}.notice dl{border-top:1px solid #edf0f4;margin:16px 0 0;padding-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.notice dt{font-size:11px;color:var(--muted)}.notice dd{font-size:13px;margin:2px 0 0;color:var(--ink)}.pagination{display:flex;align-items:center;justify-content:center;gap:20px;margin:28px 0 0;font-size:13px}.pagination button{padding:8px 14px;border:1px solid #d4dee8;border-radius:7px;background:white;color:var(--ink)}.pagination button:disabled{opacity:.4;cursor:default}.empty{text-align:center;padding:60px 16px;background:white;border:1px solid var(--line);border-radius:12px}.empty h2{font-size:18px;margin:0 0 8px}.empty p{color:var(--muted);margin:0}.warning{background:#fff7e7;border-radius:8px;padding:12px 16px;margin-top:20px;color:#80511c;overflow-wrap:anywhere}
+@media(max-width:680px){main{padding:20px 16px 32px}.hero{gap:12px;margin:22px 0}h1{font-size:22px}.total strong{font-size:25px}.total{flex-direction:column;gap:0;align-items:center}.filters{padding:18px 14px}.chips{gap:7px}.chip{font-size:12px;padding:7px 9px}.search-row{flex-wrap:wrap;gap:12px}.search-label{flex-basis:100%}.search-row label:not(.search-label){flex:1}.search-row select{min-width:0}.search-row .reset{padding:8px 10px}.notices{grid-template-columns:minmax(0,1fr)}.notice{padding:18px}.notice h2{font-size:15px}.results-bar{font-size:12px;align-items:start}.results-bar label{gap:4px}.pagination{gap:14px}}
+@media print{body{background:white}main{padding:0;max-width:none}.filters,.pagination,.results-bar label{display:none}.notice{break-inside:avoid;box-shadow:none}.notices{display:block}.notice{margin-bottom:12px}}
+</style></head>
+<body><main><header><div class="brand"><span class="brand-mark">标</span>标讯邮差 <span class="brand-en">BIDFLOW</span></div>
+<div class="hero"><div><p class="eyebrow">2026-11-15</p><h1>找到您关心的标讯</h1></div><div class="total"><strong>34</strong><span>条公告</span></div></div></header>
+<section class="filters" aria-label="公告筛选">
+<fieldset><legend>平台来源</legend><div class="chips"><button type="button" class="chip" data-group="source" data-value="" aria-pressed="true">全部 <span class="count">34</span></button><button type="button" class="chip" data-group="source" data-value="浙江省地市平台" aria-pressed="false">浙江省地市平台 <span class="count">1</span></button><button type="button" class="chip" data-group="source" data-value="上海市公共资源交易平台" aria-pressed="false">上海市公共资源交易平台 <span class="count">9</span></button><button type="button" class="chip" data-group="source" data-value="广东省公共资源交易平台" aria-pressed="false">广东省公共资源交易平台 <span class="count">24</span></button></div></fieldset>
+<fieldset><legend>公告类型</legend><div class="chips"><button type="button" class="chip" data-group="category" data-value="" aria-pressed="true">全部 <span class="count">34</span></button><button type="button" class="chip" data-group="category" data-value="tender" aria-pressed="false">招标公告 <span class="count">3</span></button><button type="button" class="chip" data-group="category" data-value="purchase" aria-pressed="false">采购公告 <span class="count">3</span></button><button type="button" class="chip" data-group="category" data-value="candidates" aria-pressed="false">候选人公示 <span class="count">3</span></button><button type="button" class="chip" data-group="category" data-value="results" aria-pressed="false">中标 / 成交结果 <span class="count">2</span></button><button type="button" class="chip" data-group="category" data-value="updates" aria-pressed="false">变更 / 终止 <span class="count">5</span></button><button type="button" class="chip" data-group="category" data-value="consultation" aria-pressed="false">采购预告 / 意见征集 <span class="count">9</span></button><button type="button" class="chip" data-group="category" data-value="disclosure" aria-pressed="false">其他公示 <span class="count">9</span></button></div></fieldset>
+<div class="search-row"><label class="search-label" for="keyword">关键词<input type="search" id="keyword" placeholder="搜索标题、项目编号或单位" autocomplete="off"></label>
+<label for="region">地区<select id="region"><option value="">全部地区</option><option value="上海市">上海市</option><option value="东莞市">东莞市</option><option value="云浮市">云浮市</option><option value="嘉兴市">嘉兴市</option><option value="广州市">广州市</option><option value="汕尾市">汕尾市</option><option value="江门市">江门市</option><option value="深圳市">深圳市</option><option value="清远市">清远市</option><option value="湛江市">湛江市</option><option value="珠海市">珠海市</option><option value="肇庆市">肇庆市</option><option value="韶关市">韶关市</option><option value="__unknown__">地区未列明</option></select></label>
+<button type="button" id="reset" class="reset">清空筛选</button></div></section>
+<div class="results-bar"><p id="result-count" role="status" aria-live="polite">共 34 条公告</p><label for="page-size">每页<select id="page-size"><option value="20">20 条</option><option value="50">50 条</option><option value="100">100 条</option></select></label></div>
+<noscript><p class="warning">当前浏览器未启用 JavaScript，筛选暂不可用。</p></noscript>
+<section id="notices" class="notices" aria-label="公告列表"><article class="notice" data-source="浙江省地市平台" data-category="disclosure" data-region="嘉兴市" data-search="嘉兴市第二医院核医学及放疗科设置及医疗工艺咨询服务项目合同  浙江省地市平台 嘉兴市 采购合同  " data-index="0">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002002/002002004/20261115/4c7affeb-a80f-408f-a465-e541a248beef.html" target="_blank" rel="noopener noreferrer">嘉兴市第二医院核医学及放疗科设置及医疗工艺咨询服务项目合同</a></h2><p class="source">浙江省地市平台</p>
+<p class="metadata">嘉兴市 · 服务类</p>
+
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="candidates" data-region="" data-search="利民路（陈海公路-元六公路）一期（涉铁段）改建工程  上海市公共资源交易平台  中标候选人公示  " data-index="1">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgchx/9164677?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzc5MTE4NjV9.T_503Dic_6LDPVuDp0WNr36EBt_B4Ps-GqwvhkKCE_4&amp;isIndex=" target="_blank" rel="noopener noreferrer">利民路（陈海公路-元六公路）一期（涉铁段）改建工程</a></h2><p class="source">上海市公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="purchase" data-region="" data-search="2027年-2028年水务局食堂第三方服务的竞争性磋商公告 310117000261105147807-17394824 上海市公共资源交易平台  采购公告 上海市松江区水务局 地 址：上海市松江区普照路90号 联系方式：021-57719000 2.采购代理机构信息 名称：上海佰程建设项目管理有限公司 地 址：上海市松江区龙腾路1015弄中星富林名庭11号楼502室 联系方式：021-51537688 3.项目联系方式 项目联系人：刘老师 电 话：021-51537688 潜在供应商 " data-index="2">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgg/9164651?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzc5MTIyMDV9.28hdvh1dhSerC1KLWzj5qOpTiH-t7i_7BKJhSDvAfnU&amp;isIndex=" target="_blank" rel="noopener noreferrer">2027年-2028年水务局食堂第三方服务的竞争性磋商公告</a></h2><p class="source">上海市公共资源交易平台</p>
+
+<p class="project-number">项目编号 310117000261105147807-17394824</p>
+<dl><div><dt>响应截止</dt><dd>2026-11-26 09:30</dd></div><div><dt>预算金额</dt><dd>2136000元；2136000.00元</dd></div></dl></article><article class="notice" data-source="上海市公共资源交易平台" data-category="updates" data-region="" data-search="黄日港水闸改造工程项目施工的采购公告更正公告 310000000260821129816-00376291-1；310000000260821129816-00376291-1 原公告的 上海市公共资源交易平台  更正公告 上海市临港新片区生态环境绿化市容事务中心 地 址：上海市浦东新区南汇新城镇申港大道200号d区二楼 联系方式：021-68280302 2.采购代理机构信息 名称：上海沪港建设咨询有限公司 地 址：上海市徐汇区斜土路2364号 联系方式：17740887667 3.项目联系方式 项目联系人：陈怡诺 电 话：17740887667 " data-index="3">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgz/9164660?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzc5MTI1NTd9.Q5x5IGkI3aldtbHtHY9IQKGEx7gt_oHeu_VK-RWqE_0&amp;isIndex=" target="_blank" rel="noopener noreferrer">黄日港水闸改造工程项目施工的采购公告更正公告</a></h2><p class="source">上海市公共资源交易平台</p>
+
+<p class="project-number">项目编号 310000000260821129816-00376291-1；310000000260821129816-00376291-1 原公告的</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="江门市" data-search="广东省江门市新会区二次供水泵房更新改造项目(一期)设计采购施工总承包合同 gbuythy2024a00433a01 广东省公共资源交易平台 江门市 项目合同 江门市新会公用环境建设集团有限公司;江门市新会博汇工程管理咨询有限公司 " data-index="4">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=d62d72df-80da-4da9-8ea5-0bf50e884108&amp;projectCode=GBUYTHY2024A00433A01&amp;bizCode=3C61&amp;siteCode=440700&amp;publishDate=20261115191835&amp;source=%E6%B1%9F%E9%97%A8%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广东省江门市新会区二次供水泵房更新改造项目(一期)设计采购施工总承包合同</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">江门市 · 市政</p>
+<p class="project-number">项目编号 GBUYTHY2024A00433A01</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="龙岗区观澜河流域排水管网系统完善工程第三方监测【已变更】 e4403000004a02873051 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市龙岗区建筑工务署 " data-index="5">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403073C149ebc347a7c7e48dab05e7b648fdef04c&amp;projectCode=E4403000004a02873051&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261115162404&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">龙岗区观澜河流域排水管网系统完善工程第三方监测【已变更】</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 市政</p>
+<p class="project-number">项目编号 E4403000004a02873051</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="肇庆市" data-search="省道 s383 线广宁北市浸米至国光段路面改造工程（施工）评标报告 e4412010813001613001 广东省公共资源交易平台 肇庆市 评标报告 广宁县公路事务中心 " data-index="6">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=aee26d43-25d8-4037-b183-eed82708f00e-3C42&amp;projectCode=E4412010813001613001&amp;bizCode=3C42&amp;siteCode=441200&amp;publishDate=20261115120727&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">省道 S383 线广宁北市浸米至国光段路面改造工程（施工）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 公路</p>
+<p class="project-number">项目编号 E4412010813001613001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="肇庆市" data-search="省道 s383 线广宁横江至旺洞段路面改造工程（施工）评标报告 e4412010813001665001 广东省公共资源交易平台 肇庆市 评标报告 广宁县公路事务中心 " data-index="7">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=cec481fa-5acc-418c-b382-75eac9898552-3C42&amp;projectCode=E4412010813001665001&amp;bizCode=3C42&amp;siteCode=441200&amp;publishDate=20261115120702&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">省道 S383 线广宁横江至旺洞段路面改造工程（施工）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 公路</p>
+<p class="project-number">项目编号 E4412010813001665001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="韶关市" data-search="广东省韶关市仁化县丹霞山外山门人居环境整治建设项目(一期)一标段施工最高投标限价补充公告 x44020008320004083zs 广东省公共资源交易平台 韶关市 招标公告与资格预审公告 仁化县城市发展资产运营有限公司 " data-index="8">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=d2e0ad25309c4da39f6e03439db86b97&amp;projectCode=X44020008320004083zs&amp;bizCode=3C14&amp;siteCode=440200&amp;publishDate=20261115111956&amp;source=%E9%9F%B6%E5%85%B3%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广东省韶关市仁化县丹霞山外山门人居环境整治建设项目(一期)一标段施工最高投标限价补充公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">韶关市 · 房屋建筑</p>
+<p class="project-number">项目编号 X44020008320004083zs</p>
+<dl><div><dt>最高限价</dt><dd>人民币（大写）：贰仟零柒拾叁万伍仟柒佰伍拾捌元叁角捌分（¥20735758.38元）</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="深圳市" data-search="樟坑径山廊示范段建设工程造价咨询 e4403000004a07553021 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市龙岗区建筑工务署 " data-index="9">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403073C149e22aa05e014472190a7a91b39975675&amp;projectCode=E4403000004a07553021&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261115093603&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">樟坑径山廊示范段建设工程造价咨询</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 市政</p>
+<p class="project-number">项目编号 E4403000004a07553021</p>
+<dl><div><dt>申请截止</dt><dd>2026-12-05 18:00</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="东莞市" data-search="东莞市看守所、市第二看守所、市第三看守所、市拘留所物业管理服务项目 441901-2026-08865 广东省公共资源交易平台 东莞市 采购计划公告 东莞市看守所 " data-index="10">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e20c2a18c1cf401a199d947491115&amp;projectCode=441901-2026-08865&amp;bizCode=3812&amp;siteCode=441900&amp;publishDate=20261115191930&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市看守所、市第二看守所、市第三看守所、市拘留所物业管理服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 441901-2026-08865</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="" data-search="中共广东省委党校(广东行政学院)2026年11月至2027年01月政府采购意向 8a7e20c2a1ce17ea01a1dced2da271c3 广东省公共资源交易平台  采购意向公开  " data-index="11">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e20c2a1ce17ea01a1dced2da271c3&amp;projectCode=8a7e20c2a1ce17ea01a1dced2da271c3&amp;bizCode=3811&amp;siteCode=440000&amp;publishDate=20261115191415&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">中共广东省委党校(广东行政学院)2026年11月至2027年01月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">政府采购</p>
+<p class="project-number">项目编号 8a7e20c2a1ce17ea01a1dced2da271c3</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="汕尾市" data-search="陆丰市南塘五峰中学2026年11月至2026年12月政府采购意向 8a7e9dd1a1ce6dd501a1ded5519e706f 广东省公共资源交易平台 汕尾市 采购意向公开  " data-index="12">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e9dd1a1ce6dd501a1ded5519e706f&amp;projectCode=8a7e9dd1a1ce6dd501a1ded5519e706f&amp;bizCode=3811&amp;siteCode=441500&amp;publishDate=20261115185325&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">陆丰市南塘五峰中学2026年11月至2026年12月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">汕尾市 · 政府采购</p>
+<p class="project-number">项目编号 8a7e9dd1a1ce6dd501a1ded5519e706f</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="深圳市" data-search="南方医科大学深圳坪山医院（深圳市坪山区人民医院）病理设备2-常规病理设备项目中标（成交）结果公告 pscg2026000150 广东省公共资源交易平台 深圳市 中标（成交）结果公告 南方医科大学深圳坪山医院（深圳市坪山区人民医院） " data-index="13">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=7a93b96e-0d7e-4cb7-9471-d7ba1c76a35f&amp;projectCode=PSCG2026000150&amp;bizCode=3871&amp;siteCode=440300&amp;publishDate=20261115184314&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">南方医科大学深圳坪山医院（深圳市坪山区人民医院）病理设备2-常规病理设备项目中标（成交）结果公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 PSCG2026000150</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="深圳市" data-search="南方医科大学深圳坪山医院（深圳市坪山区人民医院）开办费小型医疗器械-治疗车类项目中标（成交）结果公告 pscg2026000176 广东省公共资源交易平台 深圳市 中标（成交）结果公告 南方医科大学深圳坪山医院（深圳市坪山区人民医院） " data-index="14">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=f9890116-b574-400c-aad8-453697373d26&amp;projectCode=PSCG2026000176&amp;bizCode=3871&amp;siteCode=440300&amp;publishDate=20261115184128&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">南方医科大学深圳坪山医院（深圳市坪山区人民医院）开办费小型医疗器械-治疗车类项目中标（成交）结果公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 PSCG2026000176</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="深圳市公安局宝安分局2026年机动应急装备及物资采购 bacg2026000410 广东省公共资源交易平台 深圳市 采购项目  " data-index="15">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=941cb6c6-6b94-454d-aacc-c8e602be4f6e&amp;projectCode=BACG2026000410&amp;bizCode=3831&amp;siteCode=440300&amp;publishDate=20261115175604&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=D01" target="_blank" rel="noopener noreferrer">深圳市公安局宝安分局2026年机动应急装备及物资采购</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 集中采购货物类</p>
+<p class="project-number">项目编号 BACG2026000410</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="深圳市" data-search="深圳市公安局宝安分局2026年机动应急装备及物资采购（a）招标公告 bacg2026000410 广东省公共资源交易平台 深圳市 资格预审公告 深圳市公安局宝安分局 " data-index="16">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=0bbeb36c-f738-442e-9a0e-455e695c2add&amp;projectCode=BACG2026000410&amp;bizCode=3822&amp;siteCode=440300&amp;publishDate=20261115175455&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=D01" target="_blank" rel="noopener noreferrer">深圳市公安局宝安分局2026年机动应急装备及物资采购（A）招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 集中采购货物类</p>
+<p class="project-number">项目编号 BACG2026000410</p>
+<dl><div><dt>申请截止</dt><dd>2026-11-26 13:30</dd></div><div><dt>预算金额</dt><dd>4149395.000000；4149395.00元</dd></div><div><dt>最高限价</dt><dd>4149395.00元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="东莞市" data-search="东莞市智慧城市安全强基及公共服务提升项目设计服务 441901-2026-08864 广东省公共资源交易平台 东莞市 采购计划公告 东莞市消防救援支队 " data-index="17">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e20c2a1ce17ea01a1d79037f56e01&amp;projectCode=441901-2026-08864&amp;bizCode=3812&amp;siteCode=441900&amp;publishDate=20261115155145&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市智慧城市安全强基及公共服务提升项目设计服务</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 441901-2026-08864</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="【延续合同】深圳市宝安区石岩街道办事处交安委-采购交警铁骑服务合同公示 badl2024000262 广东省公共资源交易平台 深圳市 合同公告 深圳市宝安区石岩街道办事处 " data-index="18">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=5b985118-2e9a-4686-af5c-0ded376bae66&amp;projectCode=BADL2024000262&amp;bizCode=3881&amp;siteCode=440300&amp;publishDate=20261115154552&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">【延续合同】深圳市宝安区石岩街道办事处交安委-采购交警铁骑服务合同公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 BADL2024000262</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="清远市" data-search="医院印刷品采购 441802-2026-02693 广东省公共资源交易平台 清远市 采购计划公告 清远市清城区石角镇卫生院 " data-index="19">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e595da1ce9c4201a1de297b866e44&amp;projectCode=441802-2026-02693&amp;bizCode=3812&amp;siteCode=441800&amp;publishDate=20261115154440&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">医院印刷品采购</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">清远市 · 政府采购</p>
+<p class="project-number">项目编号 441802-2026-02693</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="珠海市" data-search="珠海市应急救援中心珠海市应急救援中心2027-2029年度森林消防专业技术及船舶专业技术用工服务采购项目采购需求征求意见公告 8a7ebe06a1cd5a3a01a1ddcaca2705bc 广东省公共资源交易平台 珠海市 采购需求 珠海市应急救援中心；合同 " data-index="20">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ebe06a1cd5a3a01a1ddcaca2705bc&amp;projectCode=8a7ebe06a1cd5a3a01a1ddcaca2705bc&amp;bizCode=3813&amp;siteCode=440400&amp;publishDate=20261115141530&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">珠海市应急救援中心珠海市应急救援中心2027-2029年度森林消防专业技术及船舶专业技术用工服务采购项目采购需求征求意见公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">珠海市 · 政府采购</p>
+<p class="project-number">项目编号 8a7ebe06a1cd5a3a01a1ddcaca2705bc</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="广州市" data-search="广州市天河区住房建设和园林局2026年11月至2026年12月政府采购意向 8a7ebe06a1cd5a3a01a1ddcfee1d05c2 广东省公共资源交易平台 广州市 采购意向公开  " data-index="21">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ebe06a1cd5a3a01a1ddcfee1d05c2&amp;projectCode=8a7ebe06a1cd5a3a01a1ddcfee1d05c2&amp;bizCode=3811&amp;siteCode=440100&amp;publishDate=20261115140805&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">广州市天河区住房建设和园林局2026年11月至2026年12月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 政府采购</p>
+<p class="project-number">项目编号 8a7ebe06a1cd5a3a01a1ddcfee1d05c2</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="云浮市" data-search="云浮市机关事务管理局市行政中心办公区物业管理服务项目竞争性磋商公告 yfcg126c11011 广东省公共资源交易平台 云浮市 资格预审公告 云浮市机关事务管理局 " data-index="22">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7edc65a0750b8801a1d9ac15537f4b&amp;projectCode=YFCG126C11011&amp;bizCode=3822&amp;siteCode=445300&amp;publishDate=20261115110928&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">云浮市机关事务管理局市行政中心办公区物业管理服务项目竞争性磋商公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 政府采购</p>
+<p class="project-number">项目编号 YFCG126C11011</p>
+<dl><div><dt>预算金额</dt><dd>2600000.000000；2,600,000.00元</dd></div><div><dt>最高限价</dt><dd>1元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="云浮市" data-search="云浮市机关事务管理局市行政中心办公区物业管理服务项目 yfcg126c11011 广东省公共资源交易平台 云浮市 采购项目  " data-index="23">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7edc65a0750b8801a1d9ac15537f4&amp;projectCode=YFCG126C11011&amp;bizCode=3831&amp;siteCode=445300&amp;publishDate=20261115110928&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">云浮市机关事务管理局市行政中心办公区物业管理服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 政府采购</p>
+<p class="project-number">项目编号 YFCG126C11011</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="湛江市" data-search="湛江市海洋与渔业局湛江海岸线“智链”一体化监管体系（视频数据服务与核查）(二次)的合同公告 z2026-03-105 广东省公共资源交易平台 湛江市 合同公告 湛江市海洋与渔业局 " data-index="24">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1dd2d5d696d8&amp;projectCode=Z2026-03-105&amp;bizCode=3881&amp;siteCode=440800&amp;publishDate=20261115110820&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">湛江市海洋与渔业局湛江海岸线“智链”一体化监管体系（视频数据服务与核查）(二次)的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">湛江市 · 政府采购</p>
+<p class="project-number">项目编号 Z2026-03-105</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="【初始合同】光明区2024年度公办学校幼儿园食堂大宗食材批量集采集配合同公示 gmcg2024000157 广东省公共资源交易平台 深圳市 合同公告 深圳市光明区龙豪幼儿园 " data-index="25">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=814af546-366f-4e09-8ed5-5e0dd636c0fe&amp;projectCode=GMCG2024000157&amp;bizCode=3881&amp;siteCode=440300&amp;publishDate=20261115104223&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">【初始合同】光明区2024年度公办学校幼儿园食堂大宗食材批量集采集配合同公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 GMCG2024000157</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="云浮市" data-search="云浮市审计局云浮市审计局审计业务协审工作采购需求征求意见公告 8a7e595da1ce9c4201a1dcf0ae286d56 广东省公共资源交易平台 云浮市 采购需求 云浮市审计局 " data-index="26">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e595da1ce9c4201a1dcf0ae286d56&amp;projectCode=8a7e595da1ce9c4201a1dcf0ae286d56&amp;bizCode=3813&amp;siteCode=445300&amp;publishDate=20261115100525&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">云浮市审计局云浮市审计局审计业务协审工作采购需求征求意见公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 政府采购</p>
+<p class="project-number">项目编号 8a7e595da1ce9c4201a1dcf0ae286d56</p>
+<dl><div><dt>预算金额</dt><dd>人民币 3700000.00 元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="肇庆市" data-search="德庆县住房和城乡建设局2026年11月至2026年12月政府采购意向 8a7ebe06a1cd5a3a01a1dcc5607b04a0 广东省公共资源交易平台 肇庆市 采购意向公开  " data-index="27">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-15</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ebe06a1cd5a3a01a1dcc5607b04a0&amp;projectCode=8a7ebe06a1cd5a3a01a1dcc5607b04a0&amp;bizCode=3811&amp;siteCode=441200&amp;publishDate=20261115091730&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">德庆县住房和城乡建设局2026年11月至2026年12月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 政府采购</p>
+<p class="project-number">项目编号 8a7ebe06a1cd5a3a01a1dcc5607b04a0</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="candidates" data-region="" data-search="利民路（陈海公路-元六公路）一期（涉铁段）改建工程  上海市公共资源交易平台  中标候选人公示  " data-index="28">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgchx/9164677?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzg3NDQ4MzV9.9IZeSgVQW87Tv0yNdGBofreGFhsF-rWqMQtjt_uU3cQ&amp;isIndex=" target="_blank" rel="noopener noreferrer">利民路（陈海公路-元六公路）一期（涉铁段）改建工程</a></h2><p class="source">上海市公共资源交易平台</p>
+
+
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="purchase" data-region="" data-search="2027年-2028年水务局食堂第三方服务的竞争性磋商公告 310117000261105147807-17394824 上海市公共资源交易平台  采购公告 上海市松江区水务局 地 址：上海市松江区普照路90号 联系方式：021-57719000 2.采购代理机构信息 名称：上海佰程建设项目管理有限公司 地 址：上海市松江区龙腾路1015弄中星富林名庭11号楼502室 联系方式：021-51537688 3.项目联系方式 项目联系人：刘老师 电 话：021-51537688 潜在供应商 " data-index="29">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgg/9164651?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzg3NDQ3NDF9.bTq67zn7_gUMQ7NEWQMFAIFi1PAyO-aaEkQXXnpZbzo&amp;isIndex=" target="_blank" rel="noopener noreferrer">2027年-2028年水务局食堂第三方服务的竞争性磋商公告</a></h2><p class="source">上海市公共资源交易平台</p>
+
+<p class="project-number">项目编号 310117000261105147807-17394824</p>
+<dl><div><dt>响应截止</dt><dd>2026-11-26 09:30</dd></div><div><dt>预算金额</dt><dd>2136000元；2136000.00元</dd></div></dl></article><article class="notice" data-source="上海市公共资源交易平台" data-category="updates" data-region="" data-search="黄日港水闸改造工程项目施工的采购公告更正公告 310000000260821129816-00376291-1；310000000260821129816-00376291-1 原公告的 上海市公共资源交易平台  更正公告 上海市临港新片区生态环境绿化市容事务中心 地 址：上海市浦东新区南汇新城镇申港大道200号d区二楼 联系方式：021-68280302 2.采购代理机构信息 名称：上海沪港建设咨询有限公司 地 址：上海市徐汇区斜土路2364号 联系方式：17740887667 3.项目联系方式 项目联系人：陈怡诺 电 话：17740887667 " data-index="30">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgz/9164660?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzg3NDUwMjR9.u9JqrWxYH3CvJCxfKtbbCHLoSWG4vs4gEgTgsMJxWzU&amp;isIndex=" target="_blank" rel="noopener noreferrer">黄日港水闸改造工程项目施工的采购公告更正公告</a></h2><p class="source">上海市公共资源交易平台</p>
+
+<p class="project-number">项目编号 310000000260821129816-00376291-1；310000000260821129816-00376291-1 原公告的</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="candidates" data-region="上海市" data-search="利民路（陈海公路-元六公路）一期（涉铁段）改建工程 e3100000151045218003 上海市公共资源交易平台 上海市 中标候选人公示  " data-index="31">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgchx/9164677?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzg4NjM1NzB9.5bMS-XfTmrCfq2sdFAf5YbvB5P6QIdJI02Cjv1TwYY8&amp;isIndex=" target="_blank" rel="noopener noreferrer">利民路（陈海公路-元六公路）一期（涉铁段）改建工程</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 工程建设</p>
+<p class="project-number">项目编号 e3100000151045218003</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="purchase" data-region="上海市" data-search="2027年-2028年水务局食堂第三方服务的竞争性磋商公告 310117000261105147807-17394824 上海市公共资源交易平台 上海市 采购公告 上海市松江区水务局 地 址：上海市松江区普照路90号 联系方式：021-57719000 2.采购代理机构信息 名称：上海佰程建设项目管理有限公司 地 址：上海市松江区龙腾路1015弄中星富林名庭11号楼502室 联系方式：021-51537688 3.项目联系方式 项目联系人：刘老师 电 话：021-51537688 潜在供应商 " data-index="32">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgg/9164651?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzg4NjM4NDd9.uI2W3EZ9K-Y3-c6S6J7WaxV2oDbr4TChDaIKLMUDOSM&amp;isIndex=" target="_blank" rel="noopener noreferrer">2027年-2028年水务局食堂第三方服务的竞争性磋商公告</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 政府采购</p>
+<p class="project-number">项目编号 310117000261105147807-17394824</p>
+<dl><div><dt>响应截止</dt><dd>2026-11-26 09:30</dd></div><div><dt>预算金额</dt><dd>2136000元；2136000.00元</dd></div></dl></article><article class="notice" data-source="上海市公共资源交易平台" data-category="updates" data-region="上海市" data-search="黄日港水闸改造工程项目施工的采购公告更正公告 310000000260821129816-00376291-1 上海市公共资源交易平台 上海市 更正公告 上海市临港新片区生态环境绿化市容事务中心 地 址：上海市浦东新区南汇新城镇申港大道200号d区二楼 联系方式：021-68280302 2.采购代理机构信息 名称：上海沪港建设咨询有限公司 地 址：上海市徐汇区斜土路2364号 联系方式：17740887667 3.项目联系方式 项目联系人：陈怡诺 电 话：17740887667 " data-index="33">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-15</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgz/9164660?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTY1Mzg4NjQxMjJ9.QqQSweOL0VFFlb7N8mywUmJM7HHblrwSX9odsMseOeQ&amp;isIndex=" target="_blank" rel="noopener noreferrer">黄日港水闸改造工程项目施工的采购公告更正公告</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 政府采购</p>
+<p class="project-number">项目编号 310000000260821129816-00376291-1</p>
+</article></section>
+<section id="empty" class="empty" hidden><h2>没有符合条件的公告</h2><p>换个关键词，或清空筛选再看看。</p></section>
+<nav class="pagination" aria-label="翻页"><button type="button" id="previous">上一页</button><span id="page-status"></span><button type="button" id="next">下一页</button></nav>
+</main><script>
+(() => {
+  'use strict';
+  const cards = [...document.querySelectorAll('.notice')];
+  const chips = [...document.querySelectorAll('.chip')];
+  const selected = { source: new Set(), category: new Set() };
+  const keyword = document.getElementById('keyword');
+  const region = document.getElementById('region');
+  const pageSize = document.getElementById('page-size');
+  const previous = document.getElementById('previous');
+  const next = document.getElementById('next');
+  let page = 1;
+  function matches(card, except) {
+    for (const group of ['source', 'category']) {
+      if (group !== except && selected[group].size && !selected[group].has(card.dataset[group])) return false;
+    }
+    if (region.value === '__unknown__') {
+      if (card.dataset.region) return false;
+    } else if (region.value && card.dataset.region !== region.value) {
+      return false;
+    }
+    return keyword.value.trim().toLowerCase().split(/\s+/).filter(Boolean).every(word => card.dataset.search.includes(word));
+  }
+  function render() {
+    const matching = cards.filter(card => matches(card));
+    const size = Number(pageSize.value);
+    const pages = Math.max(1, Math.ceil(matching.length / size));
+    page = Math.max(1, Math.min(page, pages));
+    const visible = new Set(matching.slice((page - 1) * size, page * size));
+    cards.forEach(card => { card.hidden = !visible.has(card); });
+    const active = selected.source.size || selected.category.size || region.value || keyword.value.trim();
+    const start = matching.length ? (page - 1) * size + 1 : 0;
+    const end = Math.min(page * size, matching.length);
+    document.getElementById('result-count').textContent = (active ? '筛选到 ' : '共 ') + matching.length + ' 条公告' + (matching.length ? ' · 显示 ' + start + '–' + end + ' 条' : '');
+    document.getElementById('page-status').textContent = page + ' / ' + pages;
+    document.getElementById('empty').hidden = matching.length !== 0;
+    document.querySelector('.pagination').hidden = matching.length <= size;
+    previous.disabled = page === 1;
+    next.disabled = page === pages;
+    for (const chip of chips) {
+      const { group, value } = chip.dataset;
+      chip.setAttribute('aria-pressed', String(value ? selected[group].has(value) : !selected[group].size));
+      chip.querySelector('.count').textContent = cards.filter(card => matches(card, group) && (!value || card.dataset[group] === value)).length;
+    }
+  }
+  for (const chip of chips) chip.addEventListener('click', () => {
+    const { group, value } = chip.dataset;
+    if (!value) selected[group].clear();
+    else if (selected[group].has(value)) selected[group].delete(value);
+    else selected[group].add(value);
+    page = 1; render();
+  });
+  keyword.addEventListener('input', () => { page = 1; render(); });
+  region.addEventListener('change', () => { page = 1; render(); });
+  pageSize.addEventListener('change', () => { page = 1; render(); });
+  document.getElementById('reset').addEventListener('click', () => {
+    selected.source.clear(); selected.category.clear(); keyword.value = ''; region.value = ''; page = 1; render();
+  });
+  previous.addEventListener('click', () => { page -= 1; render(); document.getElementById('result-count').scrollIntoView({block:'start'}); });
+  next.addEventListener('click', () => { page += 1; render(); document.getElementById('result-count').scrollIntoView({block:'start'}); });
+  render();
+})();
+</script></body></html>
