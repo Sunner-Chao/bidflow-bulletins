@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><title>2026-11-21 标讯筛选页</title><style>
+:root{color-scheme:light;--ink:#243343;--muted:#687889;--line:#e3e9ef;--blue:#225bc7;--pale:#edf3ff}
+*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:var(--ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",Arial,sans-serif}main{max-width:1120px;margin:auto;padding:32px 28px 48px}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #80adff;outline-offset:3px}[hidden]{display:none!important}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}.brand-mark{display:grid;place-items:center;background:var(--blue);color:white;border-radius:9px;width:32px;height:32px}.brand-en{font-size:11px;letter-spacing:2px;color:var(--muted);font-weight:500}.hero{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:26px 0 24px}.eyebrow{margin:0 0 5px;color:var(--muted)}h1{font-size:28px;letter-spacing:.3px;margin:0;line-height:1.5}.total{display:flex;align-items:baseline;gap:8px;white-space:nowrap}.total strong{font-size:32px;font-weight:600}.total span{color:var(--muted)}
+.filters{padding:24px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 20px #26385305}fieldset{border:0;padding:0;margin:0 0 20px;min-width:0}legend{font-size:13px;font-weight:600;margin:0 0 10px;padding:0}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--line);background:white;border-radius:8px;padding:7px 12px;color:#516172;max-width:100%;white-space:normal;text-align:left}.chip:hover{border-color:#a6bce3}.chip[aria-pressed="true"]{background:var(--pale);border-color:#a4bfee;color:var(--blue);font-weight:600}.chip .count{margin-left:6px;font-size:12px;opacity:.8}
+.search-row{display:flex;align-items:end;gap:14px;border-top:1px solid var(--line);padding-top:20px}.search-row label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:0}.search-label{flex:1}.search-row input,.search-row select{height:42px;border:1px solid #d4dee8;border-radius:8px;background:#fff;color:var(--ink);padding:8px 12px;min-width:0;width:100%}.search-row select{min-width:160px}.reset{height:42px;background:white;color:var(--blue);border:0;padding:8px 4px;white-space:nowrap}.results-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:24px 0 12px;color:var(--muted);font-size:13px}.results-bar p{margin:0}.results-bar label{display:flex;align-items:center;gap:8px;white-space:nowrap}.results-bar select{border:1px solid var(--line);background:white;border-radius:6px;padding:5px;color:var(--ink)}
+.notices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.notice{min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.notice-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.badge{padding:3px 8px;background:#f0f3f7;color:#516172;border-radius:5px;font-size:11px}.badge.tender,.badge.purchase{background:#edf3ff;color:#225bc7}.badge.results,.badge.candidates{background:#ebf6f0;color:#28704d}.badge.updates{background:#fff2e9;color:#9d5626}.notice time{font-size:12px;color:var(--muted);white-space:nowrap}.notice h2{font-size:16px;line-height:1.7;margin:0 0 9px;font-weight:600}.notice a{color:var(--ink);text-decoration:none}.notice a:hover{color:var(--blue);text-decoration:underline}.source,.metadata,.project-number{font-size:12px;color:var(--muted);margin:4px 0}.source{color:#48617b}.notice dl{border-top:1px solid #edf0f4;margin:16px 0 0;padding-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.notice dt{font-size:11px;color:var(--muted)}.notice dd{font-size:13px;margin:2px 0 0;color:var(--ink)}.pagination{display:flex;align-items:center;justify-content:center;gap:20px;margin:28px 0 0;font-size:13px}.pagination button{padding:8px 14px;border:1px solid #d4dee8;border-radius:7px;background:white;color:var(--ink)}.pagination button:disabled{opacity:.4;cursor:default}.empty{text-align:center;padding:60px 16px;background:white;border:1px solid var(--line);border-radius:12px}.empty h2{font-size:18px;margin:0 0 8px}.empty p{color:var(--muted);margin:0}.warning{background:#fff7e7;border-radius:8px;padding:12px 16px;margin-top:20px;color:#80511c;overflow-wrap:anywhere}
+@media(max-width:680px){main{padding:20px 16px 32px}.hero{gap:12px;margin:22px 0}h1{font-size:22px}.total strong{font-size:25px}.total{flex-direction:column;gap:0;align-items:center}.filters{padding:18px 14px}.chips{gap:7px}.chip{font-size:12px;padding:7px 9px}.search-row{flex-wrap:wrap;gap:12px}.search-label{flex-basis:100%}.search-row label:not(.search-label){flex:1}.search-row select{min-width:0}.search-row .reset{padding:8px 10px}.notices{grid-template-columns:minmax(0,1fr)}.notice{padding:18px}.notice h2{font-size:15px}.results-bar{font-size:12px;align-items:start}.results-bar label{gap:4px}.pagination{gap:14px}}
+@media print{body{background:white}main{padding:0;max-width:none}.filters,.pagination,.results-bar label{display:none}.notice{break-inside:avoid;box-shadow:none}.notices{display:block}.notice{margin-bottom:12px}}
+</style></head>
+<body><main><header><div class="brand"><span class="brand-mark">标</span>标讯邮差 <span class="brand-en">BIDFLOW</span></div>
+<div class="hero"><div><p class="eyebrow">2026-11-21</p><h1>找到您关心的标讯</h1></div><div class="total"><strong>139</strong><span>条公告</span></div></div></header>
+<section class="filters" aria-label="公告筛选">
+<fieldset><legend>平台来源</legend><div class="chips"><button type="button" class="chip" data-group="source" data-value="" aria-pressed="true">全部 <span class="count">139</span></button><button type="button" class="chip" data-group="source" data-value="禾采联 HCL" aria-pressed="false">禾采联 HCL <span class="count">1</span></button><button type="button" class="chip" data-group="source" data-value="浙江省统一招采" aria-pressed="false">浙江省统一招采 <span class="count">3</span></button><button type="button" class="chip" data-group="source" data-value="上海市公共资源交易平台" aria-pressed="false">上海市公共资源交易平台 <span class="count">8</span></button><button type="button" class="chip" data-group="source" data-value="广东省公共资源交易平台" aria-pressed="false">广东省公共资源交易平台 <span class="count">127</span></button></div></fieldset>
+<fieldset><legend>公告类型</legend><div class="chips"><button type="button" class="chip" data-group="category" data-value="" aria-pressed="true">全部 <span class="count">139</span></button><button type="button" class="chip" data-group="category" data-value="tender" aria-pressed="false">招标公告 <span class="count">49</span></button><button type="button" class="chip" data-group="category" data-value="purchase" aria-pressed="false">采购公告 <span class="count">2</span></button><button type="button" class="chip" data-group="category" data-value="candidates" aria-pressed="false">候选人公示 <span class="count">5</span></button><button type="button" class="chip" data-group="category" data-value="results" aria-pressed="false">中标 / 成交结果 <span class="count">9</span></button><button type="button" class="chip" data-group="category" data-value="updates" aria-pressed="false">变更 / 终止 <span class="count">10</span></button><button type="button" class="chip" data-group="category" data-value="consultation" aria-pressed="false">采购预告 / 意见征集 <span class="count">8</span></button><button type="button" class="chip" data-group="category" data-value="disclosure" aria-pressed="false">其他公示 <span class="count">56</span></button></div></fieldset>
+<div class="search-row"><label class="search-label" for="keyword">关键词<input type="search" id="keyword" placeholder="搜索标题、项目编号或单位" autocomplete="off"></label>
+<label for="region">地区<select id="region"><option value="">全部地区</option><option value="上海市">上海市</option><option value="东莞市">东莞市</option><option value="云浮市">云浮市</option><option value="嘉兴市">嘉兴市</option><option value="广州市">广州市</option><option value="惠州市">惠州市</option><option value="汕尾市">汕尾市</option><option value="河源市">河源市</option><option value="海宁市">海宁市</option><option value="海盐县">海盐县</option><option value="深圳市">深圳市</option><option value="清远市">清远市</option><option value="潮州市">潮州市</option><option value="肇庆市">肇庆市</option><option value="茂名市">茂名市</option><option value="阳江市">阳江市</option><option value="韶关市">韶关市</option><option value="__unknown__">地区未列明</option></select></label>
+<button type="button" id="reset" class="reset">清空筛选</button></div></section>
+<div class="results-bar"><p id="result-count" role="status" aria-live="polite">共 139 条公告</p><label for="page-size">每页<select id="page-size"><option value="20">20 条</option><option value="50">50 条</option><option value="100">100 条</option></select></label></div>
+<noscript><p class="warning">当前浏览器未启用 JavaScript，筛选暂不可用。</p></noscript>
+<section id="notices" class="notices" aria-label="公告列表"><article class="notice" data-source="禾采联 HCL" data-category="candidates" data-region="嘉兴市" data-search="嘉兴市自来水有限公司2026年-2027年校验表远传监测设备采购（二年）项目中标候选人公示  禾采联 hcl 嘉兴市 中标候选人公示  " data-index="0">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-21</time></div>
+<h2><a href="https://hcl.jxcqgs.cn/jyxx/001001/001001002/001001002003/20261121/f1f0cd07-a6d7-4f37-827e-8d9a1ecdbfc8.html" target="_blank" rel="noopener noreferrer">嘉兴市自来水有限公司2026年-2027年校验表远传监测设备采购（二年）项目中标候选人公示</a></h2><p class="source">禾采联 HCL</p>
+<p class="metadata">嘉兴市 · 货物类 · 公开招标</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="updates" data-region="海宁市" data-search="海宁市2026-2028年中心城区（海洲街道）老旧小区提升改造项目[a3300000090009798003001]  浙江省统一招采 海宁市 澄清修改信息  " data-index="1">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001006/20261121/99d579a0-1670-4bec-9395-2d3f35ba353b.html" target="_blank" rel="noopener noreferrer">海宁市2026-2028年中心城区（海洲街道）老旧小区提升改造项目[A3300000090009798003001]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海宁市 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="consultation" data-region="海盐县" data-search="南北湖农文旅融合发展示范区项目-南北湖柑橘农业产业提升项目招标计划  浙江省统一招采 海盐县 招标计划 海盐县南北湖农业综合开发有限公司 " data-index="2">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001013/20261121/305e5938-d566-40d2-b89f-dcd7fe458d5a.html" target="_blank" rel="noopener noreferrer">南北湖农文旅融合发展示范区项目-南北湖柑橘农业产业提升项目招标计划</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海盐县 · 工程类</p>
+
+</article><article class="notice" data-source="浙江省统一招采" data-category="disclosure" data-region="海盐县" data-search="南北湖农文旅融合发展示范区项目-南北湖柑橘农业产业提升项目[a3300000090012962]  浙江省统一招采 海盐县 项目登记信息  " data-index="3">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ggzy.zj.gov.cn/jyxxgk/002001/002001008/20261121/033c7d91-c2e4-4426-ae9f-a03f43784dd1.html" target="_blank" rel="noopener noreferrer">南北湖农文旅融合发展示范区项目-南北湖柑橘农业产业提升项目[A3300000090012962]</a></h2><p class="source">浙江省统一招采</p>
+<p class="metadata">海盐县</p>
+
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="candidates" data-region="上海市" data-search="上海临港浦江生命健康产业园（北区）项目（除桩基）装修工程（标段1） e3100000151038658008 上海市公共资源交易平台 上海市 中标候选人公示  " data-index="4">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgchx/9178476?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjUwNjl9.YKB9FRzvC0-_Z12xgUXiB00vxdhOOWQ2UaViLO-E_us&amp;isIndex=" target="_blank" rel="noopener noreferrer">上海临港浦江生命健康产业园（北区）项目（除桩基）装修工程（标段1）</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 工程建设</p>
+<p class="project-number">项目编号 e3100000151038658008</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="candidates" data-region="上海市" data-search="上海湾区生物医药产业园新建项目及周边基础设施配套工程（二期）厂房（除桩基工程） e3100000151044030014 上海市公共资源交易平台 上海市 中标候选人公示  " data-index="5">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgchx/9178475?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjUwNjl9.YKB9FRzvC0-_Z12xgUXiB00vxdhOOWQ2UaViLO-E_us&amp;isIndex=" target="_blank" rel="noopener noreferrer">上海湾区生物医药产业园新建项目及周边基础设施配套工程（二期）厂房（除桩基工程）</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 工程建设</p>
+<p class="project-number">项目编号 e3100000151044030014</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="results" data-region="上海市" data-search="高行镇2026年生态清洁小流域河道综合整治工程 e3100000151045875003 上海市公共资源交易平台 上海市 中标结果公告  " data-index="6">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgcgs/9178481?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjUyOTN9.Bd-PuXLM8LC9UuG2GqfeUSFXiYpoINCiyMTNU0X-cvI&amp;isIndex=" target="_blank" rel="noopener noreferrer">高行镇2026年生态清洁小流域河道综合整治工程</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 工程建设</p>
+<p class="project-number">项目编号 e3100000151045875003</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="results" data-region="上海市" data-search="江场西路（沪太支路-高平路）道路积水改善工程 e3100000151046482001 上海市公共资源交易平台 上海市 中标结果公告  " data-index="7">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxgcgs/9178473?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjUyOTN9.Bd-PuXLM8LC9UuG2GqfeUSFXiYpoINCiyMTNU0X-cvI&amp;isIndex=" target="_blank" rel="noopener noreferrer">江场西路（沪太支路-高平路）道路积水改善工程</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 工程建设</p>
+<p class="project-number">项目编号 e3100000151046482001</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="purchase" data-region="上海市" data-search="上海理工智慧校园数据治理平台项目的竞争性磋商公告 310000000260617118996-00363597 上海市公共资源交易平台 上海市 采购公告 上海理工大学 地 址：上海市军工路516号 联系方式：021-55272602 2.采购代理机构信息 名称：上海市政府采购中心 地 址：上海市大连路515号 联系方式：021-35968053 3.项目联系方式 项目联系人：张姝雅 电 话：021-35968053 潜在供应商 " data-index="8">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgg/9178311?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjU0MzV9.epXgTWUkDBgcZqOpIFBsVLZd_0czGnrQY72LtCJHrnI&amp;isIndex=" target="_blank" rel="noopener noreferrer">上海理工智慧校园数据治理平台项目的竞争性磋商公告</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 政府采购</p>
+<p class="project-number">项目编号 310000000260617118996-00363597</p>
+<dl><div><dt>响应截止</dt><dd>2026-12-02 10:00</dd></div><div><dt>预算金额</dt><dd>1800000元；1800000.00元</dd></div></dl></article><article class="notice" data-source="上海市公共资源交易平台" data-category="purchase" data-region="上海市" data-search="嘉定区中医医院新院开办费-临床检验设备-临检免疫类第1次再次采购的公开招标公告 310114000260902131940-14378739-1 上海市公共资源交易平台 上海市 采购公告 上海市嘉定区中医医院 地 址：上海市嘉定区博乐路222号 联系方式：021-39923676 2.采购代理机构信息 名称：上海市嘉定区政府采购中心 地 址：上海市嘉定区嘉新公路88号行政服务中心563室 联系方式：69989888-6828 3.项目联系方式 项目联系人：朱沛怡 电 话：69989888-6828 潜在供应商 " data-index="9">
+<div class="notice-heading"><span class="badge purchase">采购公告</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgg/9178160?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjU0MzV9.epXgTWUkDBgcZqOpIFBsVLZd_0czGnrQY72LtCJHrnI&amp;isIndex=" target="_blank" rel="noopener noreferrer">嘉定区中医医院新院开办费-临床检验设备-临检免疫类第1次再次采购的公开招标公告</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 政府采购</p>
+<p class="project-number">项目编号 310114000260902131940-14378739-1</p>
+<dl><div><dt>投标截止</dt><dd>2026-12-14 09:30</dd></div><div><dt>预算金额</dt><dd>2930000元；2930000.00元</dd></div></dl></article><article class="notice" data-source="上海市公共资源交易平台" data-category="results" data-region="上海市" data-search="奉贤校区扩建开办项目-食堂后厨设备的中标（成交）结果公告 310000000260605116296-00360572 上海市公共资源交易平台 上海市 中标结果公告  " data-index="10">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgs/9178655?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjU1NzV9.teFIeC1pE_7GSPNqOnO2Begk6GEgCMpUoAXxJYnc91s&amp;isIndex=" target="_blank" rel="noopener noreferrer">奉贤校区扩建开办项目-食堂后厨设备的中标（成交）结果公告</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 政府采购</p>
+<p class="project-number">项目编号 310000000260605116296-00360572</p>
+</article><article class="notice" data-source="上海市公共资源交易平台" data-category="updates" data-region="上海市" data-search="上海戏剧学院xc虚拟云子系统建设项目的采购文件更正公告 310000000260616118505-00363038 上海市公共资源交易平台 上海市 更正公告 上海戏剧学院 地 址：华山路630号 联系方式：021-62484958 2.采购代理机构信息 名称：上海名泰建设管理咨询有限公司 地 址：上海市静安区北京西路1465号国立大厦22楼 联系方式：021-52868273-809 3.项目联系方式 项目联系人：周慧、贾宗英、周茗 电 话：021-52868273-809 附件信息： 项目需求--上海戏剧学院xc虚拟云子系统建设项目.pdf 327.1k " data-index="11">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://www.shggzy.com/jyxxzcgz/9178001?cExt=eyJhbGciOiJIUzI1NiJ9.eyJwYXRoIjoiL3NlYXJjaC9xdWVyeUNvbnRlbnRzLmpodG1sIiwicGFnZU5vIjoxLCJleHAiOjE3OTcwNTIyNjU3MTR9.B95F2FiNEUIMmS66QGkj65qqV_VRdhb_XSO-z8jXEFE&amp;isIndex=" target="_blank" rel="noopener noreferrer">上海戏剧学院XC虚拟云子系统建设项目的采购文件更正公告</a></h2><p class="source">上海市公共资源交易平台</p>
+<p class="metadata">上海市 · 政府采购</p>
+<p class="project-number">项目编号 310000000260616118505-00363038</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="清远市" data-search="清远市清城区洲心街道伦洲岛慢行桥建设工程设计施工总承包合同 e4418002934a15585001 广东省公共资源交易平台 清远市 项目合同 清远市清城区代建项目管理中心 " data-index="12">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=3C61b71a734a3e4a458b8073cf1b858cbdc5&amp;projectCode=E4418002934a15585001&amp;bizCode=3C61&amp;siteCode=441800&amp;publishDate=20261121170250&amp;source=%E6%B8%85%E8%BF%9C%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">清远市清城区洲心街道伦洲岛慢行桥建设工程设计施工总承包合同</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">清远市 · 市政</p>
+<p class="project-number">项目编号 E4418002934a15585001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="广州市" data-search="广州市南沙区广隆村城中村改造项目配套道路勘察设计施工总承包epc中标信息-广州市南沙区广隆村城中村改造项目 e4401002701505936001 广东省公共资源交易平台 广州市 中标结果 广州市广建城更南湾投资发展有限公司 " data-index="13">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4bfeb2cd-5985-4aa9-b08c-c092ae41b196-3C52_1&amp;projectCode=E4401002701505936001&amp;bizCode=3C52&amp;siteCode=440100&amp;publishDate=20261121164823&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市南沙区广隆村城中村改造项目配套道路勘察设计施工总承包EPC中标信息-广州市南沙区广隆村城中村改造项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701505936001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="深圳市" data-search="深圳市深汕特别合作区“四个一万亩”耕地提质、垦造水田及灌区现代化项目一期项目epc总承包 e4403000004a07935011 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市深汕特别合作区土地资产运营管理服务有限公司 " data-index="14">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403133C1413b1faf37eb34c5cb7fa1e678ba9b786&amp;projectCode=E4403000004a07935011&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261121163603&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=" target="_blank" rel="noopener noreferrer">深圳市深汕特别合作区“四个一万亩”耕地提质、垦造水田及灌区现代化项目一期项目EPC总承包</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 工程建设</p>
+<p class="project-number">项目编号 E4403000004a07935011</p>
+<dl><div><dt>申请截止</dt><dd>2026-12-11 18:00</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="深圳市" data-search="深圳市深汕特别合作区“四个一万亩”耕地提质、垦造水田及灌区现代化项目一期项目epc总承包 e4403000004a07935011 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市深汕特别合作区土地资产运营管理服务有限公司 " data-index="15">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403133C144c1eed183a1b43c5a2dd156238e7934a&amp;projectCode=E4403000004a07935011&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261121163602&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=" target="_blank" rel="noopener noreferrer">深圳市深汕特别合作区“四个一万亩”耕地提质、垦造水田及灌区现代化项目一期项目EPC总承包</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 工程建设</p>
+<p class="project-number">项目编号 E4403000004a07935011</p>
+<dl><div><dt>申请截止</dt><dd>2026-12-11 18:00</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="潮州市" data-search="大埕镇公共服务设施改造升级项目施工合同 e4451002744a12756001 广东省公共资源交易平台 潮州市 项目合同 饶平县大埕镇人民政府 " data-index="16">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=3C61189cbd2fe1d24d7d9de2a4ed893b13c3&amp;projectCode=E4451002744a12756001&amp;bizCode=3C61&amp;siteCode=445100&amp;publishDate=20261121155543&amp;source=%E6%BD%AE%E5%B7%9E%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">大埕镇公共服务设施改造升级项目施工合同</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">潮州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4451002744a12756001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="潮州市" data-search="韩山师范学院南三区新建学生宿舍项目设计合同 e4451002744a12757001 广东省公共资源交易平台 潮州市 项目合同 韩山师范学院 " data-index="17">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=3C610197ddaf21844fbb8316f730fe3ba53b&amp;projectCode=E4451002744a12757001&amp;bizCode=3C61&amp;siteCode=445100&amp;publishDate=20261121155543&amp;source=%E6%BD%AE%E5%B7%9E%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">韩山师范学院南三区新建学生宿舍项目设计合同</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">潮州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4451002744a12757001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="园东幼儿园建设工程施工总承包【已变更】 e4403000004a07810011 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市建筑设计研究总院有限公司 " data-index="18">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403043C142780f3be60594efe97f8cdcee3f66585&amp;projectCode=E4403000004a07810011&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261121143904&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">园东幼儿园建设工程施工总承包【已变更】</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4403000004a07810011</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="光明区高端仓储式会员制商店项目及周边住宅项目勘察设计施工总承包（批量招标）【已变更】 e4403000004a07711011 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市深光商业置业发展有限公司 " data-index="19">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403113C14940cdc3b9abe4d9d9110ee64dacb8207&amp;projectCode=E4403000004a07711011&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261121143317&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">光明区高端仓储式会员制商店项目及周边住宅项目勘察设计施工总承包（批量招标）【已变更】</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4403000004a07711011</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="光明区高端仓储式会员制商店项目及周边住宅项目监理（批量招标）【已变更】 e4403000004a07711021 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市深光商业置业发展有限公司 " data-index="20">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403113C14183a89e5fecc41059e1b2a852cb1b2af&amp;projectCode=E4403000004a07711021&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261121143316&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">光明区高端仓储式会员制商店项目及周边住宅项目监理（批量招标）【已变更】</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4403000004a07711021</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="光明区高端仓储式会员制商店周边住宅项目全过程造价咨询服务【已变更】 e4403000004a07718011 广东省公共资源交易平台 深圳市 招标公告与资格预审公告 深圳市深光商业置业发展有限公司 " data-index="21">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4403113C1406dee7cf4bdd4a2e8f7a27089c334e05&amp;projectCode=E4403000004a07718011&amp;bizCode=3C14&amp;siteCode=440300&amp;publishDate=20261121143314&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">光明区高端仓储式会员制商店周边住宅项目全过程造价咨询服务【已变更】</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4403000004a07718011</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="广州市" data-search="广州市南沙区塘坑村城中村改造项目配套道路勘察设计施工总承包epc中标信息-广州市南沙区塘坑村城中村改造项目 e4401002701505943001 广东省公共资源交易平台 广州市 中标结果 广州市广建城更南湾投资发展有限公司 " data-index="22">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=fc02fe6f-d314-4008-8783-65731622bc3d-3C52_1&amp;projectCode=E4401002701505943001&amp;bizCode=3C52&amp;siteCode=440100&amp;publishDate=20261121140240&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市南沙区塘坑村城中村改造项目配套道路勘察设计施工总承包EPC中标信息-广州市南沙区塘坑村城中村改造项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701505943001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="东莞市" data-search="东莞市截污主干管网改造提升项目（一期）（施工三标）结果公告 e4419000748012342001 广东省公共资源交易平台 东莞市 招标公告与资格预审公告 东莞市城建工程管理局 " data-index="23">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=da992312-d8e0-4ca1-a0d3-60f0ad5bae7e&amp;projectCode=E4419000748012342001&amp;bizCode=3C14&amp;siteCode=441900&amp;publishDate=20261121004731&amp;source=%E4%B8%9C%E8%8E%9E%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">东莞市截污主干管网改造提升项目（一期）（施工三标）结果公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 市政</p>
+<p class="project-number">项目编号 E4419000748012342001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市智能网联汽车“车路云一体化”应用试点项目(一期)-应用研究咨询评标报告 e4401002701506296001 广东省公共资源交易平台 广州市 评标报告 广州信息投资有限公司 " data-index="24">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4f44fcec-3232-4c87-af41-89ee21a87e02-3C42&amp;projectCode=E4401002701506296001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000541&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">广州市智能网联汽车“车路云一体化”应用试点项目(一期)-应用研究咨询评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 其他工程</p>
+<p class="project-number">项目编号 E4401002701506296001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="南沙区龙穴北临港海洋高端装备制造及综合保障基地项目多用途码头工程勘察设计评标报告 e4401002701506237001 广东省公共资源交易平台 广州市 评标报告 广州南沙临港海洋工程装备有限公司 " data-index="25">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=88b23d27-4a08-4ca9-b435-6379125fa74e-3C42&amp;projectCode=E4401002701506237001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000538&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">南沙区龙穴北临港海洋高端装备制造及综合保障基地项目多用途码头工程勘察设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 公路</p>
+<p class="project-number">项目编号 E4401002701506237001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市白云区三元里村城中村改造项目二期安置房（ab3814010）工程监理服务评标报告 e4401002701505558001 广东省公共资源交易平台 广州市 评标报告 广州三元里片区改造投资有限公司 " data-index="26">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=3efeff5f-6e88-4244-9cc8-32fc8e4acfc5-3C42&amp;projectCode=E4401002701505558001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000538&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广州市白云区三元里村城中村改造项目二期安置房（AB3814010）工程监理服务评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701505558001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="市教育局广州市旅游商务职业学校赤沙校区安全提升及功能场室改造项目、市教育局广州市旅游商务职业学校赤沙校区消防改造及功能场室维护维修项目设计服务（第二次）评标报告 e4401002701506184001 广东省公共资源交易平台 广州市 评标报告 广州市教育基建和装备中心 " data-index="27">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=d055eded-59fd-407a-95ec-dd17ed4c51a5-3C42&amp;projectCode=E4401002701506184001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000536&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">市教育局广州市旅游商务职业学校赤沙校区安全提升及功能场室改造项目、市教育局广州市旅游商务职业学校赤沙校区消防改造及功能场室维护维修项目设计服务（第二次）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506184001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="新能源器件循环利用能力提升项目施工总承包评标报告 e4401002701505956001 广东省公共资源交易平台 广州市 评标报告 中国科学院广州能源研究所 " data-index="28">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=f4012272-4273-462d-906c-876138c72f26-3C42&amp;projectCode=E4401002701505956001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000532&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">新能源器件循环利用能力提升项目施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701505956001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市自来水有限公司北部水厂智慧化设备（视频智能部分）采购项目评标报告 e4401002701505979001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="29">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=69686a0a-fa4c-4491-89e9-030e44a9b13c-3C42&amp;projectCode=E4401002701505979001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000532&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州市自来水有限公司北部水厂智慧化设备（视频智能部分）采购项目评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701505979001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="国际呼吸医学中心项目医疗专项工程施工专业承包评标报告 e4401002701505924001 广东省公共资源交易平台 广州市 评标报告 广州市重点公共建设项目管理中心 " data-index="30">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=9ee473ec-9cbc-4b56-8714-26cd03c20b86-3C42&amp;projectCode=E4401002701505924001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000441&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">国际呼吸医学中心项目医疗专项工程施工专业承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701505924001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="天河区老旧主干管网改造工程（中成路等27子项）施工总承包（标段一：天河区中成路等11子项）评标报告 e4401002701506067001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="31">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=9079127a-6930-416f-aadc-76ddfe415d31-3C42&amp;projectCode=E4401002701506067001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000441&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">天河区老旧主干管网改造工程（中成路等27子项）施工总承包（标段一：天河区中成路等11子项）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506067001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="阳光南路升级改造工程（广清高速至狮岭大道）勘察设计评标报告 e4401002701506099001 广东省公共资源交易平台 广州市 评标报告 广州市花都区道路交通基础设施建设管理中心 " data-index="32">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=64380bff-27ae-484a-be19-6cdbb333f4f6-3C42&amp;projectCode=E4401002701506099001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000441&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">阳光南路升级改造工程（广清高速至狮岭大道）勘察设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506099001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="西洲水厂工艺升级改造工程工程总承包（施工图设计、施工）评标报告 e4401002701506169001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="33">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=d857069b-5c8d-4ba7-9444-ccfd0e0c90de-3C42&amp;projectCode=E4401002701506169001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000438&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">西洲水厂工艺升级改造工程工程总承包（施工图设计、施工）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506169001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州东部中心供水管网改造工程（石滩片区）工程量清单及招标控制价编制服务评标报告 e4401002701505635001 广东省公共资源交易平台 广州市 评标报告 广州市增城区石滩镇人民政府 " data-index="34">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=c3d09bf0-a57b-4b47-bdec-404c4e59ecf9-3C42&amp;projectCode=E4401002701505635001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000436&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州东部中心供水管网改造工程（石滩片区）工程量清单及招标控制价编制服务评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701505635001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="阳江市" data-search="阳江市空铁新城高铁综合组团yj-kt-01单元一期开发项目（kt-01-11\12\13\15地块项目）标段二设计施工总承包评标报告 e4401002701506339001 广东省公共资源交易平台 阳江市 评标报告 阳江市交投晟发投资开发有限公司 " data-index="35">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=0970b08d-65db-4219-b97f-c942504b091a-3C42&amp;projectCode=E4401002701506339001&amp;bizCode=3C42&amp;siteCode=441700&amp;publishDate=20261121000436&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">阳江市空铁新城高铁综合组团YJ-KT-01单元一期开发项目（KT-01-11\12\13\15地块项目）标段二设计施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">阳江市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506339001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州从化至清远连州高速公路鳌头停车区扩建为服务区项目设计施工总承包评标报告 e4401002701505503001 广东省公共资源交易平台 广州市 评标报告 中交广连高速公路投资发展有限公司 " data-index="36">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=a8de5e11-2efc-45cc-afc8-108c3853751b-3C42&amp;projectCode=E4401002701505503001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000434&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">广州从化至清远连州高速公路鳌头停车区扩建为服务区项目设计施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 公路</p>
+<p class="project-number">项目编号 E4401002701505503001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="南沙区龙穴北临港海洋高端装备制造及综合保障基地项目-吹砂填土及地基处理工程全过程工程咨询评标报告 e4401002701506222001 广东省公共资源交易平台 广州市 评标报告 广州南沙临港海洋工程装备有限公司 " data-index="37">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=42951247-dcbc-4afc-808f-6ac2595c7f21-3C42&amp;projectCode=E4401002701506222001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000434&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">南沙区龙穴北临港海洋高端装备制造及综合保障基地项目-吹砂填土及地基处理工程全过程工程咨询评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506222001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="国道106改造项目管线迁改施工总承包招标评标报告 e4401002701505792001 广东省公共资源交易平台 广州市 评标报告 广州机场第二高速公路有限公司 " data-index="38">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=22875eff-eaf3-41e9-8323-aef53ec9f9f6-3C42&amp;projectCode=E4401002701505792001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000346&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">国道106改造项目管线迁改施工总承包招标评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701505792001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="水厂生产设备系统改造工程（第二批）工程总承包（施工图设计、施工）项目（电力专业）评标报告 e4401002701506234001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="39">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=691467e8-11c1-4245-976a-3ca70c5e726d-3C42&amp;projectCode=E4401002701506234001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000340&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">水厂生产设备系统改造工程（第二批）工程总承包（施工图设计、施工）项目（电力专业）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506234001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="云浮市" data-search="云浮市云安区（云浮新区）农业基础设施配套项目勘察、设计评标报告 e4401002701506243001 广东省公共资源交易平台 云浮市 评标报告 广东省鲲鹏城市建设投资集团有限公司 " data-index="40">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=6f57a447-67bb-4809-bc08-a36f525a2a70-3C42&amp;projectCode=E4401002701506243001&amp;bizCode=3C42&amp;siteCode=445300&amp;publishDate=20261121000337&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">云浮市云安区（云浮新区）农业基础设施配套项目勘察、设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506243001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="姬堂社区城中村给水改造工程施工总承包评标报告 e4401002701506085001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="41">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=fff4d6a6-46e2-4319-9c0b-053720943444-3C42&amp;projectCode=E4401002701506085001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000140&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">姬堂社区城中村给水改造工程施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506085001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="东莞市" data-search="厚街镇工业西路（振兴路-湖景大道）和创业路（水口街-环湖路）升级改造配套电力迁改工程评标报告 e4401002701506267001 广东省公共资源交易平台 东莞市 评标报告 东莞市厚街镇工程建设中心 " data-index="42">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=6777a453-f5d9-4f02-8db0-280bf4eb33dd-3C42&amp;projectCode=E4401002701506267001&amp;bizCode=3C42&amp;siteCode=441900&amp;publishDate=20261121000140&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A08" target="_blank" rel="noopener noreferrer">厚街镇工业西路（振兴路-湖景大道）和创业路（水口街-环湖路）升级改造配套电力迁改工程评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 能源</p>
+<p class="project-number">项目编号 E4401002701506267001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="白云区老旧主干管网改造工程（三元里大道等9子项）施工总承包（标段二：白云区大金钟路至鹤龙路等2子项）评标报告 e4401002701505980001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="43">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=5478dbb3-0ac1-48ea-b6c0-67808d017dd2-3C42&amp;projectCode=E4401002701505980001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000139&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">白云区老旧主干管网改造工程（三元里大道等9子项）施工总承包（标段二：白云区大金钟路至鹤龙路等2子项）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701505980001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市净水有限公司2026-2027年通风除臭系统升级改造项目评标报告 e4401002701506018001 广东省公共资源交易平台 广州市 评标报告 广州市净水有限公司 " data-index="44">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=84b837fc-2913-41b7-9f4e-18d67391e7de-3C42&amp;projectCode=E4401002701506018001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000139&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州市净水有限公司2026-2027年通风除臭系统升级改造项目评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506018001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市净水有限公司2026-2027年预处理、二沉池等升级改造项目（标段二）评标报告 e4401002701506213001 广东省公共资源交易平台 广州市 评标报告 广州市净水有限公司 " data-index="45">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=10d27fc4-a8ad-48f9-96ce-835893954821-3C42&amp;projectCode=E4401002701506213001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000139&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州市净水有限公司2026-2027年预处理、二沉池等升级改造项目（标段二）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506213001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="天河区凌塘村城中村改造项目-西片区复建安置房及配套设施工程监理服务评标报告 e4401002701506386001 广东省公共资源交易平台 广州市 评标报告 广州天华科韵城市更新有限公司 " data-index="46">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=07aa7f39-7977-40ab-a91a-6d4587551da8-3C42&amp;projectCode=E4401002701506386001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000139&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">天河区凌塘村城中村改造项目-西片区复建安置房及配套设施工程监理服务评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506386001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市净水有限公司2026-2027年沥滘、大沙地、西朗分公司污水处理设施加盖升级改造项目初步设计评标报告 e4401002701506082001 广东省公共资源交易平台 广州市 评标报告 广州市净水有限公司 " data-index="47">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=0be56c0a-8a22-4d85-b5ca-af06c0437b40-3C42&amp;projectCode=E4401002701506082001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000139&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州市净水有限公司2026-2027年沥滘、大沙地、西朗分公司污水处理设施加盖升级改造项目初步设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506082001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="增龙公路s119正果镇区段改线项目检测服务（第二次）评标报告 e4401002701506276001 广东省公共资源交易平台 广州市 评标报告 广州市增城区正果镇人民政府 " data-index="48">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=e212716a-87f0-432a-8ef5-27df34bf9106-3C42&amp;projectCode=E4401002701506276001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000138&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">增龙公路S119正果镇区段改线项目检测服务（第二次）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 公路</p>
+<p class="project-number">项目编号 E4401002701506276001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="白云区老旧主干管网改造工程（三元里大道等9子项）施工总承包（标段一：白云区江城路至金沙南路等7子项）评标报告 e4401002701505980001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="49">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=9ff9cab5-a2ac-4dd6-9aa8-99daddca85d6-3C42&amp;projectCode=E4401002701505980001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000138&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">白云区老旧主干管网改造工程（三元里大道等9子项）施工总承包（标段一：白云区江城路至金沙南路等7子项）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701505980001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="黄埔客运港站场综合体地块商业项目地铁监控服务（第二次）评标报告 e4401002701506273001 广东省公共资源交易平台 广州市 评标报告 广州科港投资运营有限公司 " data-index="50">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=7cdc1ec0-9c10-43b6-8731-6c3e38441b77-3C42&amp;projectCode=E4401002701506273001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000137&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">黄埔客运港站场综合体地块商业项目地铁监控服务（第二次）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506273001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市净水有限公司2026-2027年预处理、二沉池等升级改造项目（标段一）评标报告 e4401002701506213001 广东省公共资源交易平台 广州市 评标报告 广州市净水有限公司 " data-index="51">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=f65c185b-c0c1-4f47-b99c-27d5313559d2-3C42&amp;projectCode=E4401002701506213001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000137&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州市净水有限公司2026-2027年预处理、二沉池等升级改造项目（标段一）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506213001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市智能网联汽车“车路云一体化”应用试点项目(一期)-软件系统设计评标报告 e4401002701506307001 广东省公共资源交易平台 广州市 评标报告 广州信息投资有限公司 " data-index="52">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=93ede519-5ff3-49ef-b65b-b54c921db069-3C42&amp;projectCode=E4401002701506307001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000136&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">广州市智能网联汽车“车路云一体化”应用试点项目(一期)-软件系统设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 其他工程</p>
+<p class="project-number">项目编号 E4401002701506307001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="沙嘴路跨线桥贯通工程设计施工总承包评标报告 e4401002701506357001 广东省公共资源交易平台 广州市 评标报告 广州市南沙新区明珠湾开发建设管理局 " data-index="53">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=8281bbe7-41b8-4626-8aad-bf0a26a30d0c-3C42&amp;projectCode=E4401002701506357001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000135&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">沙嘴路跨线桥贯通工程设计施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506357001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="天河区老旧主干管网改造工程（中成路等27子项）施工总承包（标段二：天河区翠园街等16子项）评标报告 e4401002701506067001 广东省公共资源交易平台 广州市 评标报告 广州市自来水有限公司 " data-index="54">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=b423c0fa-2f62-49ce-874f-d177970ae8a7-3C42&amp;projectCode=E4401002701506067001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000135&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">天河区老旧主干管网改造工程（中成路等27子项）施工总承包（标段二：天河区翠园街等16子项）评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506067001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市白云区三元里村城中村改造项目二期安置房（ab3814010）建设管理服务评标报告 e4401002701505998001 广东省公共资源交易平台 广州市 评标报告 广州三元里片区改造投资有限公司 " data-index="55">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=87eba654-9ce7-45f2-aaf1-d6adec888fa7-3C42&amp;projectCode=E4401002701505998001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000134&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广州市白云区三元里村城中村改造项目二期安置房（AB3814010）建设管理服务评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701505998001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="荔湾区山村城中村改造项目安置房周边配套道路工程（二期）勘察初步设计评标报告 e4401002701506286001 广东省公共资源交易平台 广州市 评标报告 广州市花地河城建有限公司 " data-index="56">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=e466a8b0-aaf2-4c64-b1d2-fefee670a2ca-3C42&amp;projectCode=E4401002701506286001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000134&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">荔湾区山村城中村改造项目安置房周边配套道路工程（二期）勘察初步设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506286001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市智能网联汽车“车路云一体化”应用试点项目（一期）-勘察与设计评标报告 e4401002701506333001 广东省公共资源交易平台 广州市 评标报告 广州信息投资有限公司 " data-index="57">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4f49511a-2cd5-4667-ba3e-fe22c924df58-3C42&amp;projectCode=E4401002701506333001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000133&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">广州市智能网联汽车“车路云一体化”应用试点项目（一期）-勘察与设计评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 其他工程</p>
+<p class="project-number">项目编号 E4401002701506333001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市白云区夏茅村城中村改造项目首开区安置地块项目（ab2506126安置地块）第三方检测、监测评标报告 e4401002701506209001 广东省公共资源交易平台 广州市 评标报告 广州白云湖投资发展有限公司 " data-index="58">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=6fdfa6d1-88da-452d-a287-9b19bb5608ff-3C42&amp;projectCode=E4401002701506209001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000133&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广州市白云区夏茅村城中村改造项目首开区安置地块项目（AB2506126安置地块）第三方检测、监测评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506209001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="启源大道及周边基础设施提升工程(一期)勘察设计施工总承包评标报告 e4401002701506231001 广东省公共资源交易平台 广州市 评标报告 广州市花都区道路交通基础设施建设管理中心 " data-index="59">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=72aaa253-4ab9-48a1-8ae0-5e23c0885e84-3C42&amp;projectCode=E4401002701506231001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000132&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">启源大道及周边基础设施提升工程(一期)勘察设计施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506231001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州市从化区医共体南部院区配套建设工程项目施工总承包评标报告 e4401002701506225001 广东省公共资源交易平台 广州市 评标报告 广州市从化区公共建设项目代建中心 " data-index="60">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=38fa6387-6dfb-4095-a9dd-48d97ab689ee-3C42&amp;projectCode=E4401002701506225001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000130&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广州市从化区医共体南部院区配套建设工程项目施工总承包评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506225001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="广州市" data-search="广州从化区禾仓村城中村改造项目规划路项目工程检测服务评标报告 e4401002701506303001 广东省公共资源交易平台 广州市 评标报告 广州从投城市更新有限公司 " data-index="61">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=8ea833ab-7d9e-4972-af56-e9265c1487d7-3C42&amp;projectCode=E4401002701506303001&amp;bizCode=3C42&amp;siteCode=440100&amp;publishDate=20261121000130&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州从化区禾仓村城中村改造项目规划路项目工程检测服务评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506303001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="茂名市" data-search="博贺湾大道道路绿化提升工程项目（新建防尘绿篱及节点改造）施工评标报告 e4401001123002919001 广东省公共资源交易平台 茂名市 评标报告 茂名市城市管理和综合执法局滨海新区分局 " data-index="62">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=cb7bd99f-f96c-4d78-bbc8-ba19f2b011d8-3C42&amp;projectCode=E4401001123002919001&amp;bizCode=3C42&amp;siteCode=440900&amp;publishDate=20261121000101&amp;source=%E5%B9%BF%E4%B8%9C%E7%9C%81%E4%BA%A4%E6%98%93%E6%8E%A7%E8%82%A1%E9%9B%86%E5%9B%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A97" target="_blank" rel="noopener noreferrer">博贺湾大道道路绿化提升工程项目（新建防尘绿篱及节点改造）施工评标报告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 园林绿化工程</p>
+<p class="project-number">项目编号 E4401001123002919001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="云浮市" data-search="2026年度云浮市新兴县高标准农田建设项目工程施工招标公告 e4401001123002998001 广东省公共资源交易平台 云浮市 招标公告与资格预审公告 新兴县农业推广总站 " data-index="63">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4fb7fcda-f00f-4fe3-9389-4c96ac4346f1-3C14&amp;projectCode=E4401001123002998001&amp;bizCode=3C14&amp;siteCode=445300&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%B8%9C%E7%9C%81%E4%BA%A4%E6%98%93%E6%8E%A7%E8%82%A1%E9%9B%86%E5%9B%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">2026年度云浮市新兴县高标准农田建设项目工程施工招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 水利</p>
+<p class="project-number">项目编号 E4401001123002998001</p>
+<dl><div><dt>最高限价</dt><dd>10567780.71元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程检测服务（标段一）招标公告-广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程 e4401002701506880001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市中心区交通项目管理中心 " data-index="64">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=7d8ed155-d662-4a47-9443-c205f9951a00-3C14&amp;projectCode=E4401002701506880001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程检测服务（标段一）招标公告-广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506880001</p>
+<dl><div><dt>最高限价</dt><dd>109.346400</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="三期货站东货运区厨房及员工食堂建设项目施工总承包招标公告-三期货站东货运区厨房及员工食堂建设 e4401002701506892001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广东省机场集团物流有限公司 " data-index="65">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=492a5a71-1022-4418-9686-49ef1026d3e5-3C14&amp;projectCode=E4401002701506892001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">三期货站东货运区厨房及员工食堂建设项目施工总承包招标公告-三期货站东货运区厨房及员工食堂建设</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506892001</p>
+<dl><div><dt>最高限价</dt><dd>490.682331</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州净水公司京溪分公司2026年污泥脱水改造项目（第二次）招标公告-广州净水公司京溪分公司2026年污泥脱水改造项目（第二次） e4401002701506936001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市净水有限公司 " data-index="66">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=e7c662de-4eb0-4d69-9c1f-aa8aec4ac63e-3C14&amp;projectCode=E4401002701506936001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">广州净水公司京溪分公司2026年污泥脱水改造项目（第二次）招标公告-广州净水公司京溪分公司2026年污泥脱水改造项目（第二次）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506936001</p>
+<dl><div><dt>最高限价</dt><dd>676.795236</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="南沙区东井村城中村改造基础设施项目勘察设计施工总承包工程招标公告-南沙区东井村城中村改造项目 e4401002701506924001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州南沙交投城市更新有限公司 " data-index="67">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=3f56be09-dc01-41ea-b8f1-bb91d5c61017-3C14&amp;projectCode=E4401002701506924001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">南沙区东井村城中村改造基础设施项目勘察设计施工总承包工程招标公告-南沙区东井村城中村改造项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506924001</p>
+<dl><div><dt>最高限价</dt><dd>5996.309371</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="黄埔区地下供水管网建设工程-知识城范围供水管网局部改善连通工程第三方监测（含地铁保护监测）（第二次）招标公告-黄埔区地下供水管网建设工程-知识城范围供水管网局部改善连通工程 e4401002701506925001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 中新广州知识城财政投资建设项目管理中心 " data-index="68">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=04f83082-8ec9-4d03-87d7-02a03c4fb8dd-3C14&amp;projectCode=E4401002701506925001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">黄埔区地下供水管网建设工程-知识城范围供水管网局部改善连通工程第三方监测（含地铁保护监测）（第二次）招标公告-黄埔区地下供水管网建设工程-知识城范围供水管网局部改善连通工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506925001</p>
+<dl><div><dt>最高限价</dt><dd>165.635600</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="永和污水处理厂四期工程除臭系统提效改造工程招标公告-永和污水处理厂四期工程除臭系统提效改造工程 e4401002701506939001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州增城北控水质净化有限公司 " data-index="69">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=e9cc109e-acce-4798-903b-7c8b0d874176-3C14&amp;projectCode=E4401002701506939001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">永和污水处理厂四期工程除臭系统提效改造工程招标公告-永和污水处理厂四期工程除臭系统提效改造工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 其他工程</p>
+<p class="project-number">项目编号 E4401002701506939001</p>
+<dl><div><dt>最高限价</dt><dd>692.000000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="candidates" data-region="肇庆市" data-search="国道g355线怀集大浪至栏马段灾毁恢复重建工程（施工）中标候选人公示 e4412010813001666001 广东省公共资源交易平台 肇庆市 中标候选人公示 怀集县公路事务中心 " data-index="70">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=763d180c-85b8-4b71-821d-8f2139eb4a18-3C51&amp;projectCode=E4412010813001666001&amp;bizCode=3C51&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">国道G355线怀集大浪至栏马段灾毁恢复重建工程（施工）中标候选人公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 公路</p>
+<p class="project-number">项目编号 E4412010813001666001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="candidates" data-region="肇庆市" data-search="肇庆（端州区）古城墙修缮保护工程项目——肇庆古城墙南、北城门遗址保护修缮工程(施工）中标候选人公示 e4412010813001688001 广东省公共资源交易平台 肇庆市 中标候选人公示 肇庆市代建项目管理局 " data-index="71">
+<div class="notice-heading"><span class="badge candidates">候选人公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=0a0af64d-503f-43d5-890b-0109ddac017d-3C51&amp;projectCode=E4412010813001688001&amp;bizCode=3C51&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">肇庆（端州区）古城墙修缮保护工程项目——肇庆古城墙南、北城门遗址保护修缮工程(施工）中标候选人公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 其他工程</p>
+<p class="project-number">项目编号 E4412010813001688001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="肇庆市" data-search="德庆县城区排水一体化更新改造项目-德庆县污水管网补短板（二期）项目（施工） e4412010813001717001 广东省公共资源交易平台 肇庆市 招标公告与资格预审公告 德庆县住房和城乡建设局 " data-index="72">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4fcd3a82-b310-4391-9caa-50d9a2afceea-3C14&amp;projectCode=E4412010813001717001&amp;bizCode=3C14&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">德庆县城区排水一体化更新改造项目-德庆县污水管网补短板（二期）项目（施工）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 市政</p>
+<p class="project-number">项目编号 E4412010813001717001</p>
+<dl><div><dt>最高限价</dt><dd>2174.864013万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="韶关市" data-search="广东省南雄市国家储备林一期建设项目作业设计服务招标公告-广东省南雄市国家储备林一期建设项目 e4401002701506921001 广东省公共资源交易平台 韶关市 招标公告与资格预审公告 广东粤雄林业投资有限责任公司 " data-index="73">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=4946e12b-8ef4-4f89-87b3-7e3cac02fecf-3C14&amp;projectCode=E4401002701506921001&amp;bizCode=3C14&amp;siteCode=440200&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A97" target="_blank" rel="noopener noreferrer">广东省南雄市国家储备林一期建设项目作业设计服务招标公告-广东省南雄市国家储备林一期建设项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">韶关市 · 园林绿化工程</p>
+<p class="project-number">项目编号 E4401002701506921001</p>
+<dl><div><dt>最高限价</dt><dd>700.000000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="黄埔新城社区卫生服务中心改造工程施工总承包招标公告-黄埔新城社区卫生服务中心改造工程 e4401002701506440001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州开发区财政投资建设项目管理中心 " data-index="74">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=a34c8b9a-7230-408b-a59f-8e1a38fee527-3C14&amp;projectCode=E4401002701506440001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">黄埔新城社区卫生服务中心改造工程施工总承包招标公告-黄埔新城社区卫生服务中心改造工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506440001</p>
+<dl><div><dt>最高限价</dt><dd>1491.745001</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州港南沙港区中部查验中心项目勘察设计招标公告-广州港南沙港区中部查验中心项目 e4401002701506862001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州南沙国际冷链有限公司 " data-index="75">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=3f074ea2-525d-4e4f-a92b-6f0fc0908e3a-3C14&amp;projectCode=E4401002701506862001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广州港南沙港区中部查验中心项目勘察设计招标公告-广州港南沙港区中部查验中心项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506862001</p>
+<dl><div><dt>最高限价</dt><dd>204.000000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="华南理工大学五山校区科技创新大楼(二期)、华南理工大学五山校区医工融合科创中心2个项目监测服务（标段二）招标公告-华南理工大学五山校区医工融合科创中心;华南理工大学五山校区供水加压站;华南理工大学五山校区科技创新大楼（二期） e4401002701506777001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市重点公共建设项目管理中心 " data-index="76">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=1d94454d-a402-40ae-bb17-c4fb30e6740a-3C14&amp;projectCode=E4401002701506777001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">华南理工大学五山校区科技创新大楼(二期)、华南理工大学五山校区医工融合科创中心2个项目监测服务（标段二）招标公告-华南理工大学五山校区医工融合科创中心;华南理工大学五山校区供水加压站;华南理工大学五山校区科技创新大楼（二期）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506777001</p>
+<dl><div><dt>最高限价</dt><dd>245.596727</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="云浮市" data-search="罗定市第二中医院提升工程监理招标公告 x445300090900019p19p 广东省公共资源交易平台 云浮市 招标公告与资格预审公告 罗定市卫安投资有限公司 " data-index="77">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=43dd6bf84baa49d08d70d92974f2018f&amp;projectCode=X445300090900019p19p&amp;bizCode=3C14&amp;siteCode=445300&amp;publishDate=20261121000000&amp;source=%E4%BA%91%E6%B5%AE%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">罗定市第二中医院提升工程监理招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 房屋建筑</p>
+<p class="project-number">项目编号 X445300090900019p19p</p>
+<dl><div><dt>最高限价</dt><dd>122万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州白云国际机场商务航空服务基地水电设备设施管理维护服务项目招标公告-广州白云国际机场商务航空服务基地水电设备设施管理维护服务项目 e4401002701506877001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广东翼通商务航空发展股份有限公司 " data-index="78">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=b24aa848-11bb-4769-b1d5-d292b3a2df39-3C14&amp;projectCode=E4401002701506877001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A97" target="_blank" rel="noopener noreferrer">广州白云国际机场商务航空服务基地水电设备设施管理维护服务项目招标公告-广州白云国际机场商务航空服务基地水电设备设施管理维护服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 园林绿化工程</p>
+<p class="project-number">项目编号 E4401002701506877001</p>
+<dl><div><dt>最高限价</dt><dd>300.000000；人民币150万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="茂名市" data-search="信宜产业转移工业园水口产业集聚发展区进园大道建设工程(二期)招标公告-信宜产业转移工业园基础设施建设工程项目 e4401002701506954001 广东省公共资源交易平台 茂名市 招标公告与资格预审公告 信宜市信业产业和工业园投资有限公司 " data-index="79">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=785ee494-c07f-4f16-b167-ee161859d998-3C14&amp;projectCode=E4401002701506954001&amp;bizCode=3C14&amp;siteCode=440900&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">信宜产业转移工业园水口产业集聚发展区进园大道建设工程(二期)招标公告-信宜产业转移工业园基础设施建设工程项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506954001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州市白云区萧岗村城中村改造项目第一片区二期安置地块项目（ab2803044安置地块）检验监测服务招标公告-广州市白云区萧岗村城中村改造项目第一片区二期安置地块项目（ab2803044安置地块） e4401002701506943001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州云成投资发展有限公司 " data-index="80">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=62227b25-b277-4af3-8762-a5605d7c6a5e-3C14&amp;projectCode=E4401002701506943001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">广州市白云区萧岗村城中村改造项目第一片区二期安置地块项目（AB2803044安置地块）检验监测服务招标公告-广州市白云区萧岗村城中村改造项目第一片区二期安置地块项目（AB2803044安置地块）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506943001</p>
+<dl><div><dt>最高限价</dt><dd>916.314605</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="2026-2027年度中高风险管渠地质雷达探测服务项目招标公告-2026-2027年度中高风险管渠地质雷达探测服务项目 e4401002701506926001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市增城排水有限公司 " data-index="81">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=8d47399e-ec62-4893-8e04-578b8aabe042-3C14&amp;projectCode=E4401002701506926001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">2026-2027年度中高风险管渠地质雷达探测服务项目招标公告-2026-2027年度中高风险管渠地质雷达探测服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506926001</p>
+<dl><div><dt>最高限价</dt><dd>245.658442</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程地铁安全监控服务招标公告-广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程 e4401002701506861001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市中心区交通项目管理中心 " data-index="82">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=ffc37c0b-b93f-420a-b3a7-409123c6d52c-3C14&amp;projectCode=E4401002701506861001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程地铁安全监控服务招标公告-广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506861001</p>
+<dl><div><dt>最高限价</dt><dd>110.700000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="2027-2030年度水投集团水质净化厂及泵站安全保卫定点服务项目招标公告-2027-2030年度水投集团水质净化厂及泵站安全保卫定点服务项目 e4401002701506199001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州科学城水务投资集团有限公司 " data-index="83">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=0ebfbe66-3177-40fe-b64a-613a9d405a47-3C14&amp;projectCode=E4401002701506199001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">2027-2030年度水投集团水质净化厂及泵站安全保卫定点服务项目招标公告-2027-2030年度水投集团水质净化厂及泵站安全保卫定点服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 其他工程</p>
+<p class="project-number">项目编号 E4401002701506199001</p>
+<dl><div><dt>最高限价</dt><dd>3427.328160</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="肇庆市" data-search="肇庆市紫云科创城排水防涝工程（一期）建设项目（勘察设计） e4412010813001713001 广东省公共资源交易平台 肇庆市 招标公告与资格预审公告 肇庆市安泓建设有限公司 " data-index="84">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=a3507df1-6cc6-49e9-b509-370915776551-3C14&amp;projectCode=E4412010813001713001&amp;bizCode=3C14&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">肇庆市紫云科创城排水防涝工程（一期）建设项目（勘察设计）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 水利</p>
+<p class="project-number">项目编号 E4412010813001713001</p>
+<dl><div><dt>最高限价</dt><dd>1435.12万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="云浮市" data-search="国家税务总局云浮市云安区税务局综合业务办公用房维修改造项目施工招标公告 x445300090900019o19o 广东省公共资源交易平台 云浮市 招标公告与资格预审公告 国家税务总局云浮市云安区税务局 " data-index="85">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=d7bcff1e961c4bd4acada0c9ed01ac3d&amp;projectCode=X445300090900019o19o&amp;bizCode=3C14&amp;siteCode=445300&amp;publishDate=20261121000000&amp;source=%E4%BA%91%E6%B5%AE%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">国家税务总局云浮市云安区税务局综合业务办公用房维修改造项目施工招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 房屋建筑</p>
+<p class="project-number">项目编号 X445300090900019o19o</p>
+<dl><div><dt>最高限价</dt><dd>9,323,790.36元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="蝴蝶洲变电站扩建电力管廊工程设计施工总承包招标公告-蝴蝶洲变电站扩建电力管廊工程 e4401002701506589001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州南沙经济技术开发区建设中心（广州市南沙区建设中心） " data-index="86">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=098495f6-dc6a-4338-982d-b582742c326b-3C14&amp;projectCode=E4401002701506589001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">蝴蝶洲变电站扩建电力管廊工程设计施工总承包招标公告-蝴蝶洲变电站扩建电力管廊工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506589001</p>
+<dl><div><dt>最高限价</dt><dd>1448.946304</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州港仓储运输有限公司20台套电动集装箱牵引车及半挂车购置项目招标公告-储运公司购置20台套电动集装箱牵引车及半挂车项目 e4401002701506933001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州港仓储运输有限公司 " data-index="87">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=28cf486e-8d4c-4cf7-a052-4d6fa16c2c6c-3C14&amp;projectCode=E4401002701506933001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">广州港仓储运输有限公司20台套电动集装箱牵引车及半挂车购置项目招标公告-储运公司购置20台套电动集装箱牵引车及半挂车项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 公路</p>
+<p class="project-number">项目编号 E4401002701506933001</p>
+<dl><div><dt>最高限价</dt><dd>1315.000000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="南沙国际会展中心项目主体部分预算、结算审核造价咨询服务招标公告-南沙国际金融论坛（iff）永久会址项目 e4401002701506942001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市南沙新区明珠湾开发建设管理局 " data-index="88">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=f55d1ef0-0afa-413b-ad73-51eb8ed08262-3C14&amp;projectCode=E4401002701506942001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">南沙国际会展中心项目主体部分预算、结算审核造价咨询服务招标公告-南沙国际金融论坛（IFF）永久会址项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506942001</p>
+<dl><div><dt>最高限价</dt><dd>180.000000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="槎神大道（鸦岗大道-凤凰大道）土建三标施工总承包招标公告-槎神大道（鸦岗大道-凤凰大道） e4401002701506824001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市中心区交通项目管理中心 " data-index="89">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=6ae16d0d-10ec-447e-8f57-e1edd141bb22-3C14&amp;projectCode=E4401002701506824001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">槎神大道（鸦岗大道-凤凰大道）土建三标施工总承包招标公告-槎神大道（鸦岗大道-凤凰大道）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506824001</p>
+<dl><div><dt>最高限价</dt><dd>26509.998584</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="中山大学附属第三医院岭南医院科研楼改造项目设计（第三次）招标公告-中山大学附属第三医院岭南医院科研楼改造项目 e4401002701506893001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州开发区财政投资建设项目管理中心 " data-index="90">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=2513b7ef-da93-4517-aed5-c6754caf5ce9-3C14&amp;projectCode=E4401002701506893001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">中山大学附属第三医院岭南医院科研楼改造项目设计（第三次）招标公告-中山大学附属第三医院岭南医院科研楼改造项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506893001</p>
+<dl><div><dt>最高限价</dt><dd>265.766400</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="肇庆市" data-search="德庆县城区排水一体化更新改造项目-德庆县污水管网补短板（二期）项目（监理） e4412010813001718001 广东省公共资源交易平台 肇庆市 招标公告与资格预审公告 德庆县住房和城乡建设局 " data-index="91">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=acc0a4d6-fbc1-4bef-9a14-4fd8ca639daa-3C14&amp;projectCode=E4412010813001718001&amp;bizCode=3C14&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">德庆县城区排水一体化更新改造项目-德庆县污水管网补短板（二期）项目（监理）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 市政</p>
+<p class="project-number">项目编号 E4412010813001718001</p>
+<dl><div><dt>最高限价</dt><dd>21.74864万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="云浮市" data-search="2026年度云浮市云城区高标准农田建设项目施工招标公告 x445300090900019y19y 广东省公共资源交易平台 云浮市 招标公告与资格预审公告 云浮市云城区农业农村综合服务中心 " data-index="92">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=28f24f8d81a549fdad17ee65af413bfa&amp;projectCode=X445300090900019y19y&amp;bizCode=3C14&amp;siteCode=445300&amp;publishDate=20261121000000&amp;source=%E4%BA%91%E6%B5%AE%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">2026年度云浮市云城区高标准农田建设项目施工招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">云浮市 · 其他工程</p>
+<p class="project-number">项目编号 X445300090900019y19y</p>
+<dl><div><dt>最高限价</dt><dd>7675455.96元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="南沙区黄山鲁蝴蝶洲片区排涝设施工程设计施工总承包招标公告-南沙区黄山鲁蝴蝶洲片区排涝设施工程 e4401002701506888001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州南沙经济技术开发区建设中心（广州市南沙区建设中心） " data-index="93">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=a168c596-47d0-4e12-ade5-8368e8927fb9-3C14&amp;projectCode=E4401002701506888001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">南沙区黄山鲁蝴蝶洲片区排涝设施工程设计施工总承包招标公告-南沙区黄山鲁蝴蝶洲片区排涝设施工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506888001</p>
+<dl><div><dt>最高限价</dt><dd>1703.767602</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="茂名市" data-search="化州市看守所改扩建工程项目施工招标公告-化州市看守所改扩建工程项目 e4401002701506955001 广东省公共资源交易平台 茂名市 招标公告与资格预审公告 化州市公安局 " data-index="94">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=0d1d8902-5755-49e8-9239-20d6811a0c0d-3C14&amp;projectCode=E4401002701506955001&amp;bizCode=3C14&amp;siteCode=440900&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">化州市看守所改扩建工程项目施工招标公告-化州市看守所改扩建工程项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506955001</p>
+<dl><div><dt>最高限价</dt><dd>6014.240000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州市白云区夏茅村城中村改造项目第一阶段管线迁改工程建设管理服务招标公告-广州市白云区夏茅村城中村改造项目二期安置地块项目（ab2506118安置地块） e4401002701506830001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州白云湖投资发展有限公司 " data-index="95">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=82697f48-291e-4849-a8b7-5553e6d7e681-3C14&amp;projectCode=E4401002701506830001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市白云区夏茅村城中村改造项目第一阶段管线迁改工程建设管理服务招标公告-广州市白云区夏茅村城中村改造项目二期安置地块项目（AB2506118安置地块）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506830001</p>
+<dl><div><dt>最高限价</dt><dd>224.460000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="汕尾市" data-search="2026年度汕尾市陆丰市高标准农田建设项目2招标公告-2026年度汕尾市陆丰市高标准农田建设项目2 e4401002701506935001 广东省公共资源交易平台 汕尾市 招标公告与资格预审公告 陆丰市农业农村局 " data-index="96">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=0ee90188-5c5b-4a45-98be-aa09c8fa964b-3C14&amp;projectCode=E4401002701506935001&amp;bizCode=3C14&amp;siteCode=441500&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">2026年度汕尾市陆丰市高标准农田建设项目2招标公告-2026年度汕尾市陆丰市高标准农田建设项目2</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">汕尾市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506935001</p>
+<dl><div><dt>最高限价</dt><dd>809.082835</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="一号航站楼消防设施设备维护服务外包项目（第二次）招标公告-一号航站楼消防设施设备维护服务外包项目（第二次） e4401002701506913001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州白云国际机场第一航站区管理有限公司 " data-index="97">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=b950db10-cf2c-4904-9b2f-b5c7d3982246-3C14&amp;projectCode=E4401002701506913001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">一号航站楼消防设施设备维护服务外包项目（第二次）招标公告-一号航站楼消防设施设备维护服务外包项目（第二次）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 其他工程</p>
+<p class="project-number">项目编号 E4401002701506913001</p>
+<dl><div><dt>最高限价</dt><dd>813.368724</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="肇庆市" data-search="封开县江口街道老旧小区改造配套基础设施建设项目（二期）三元一路边坡治理工程（施工） e4412010813001722001 广东省公共资源交易平台 肇庆市 招标公告与资格预审公告 封开县土地储备中心 " data-index="98">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=aa5bc55f-e2c1-47be-b8f2-bc9196d31568-3C14&amp;projectCode=E4412010813001722001&amp;bizCode=3C14&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A99" target="_blank" rel="noopener noreferrer">封开县江口街道老旧小区改造配套基础设施建设项目（二期）三元一路边坡治理工程（施工）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 其他工程</p>
+<p class="project-number">项目编号 E4412010813001722001</p>
+<dl><div><dt>最高限价</dt><dd>599.115271万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="肇庆市" data-search="肇庆市端州区城西街道老旧街区改造提升项目（施工） e4412010813001721001 广东省公共资源交易平台 肇庆市 招标公告与资格预审公告 肇庆市端城恒誉物业管理有限公司 " data-index="99">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=e19238d0-c51a-47dc-997b-9bc39f0efccc-3C14&amp;projectCode=E4412010813001721001&amp;bizCode=3C14&amp;siteCode=441200&amp;publishDate=20261121000000&amp;source=%E8%82%87%E5%BA%86%E5%B8%82%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">肇庆市端州区城西街道老旧街区改造提升项目（施工）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">肇庆市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4412010813001721001</p>
+<dl><div><dt>最高限价</dt><dd>19177.714732万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="茂名市" data-search="茂名市茂南区城北片区智慧城市基础设施建设项目－沿江南路、沿江北路（含规划纵二巷）、桥梁工程、智慧基础设施建设、一江两岸配套支渠工程、一江两岸生态提升工程、雄鹰岩场生态公园建设工程工程总承包招标公告 e4401001123003000001 广东省公共资源交易平台 茂名市 招标公告与资格预审公告 茂名市茂南区景盛建设有限公司 " data-index="100">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=370b1195-5569-4ab4-93dc-887de610189b-3C14&amp;projectCode=E4401001123003000001&amp;bizCode=3C14&amp;siteCode=440900&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%B8%9C%E7%9C%81%E4%BA%A4%E6%98%93%E6%8E%A7%E8%82%A1%E9%9B%86%E5%9B%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">茂名市茂南区城北片区智慧城市基础设施建设项目－沿江南路、沿江北路（含规划纵二巷）、桥梁工程、智慧基础设施建设、一江两岸配套支渠工程、一江两岸生态提升工程、雄鹰岩场生态公园建设工程工程总承包招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 市政</p>
+<p class="project-number">项目编号 E4401001123003000001</p>
+<dl><div><dt>申请截止</dt><dd>2026-12-11 11:00</dd></div><div><dt>最高限价</dt><dd>31399.291055万元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="大湾区生物信息中心建设项目基建工程监理招标公告-大湾区生物信息中心建设项目 e4401002701506900001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州开发区财政投资建设项目管理中心 " data-index="101">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=b1b1ed29-ac97-4e23-9a52-597427ded490-3C14&amp;projectCode=E4401002701506900001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">大湾区生物信息中心建设项目基建工程监理招标公告-大湾区生物信息中心建设项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506900001</p>
+<dl><div><dt>最高限价</dt><dd>419.127308</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="韶关市" data-search="广东省南雄市国家储备林一期建设项目工程监理服务招标公告-广东省南雄市国家储备林一期建设项目 e4401002701506920001 广东省公共资源交易平台 韶关市 招标公告与资格预审公告 广东粤雄林业投资有限责任公司 " data-index="102">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=bb508f9a-d7a4-47f0-88b9-10b86157a0b8-3C14&amp;projectCode=E4401002701506920001&amp;bizCode=3C14&amp;siteCode=440200&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A97" target="_blank" rel="noopener noreferrer">广东省南雄市国家储备林一期建设项目工程监理服务招标公告-广东省南雄市国家储备林一期建设项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">韶关市 · 园林绿化工程</p>
+<p class="project-number">项目编号 E4401002701506920001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="惠州市" data-search="广东省高速公路有限公司机电信息化系统迭代更新工程施工招标招标公告-广东省高速公路有限公司机电信息化系统迭代更新工程施工招标 e4401002701506800001 广东省公共资源交易平台 惠州市 招标公告与资格预审公告 广东省高速公路有限公司深汕西分公司 " data-index="103">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=ce40f6bf-65c6-4136-bf92-329d79d5f9ab-3C14&amp;projectCode=E4401002701506800001&amp;bizCode=3C14&amp;siteCode=441300&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">广东省高速公路有限公司机电信息化系统迭代更新工程施工招标招标公告-广东省高速公路有限公司机电信息化系统迭代更新工程施工招标</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">惠州市 · 公路</p>
+<p class="project-number">项目编号 E4401002701506800001</p>
+<dl><div><dt>申请截止</dt><dd>2026-12-11 09:00</dd></div><div><dt>最高限价</dt><dd>1608.357500</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州市白云区夏茅村城中村改造项目二期基础设施项目建设管理服务招标公告-广州市白云区夏茅村城中村改造项目二期基础设施项目 e4401002701506846001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州白云湖投资发展有限公司 " data-index="104">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=17476c47-b6af-44cb-b375-dbbbadd42445-3C14&amp;projectCode=E4401002701506846001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市白云区夏茅村城中村改造项目二期基础设施项目建设管理服务招标公告-广州市白云区夏茅村城中村改造项目二期基础设施项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506846001</p>
+<dl><div><dt>最高限价</dt><dd>569.850000</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="华南理工大学五山校区科技创新大楼(二期)、华南理工大学五山校区医工融合科创中心、华南理工大学五山校区供水加压站3个项目第三方检测服务（标段一）招标公告-华南理工大学五山校区医工融合科创中心;华南理工大学五山校区供水加压站;华南理工大学五山校区科技创新大楼（二期） e4401002701506777001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市重点公共建设项目管理中心 " data-index="105">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=c7948b91-05b2-4ff0-a2a0-83d26ba31ad3-3C14&amp;projectCode=E4401002701506777001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">华南理工大学五山校区科技创新大楼(二期)、华南理工大学五山校区医工融合科创中心、华南理工大学五山校区供水加压站3个项目第三方检测服务（标段一）招标公告-华南理工大学五山校区医工融合科创中心;华南理工大学五山校区供水加压站;华南理工大学五山校区科技创新大楼（二期）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506777001</p>
+<dl><div><dt>最高限价</dt><dd>360.957819</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="龙洞凤凰片区交通改善工程（通信管线迁改工程）招标公告-龙洞凤凰片区交通改善工程 e4401002701506918001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市天河区建设工程项目代建局 " data-index="106">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=1bec935c-5acd-4ff3-89aa-0d375d7b3dca-3C14&amp;projectCode=E4401002701506918001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">龙洞凤凰片区交通改善工程（通信管线迁改工程）招标公告-龙洞凤凰片区交通改善工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506918001</p>
+<dl><div><dt>最高限价</dt><dd>576.538635</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程检测服务（标段二）招标公告-广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程 e4401002701506880001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州市中心区交通项目管理中心 " data-index="107">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=69749d1c-8fb1-4d84-affc-7857f307bbdd-3C14&amp;projectCode=E4401002701506880001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A02" target="_blank" rel="noopener noreferrer">广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程检测服务（标段二）招标公告-广州市中心城区如意坊隧道干坞内地下智慧停车场及配套工程</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 市政</p>
+<p class="project-number">项目编号 E4401002701506880001</p>
+<dl><div><dt>最高限价</dt><dd>262.373928</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="汕尾市" data-search="2026年度汕尾市陆丰市高标准农田建设项目1招标公告-2026年度汕尾市陆丰市高标准农田建设项目1 e4401002701506928001 广东省公共资源交易平台 汕尾市 招标公告与资格预审公告 陆丰市农业农村局 " data-index="108">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=a60fba7e-ee05-46eb-a475-098510747f16-3C14&amp;projectCode=E4401002701506928001&amp;bizCode=3C14&amp;siteCode=441500&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A07" target="_blank" rel="noopener noreferrer">2026年度汕尾市陆丰市高标准农田建设项目1招标公告-2026年度汕尾市陆丰市高标准农田建设项目1</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">汕尾市 · 水利</p>
+<p class="project-number">项目编号 E4401002701506928001</p>
+<dl><div><dt>最高限价</dt><dd>704.664584</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="南沙国际滨水码头及配套设施建设项目勘察设计施工总承包招标公告-南沙国际滨水码头及配套设施建设项目 e4401002701506944001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州南沙开建滨水文旅发展有限公司 " data-index="109">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=daed870d-c721-4f2e-949b-bbc6a92da2d1-3C14&amp;projectCode=E4401002701506944001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A03" target="_blank" rel="noopener noreferrer">南沙国际滨水码头及配套设施建设项目勘察设计施工总承包招标公告-南沙国际滨水码头及配套设施建设项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 公路</p>
+<p class="project-number">项目编号 E4401002701506944001</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="广州市" data-search="南沙区南横村城中村改造项目留用地置换物业建设项目勘察设计施工总承包招标公告-南沙区南横村城中村改造项目 e4401002701506878001 广东省公共资源交易平台 广州市 招标公告与资格预审公告 广州南沙城市更新投资发展有限公司 " data-index="110">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/A?noticeId=d160442b-a686-4fad-9962-71c4c90867b9-3C14&amp;projectCode=E4401002701506878001&amp;bizCode=3C14&amp;siteCode=440100&amp;publishDate=20261121000000&amp;source=%E5%B9%BF%E4%BA%A4%E6%98%93%E6%95%B0%E5%AD%97%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E5%B7%A5%E7%A8%8B%E5%BB%BA%E8%AE%BE&amp;classify=A01" target="_blank" rel="noopener noreferrer">南沙区南横村城中村改造项目留用地置换物业建设项目勘察设计施工总承包招标公告-南沙区南横村城中村改造项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">广州市 · 房屋建筑</p>
+<p class="project-number">项目编号 E4401002701506878001</p>
+<dl><div><dt>最高限价</dt><dd>57302.088892</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="深汕校区（开办）j01专家公寓电器 szdl2026001915 广东省公共资源交易平台 深圳市 采购项目  " data-index="111">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=2ecac0fc-a6c3-48cf-b392-1c9b0672b8fa&amp;projectCode=SZDL2026001915&amp;bizCode=3831&amp;siteCode=440300&amp;publishDate=20261121175604&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=D01" target="_blank" rel="noopener noreferrer">深汕校区（开办）J01专家公寓电器</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 集中采购货物类</p>
+<p class="project-number">项目编号 SZDL2026001915</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="关于南方医科大学深圳坪山医院（深圳市坪山区人民医院）移动护理建设项目的结果更正公告 pscg2026000174 广东省公共资源交易平台 深圳市 更正公告 南方医科大学深圳坪山医院（深圳市坪山区人民医院） " data-index="112">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=3f2ea203-64ce-4c35-970f-dc4724c9baf4&amp;projectCode=PSCG2026000174&amp;bizCode=38B1&amp;siteCode=440300&amp;publishDate=20261121173540&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">关于南方医科大学深圳坪山医院（深圳市坪山区人民医院）移动护理建设项目的结果更正公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 PSCG2026000174</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="深圳市" data-search="港澳业务辅助性工作项目（重新采购第2次）中标结果公示 szdl2026001646 广东省公共资源交易平台 深圳市 中标（成交）结果公告 中共深圳市委港澳工作办公室（深圳市人民政府港澳事务办公室） " data-index="113">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=c4442ddd-2280-4564-8c63-5db113c62f0a&amp;projectCode=SZDL2026001646&amp;bizCode=3871&amp;siteCode=440300&amp;publishDate=20261121172334&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">港澳业务辅助性工作项目（重新采购第2次）中标结果公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 SZDL2026001646</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="【初始合同】深圳市诈骗预警数据账号及处置综合服务合同公示 szdl2026001749 广东省公共资源交易平台 深圳市 合同公告 深圳市公安局刑事侦查支队 " data-index="114">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=58bf9a19-f978-4d9c-acae-8c5ec7d5612d&amp;projectCode=SZDL2026001749&amp;bizCode=3881&amp;siteCode=440300&amp;publishDate=20261121171650&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">【初始合同】深圳市诈骗预警数据账号及处置综合服务合同公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 SZDL2026001749</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="东莞市" data-search="东莞市公安局大朗分局东莞市公安局大朗分局驻所人民调解服务采购项目采购需求征求意见公告 8a7e595da1f282ea01a1fd300a644dc5 广东省公共资源交易平台 东莞市 采购需求 东莞市公安局大朗分局 " data-index="115">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e595da1f282ea01a1fd300a644dc5&amp;projectCode=8a7e595da1f282ea01a1fd300a644dc5&amp;bizCode=3813&amp;siteCode=441900&amp;publishDate=20261121162505&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市公安局大朗分局东莞市公安局大朗分局驻所人民调解服务采购项目采购需求征求意见公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 8a7e595da1f282ea01a1fd300a644dc5</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="深圳市" data-search="深圳市宝安区住房和建设事务中心局办公大楼物业管理服务意向公开 6523593a55901959966f433afcfef919 广东省公共资源交易平台 深圳市 采购意向公开  " data-index="116">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=4e98887d-b33d-4a4f-9ec8-7e86923ebcb4&amp;projectCode=6523593a55901959966f433afcfef919&amp;bizCode=3811&amp;siteCode=440300&amp;publishDate=20261121155427&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">深圳市宝安区住房和建设事务中心局办公大楼物业管理服务意向公开</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 6523593a55901959966f433afcfef919</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="汕尾市" data-search="陆丰市金厢镇人民政府2026年11月至2026年12月政府采购意向 8a7e20c2a1f817cd01a1fced81d01828 广东省公共资源交易平台 汕尾市 采购意向公开  " data-index="117">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e20c2a1f817cd01a1fced81d01828&amp;projectCode=8a7e20c2a1f817cd01a1fced81d01828&amp;bizCode=3811&amp;siteCode=441500&amp;publishDate=20261121150955&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">陆丰市金厢镇人民政府2026年11月至2026年12月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">汕尾市 · 政府采购</p>
+<p class="project-number">项目编号 8a7e20c2a1f817cd01a1fced81d01828</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="东莞市" data-search="东莞市技师学院东莞市技师学院东城校区改扩建配套建设项目智能化项目的合同公告 441901-2026-07055 广东省公共资源交易平台 东莞市 合同公告 东莞市技师学院 " data-index="118">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1fcd37bb0596&amp;projectCode=441901-2026-07055&amp;bizCode=3881&amp;siteCode=441900&amp;publishDate=20261121143800&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市技师学院东莞市技师学院东城校区改扩建配套建设项目智能化项目的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 441901-2026-07055</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="关于福田区城市管理综合事务中心2026年-2029年市民中心北广场“全要素”精细化管理服务项目的更正公告 ftcg2026000302 广东省公共资源交易平台 深圳市 更正公告 深圳市福田区城市管理综合事务中心 " data-index="119">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=b07e4638-a33c-455d-81fc-9319475cc65d&amp;projectCode=FTCG2026000302&amp;bizCode=38B1&amp;siteCode=440300&amp;publishDate=20261121142158&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">关于福田区城市管理综合事务中心2026年-2029年市民中心北广场“全要素”精细化管理服务项目的更正公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 FTCG2026000302</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="" data-search="广东省珠江东航道事务中心广东省珠江东航道事务中心2026年下半年航标器材及配件采购项目的合同公告 bjfh-cs-20260917 广东省公共资源交易平台  合同公告 广东省珠江东航道事务中心 " data-index="120">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1fca14695595&amp;projectCode=BJFH-CS-20260917&amp;bizCode=3881&amp;siteCode=440000&amp;publishDate=20261121134310&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">广东省珠江东航道事务中心广东省珠江东航道事务中心2026年下半年航标器材及配件采购项目的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">政府采购</p>
+<p class="project-number">项目编号 BJFH-CS-20260917</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="茂名市" data-search="茂名市第三人民医院2026年11月至2026年12月政府采购意向 8a7edaeea1ecba2f01a1f19bd6864237 广东省公共资源交易平台 茂名市 采购意向公开  " data-index="121">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7edaeea1ecba2f01a1f19bd6864237&amp;projectCode=8a7edaeea1ecba2f01a1f19bd6864237&amp;bizCode=3811&amp;siteCode=440900&amp;publishDate=20261121125250&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">茂名市第三人民医院2026年11月至2026年12月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 政府采购</p>
+<p class="project-number">项目编号 8a7edaeea1ecba2f01a1f19bd6864237</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="东莞市" data-search="东莞市生态环境局东莞市危险废物环境监管单位全过程监控能力提升服务项目的合同公告 441901-2026-0665 广东省公共资源交易平台 东莞市 合同公告 东莞市生态环境局 " data-index="122">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1fc7037dc594&amp;projectCode=441901-2026-0665&amp;bizCode=3881&amp;siteCode=441900&amp;publishDate=20261121124935&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市生态环境局东莞市危险废物环境监管单位全过程监控能力提升服务项目的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 441901-2026-0665</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="深圳蛇口湾艺术区总设计师咨询服务采购项目更正公告 nsdl2026000173 广东省公共资源交易平台 深圳市 更正公告 深圳市规划和自然资源局南山管理局 " data-index="123">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=21244b23-1055-44ff-b65c-6bc700cd206a&amp;projectCode=NSDL2026000173&amp;bizCode=38B1&amp;siteCode=440300&amp;publishDate=20261121124558&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">深圳蛇口湾艺术区总设计师咨询服务采购项目更正公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 NSDL2026000173</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="惠州市" data-search="惠州市人才交流服务中心“百万英才汇南粤”暨“校园惠州日”（北京站）活动服务项目 hzzh2026119 广东省公共资源交易平台 惠州市 采购项目  " data-index="124">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e6f06a0750c4101a1fc3f3abf07b&amp;projectCode=HZZH2026119&amp;bizCode=3831&amp;siteCode=441300&amp;publishDate=20261121122832&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">惠州市人才交流服务中心“百万英才汇南粤”暨“校园惠州日”（北京站）活动服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">惠州市 · 政府采购</p>
+<p class="project-number">项目编号 HZZH2026119</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="河源市" data-search="龙川县财政性资金投资建设项目委托审核服务机构采购项目结果公告 hylyg202609081 广东省公共资源交易平台 河源市 中标（成交）结果公告 龙川县财政局 " data-index="125">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e9d4ca0750d0301a1fc40d1b26c46&amp;projectCode=HYLYG202609081&amp;bizCode=3871&amp;siteCode=441600&amp;publishDate=20261121120958&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">龙川县财政性资金投资建设项目委托审核服务机构采购项目结果公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">河源市 · 政府采购</p>
+<p class="project-number">项目编号 HYLYG202609081</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="results" data-region="深圳市" data-search="南方医科大学深圳坪山医院（深圳市坪山区人民医院）移动护理建设项目中标（成交）结果公告 pscg2026000174 广东省公共资源交易平台 深圳市 中标（成交）结果公告 南方医科大学深圳坪山医院（深圳市坪山区人民医院） " data-index="126">
+<div class="notice-heading"><span class="badge results">中标 / 成交结果</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=dcee391a-7306-4068-b578-74c42d7758c8&amp;projectCode=PSCG2026000174&amp;bizCode=3871&amp;siteCode=440300&amp;publishDate=20261121114957&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">南方医科大学深圳坪山医院（深圳市坪山区人民医院）移动护理建设项目中标（成交）结果公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 PSCG2026000174</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="深圳市" data-search="广东内伶仃福田国家级自然保护区管理局保护区护林巡防及应急服务项目意向公开 7b5059b5dda46b0c8bb9c8478d54d394 广东省公共资源交易平台 深圳市 采购意向公开  " data-index="127">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=279739eb-7a40-49ce-b919-fd3603f4b30a&amp;projectCode=7b5059b5dda46b0c8bb9c8478d54d394&amp;bizCode=3811&amp;siteCode=440300&amp;publishDate=20261121113640&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">广东内伶仃福田国家级自然保护区管理局保护区护林巡防及应急服务项目意向公开</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 7b5059b5dda46b0c8bb9c8478d54d394</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="茂名市" data-search="高州市中小学德育培训学校2026年11月至2026年12月政府采购意向 8a7edaeea1f2fbac01a1fc1276f51638 广东省公共资源交易平台 茂名市 采购意向公开  " data-index="128">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7edaeea1f2fbac01a1fc1276f51638&amp;projectCode=8a7edaeea1f2fbac01a1fc1276f51638&amp;bizCode=3811&amp;siteCode=440900&amp;publishDate=20261121112300&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">高州市中小学德育培训学校2026年11月至2026年12月政府采购意向</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 政府采购</p>
+<p class="project-number">项目编号 8a7edaeea1f2fbac01a1fc1276f51638</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="consultation" data-region="惠州市" data-search="惠州市人才交流服务中心“百万英才汇南粤”暨“校园惠州日”（北京站）活动服务项目 441301-2026-04365 广东省公共资源交易平台 惠州市 采购计划公告 惠州市人才交流服务中心 " data-index="129">
+<div class="notice-heading"><span class="badge consultation">采购预告 / 意见征集</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e20c2a1f817cd01a1fc03f85f1694&amp;projectCode=441301-2026-04365&amp;bizCode=3812&amp;siteCode=441300&amp;publishDate=20261121105310&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">惠州市人才交流服务中心“百万英才汇南粤”暨“校园惠州日”（北京站）活动服务项目</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">惠州市 · 政府采购</p>
+<p class="project-number">项目编号 441301-2026-04365</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="【初始合同】稀释制冷机采购合同公示 szdl2026001750 广东省公共资源交易平台 深圳市 合同公告 深圳技术大学 " data-index="130">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=91da04df-ebe1-476f-8011-5acc48930ac4&amp;projectCode=SZDL2026001750&amp;bizCode=3881&amp;siteCode=440300&amp;publishDate=20261121104630&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">【初始合同】稀释制冷机采购合同公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 SZDL2026001750</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="东莞市" data-search="东莞市寮步医院东莞市寮步医院2026年医疗设备采购项目（三）的合同公告 441900019-2026-00732 广东省公共资源交易平台 东莞市 合同公告 东莞市寮步医院 " data-index="131">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1fbf93315588&amp;projectCode=441900019-2026-00732&amp;bizCode=3881&amp;siteCode=441900&amp;publishDate=20261121103935&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市寮步医院东莞市寮步医院2026年医疗设备采购项目（三）的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 441900019-2026-00732</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="茂名市" data-search="茂名市茂南区山阁镇卫生院茂南区山阁镇卫生院血液透析中心医疗设备及配套场地设施购置项目的合同公告 gdscs-2026022 广东省公共资源交易平台 茂名市 合同公告 茂名市茂南区山阁镇卫生院 " data-index="132">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1fbf1a57e587&amp;projectCode=GDSCS-2026022&amp;bizCode=3881&amp;siteCode=440900&amp;publishDate=20261121103120&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">茂名市茂南区山阁镇卫生院茂南区山阁镇卫生院血液透析中心医疗设备及配套场地设施购置项目的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 政府采购</p>
+<p class="project-number">项目编号 GDSCS-2026022</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="茂名市" data-search="茂名市茂南区大疫情防控体系项目——疫情防控指挥体系（一期） gx2026zf0109 广东省公共资源交易平台 茂名市 采购项目  " data-index="133">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e6f06a0750c4101a1f9d7a4f94f6&amp;projectCode=GX2026ZF0109&amp;bizCode=3831&amp;siteCode=440900&amp;publishDate=20261121102654&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">茂名市茂南区大疫情防控体系项目——疫情防控指挥体系（一期）</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 政府采购</p>
+<p class="project-number">项目编号 GX2026ZF0109</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="tender" data-region="茂名市" data-search="茂名市茂南区大疫情防控体系项目——疫情防控指挥体系（一期）招标公告 gx2026zf0109；采购；gx2026zf0109）的采购结果，按照《中华人民共和国政府采购法》及其实施条例、《中华人民共和国民法典（合同编）》的规定，经双方协商，本着平等互利和诚实信用的原则，一致同意签订本合同如下；gx2026zf0109），我方保证在收取《中标通知书》时，按招标文件对代理服务费支付方式的约定，承担本项目代理服务费；gx2026zf0109 ）的投标活动，现有以下几个内容（或条款）存在疑问（或无法理解），特提出询问 广东省公共资源交易平台 茂名市 资格预审公告 茂名市茂南区卫生健康局；本项目是指；分项专项竣工验收通过；签字确认，付本模块计价基数；要求，按比例开具发票，提供给采购人，由采购人按发票金额支付进度款；本项目是指茂名市茂南区卫生健康局，是采购活动当事人之一，负责项目的整体规划、技术方案可行性设计论证与实施，作为合同采购方（用户）的主体承担质疑回复、履行合同、验收与评价等义务 " data-index="134">
+<div class="notice-heading"><span class="badge tender">招标公告</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7e6f06a0750c4101a1f9d7a4f94f6e&amp;projectCode=GX2026ZF0109&amp;bizCode=3822&amp;siteCode=440900&amp;publishDate=20261121102654&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">茂名市茂南区大疫情防控体系项目——疫情防控指挥体系（一期）招标公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">茂名市 · 政府采购</p>
+<p class="project-number">项目编号 GX2026ZF0109；采购；GX2026ZF0109）的采购结果，按照《中华人民共和国政府采购法》及其实施条例、《中华人民共和国民法典（合同编）》的规定，经双方协商，本着平等互利和诚实信用的原则，一致同意签订本合同如下；GX2026ZF0109），我方保证在收取《中标通知书》时，按招标文件对代理服务费支付方式的约定，承担本项目代理服务费；GX2026ZF0109 ）的投标活动，现有以下几个内容（或条款）存在疑问（或无法理解），特提出询问</p>
+<dl><div><dt>预算金额</dt><dd>38664989.250000；38,664,989.25元；38,664,989.25</dd></div><div><dt>最高限价</dt><dd>1元</dd></div></dl></article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="【延续合同】深圳市公安局深汕特别合作区分局2025年度警用摩托车、电动车维修保养服务项目b包合同公示 ssdl2025000076 广东省公共资源交易平台 深圳市 合同公告 深圳市公安局深汕特别合作区分局 " data-index="135">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8fcaee95-f41a-4ff8-9885-df5ddebeb474&amp;projectCode=SSDL2025000076&amp;bizCode=3881&amp;siteCode=440300&amp;publishDate=20261121101518&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">【延续合同】深圳市公安局深汕特别合作区分局2025年度警用摩托车、电动车维修保养服务项目B包合同公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 SSDL2025000076</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="深圳市" data-search="【延续合同】深圳市公安局深汕特别合作区分局2025年度警用摩托车、电动车维修保养服务项目a包合同公示 ssdl2025000076 广东省公共资源交易平台 深圳市 合同公告 深圳市公安局深汕特别合作区分局 " data-index="136">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8fdd8a7f-4e4e-438f-bbe6-29b6957f70ba&amp;projectCode=SSDL2025000076&amp;bizCode=3881&amp;siteCode=440300&amp;publishDate=20261121100419&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">【延续合同】深圳市公安局深汕特别合作区分局2025年度警用摩托车、电动车维修保养服务项目A包合同公示</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 SSDL2025000076</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="updates" data-region="深圳市" data-search="关于香港大学深圳医院（二期）开办首批厨房设备采购项目的更正公告 szcg2026001332 广东省公共资源交易平台 深圳市 更正公告 香港大学深圳医院 " data-index="137">
+<div class="notice-heading"><span class="badge updates">变更 / 终止</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=31af29db-ab41-44b0-b5b8-39eda3a53029&amp;projectCode=SZCG2026001332&amp;bizCode=38B1&amp;siteCode=440300&amp;publishDate=20261121095331&amp;source=%E6%B7%B1%E5%9C%B3%E4%BA%A4%E6%98%93%E9%9B%86%E5%9B%A2%E7%BB%9F%E4%B8%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">关于香港大学深圳医院（二期）开办首批厨房设备采购项目的更正公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">深圳市 · 政府采购</p>
+<p class="project-number">项目编号 SZCG2026001332</p>
+</article><article class="notice" data-source="广东省公共资源交易平台" data-category="disclosure" data-region="东莞市" data-search="东莞市寮步医院东莞市寮步医院2026年医疗设备采购项目（四）的合同公告 441900019-2026-00846 广东省公共资源交易平台 东莞市 合同公告 东莞市寮步医院 " data-index="138">
+<div class="notice-heading"><span class="badge disclosure">其他公示</span><time>2026-11-21</time></div>
+<h2><a href="https://ygp.gdzwfw.gov.cn/ggzy-portal/index.html#/44/new/jygg/v3/D?noticeId=8a7ea73fa07516d901a1fb71ee7657f&amp;projectCode=441900019-2026-00846&amp;bizCode=3881&amp;siteCode=441900&amp;publishDate=20261121081150&amp;source=%E5%B9%BF%E4%B8%9C%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD%E6%99%BA%E6%85%A7%E4%BA%91%E5%B9%B3%E5%8F%B0&amp;titleDetails=%E6%94%BF%E5%BA%9C%E9%87%87%E8%B4%AD&amp;classify=" target="_blank" rel="noopener noreferrer">东莞市寮步医院东莞市寮步医院2026年医疗设备采购项目（四）的合同公告</a></h2><p class="source">广东省公共资源交易平台</p>
+<p class="metadata">东莞市 · 政府采购</p>
+<p class="project-number">项目编号 441900019-2026-00846</p>
+</article></section>
+<section id="empty" class="empty" hidden><h2>没有符合条件的公告</h2><p>换个关键词，或清空筛选再看看。</p></section>
+<nav class="pagination" aria-label="翻页"><button type="button" id="previous">上一页</button><span id="page-status"></span><button type="button" id="next">下一页</button></nav>
+</main><script>
+(() => {
+  'use strict';
+  const cards = [...document.querySelectorAll('.notice')];
+  const chips = [...document.querySelectorAll('.chip')];
+  const selected = { source: new Set(), category: new Set() };
+  const keyword = document.getElementById('keyword');
+  const region = document.getElementById('region');
+  const pageSize = document.getElementById('page-size');
+  const previous = document.getElementById('previous');
+  const next = document.getElementById('next');
+  let page = 1;
+  function matches(card, except) {
+    for (const group of ['source', 'category']) {
+      if (group !== except && selected[group].size && !selected[group].has(card.dataset[group])) return false;
+    }
+    if (region.value === '__unknown__') {
+      if (card.dataset.region) return false;
+    } else if (region.value && card.dataset.region !== region.value) {
+      return false;
+    }
+    return keyword.value.trim().toLowerCase().split(/\s+/).filter(Boolean).every(word => card.dataset.search.includes(word));
+  }
+  function render() {
+    const matching = cards.filter(card => matches(card));
+    const size = Number(pageSize.value);
+    const pages = Math.max(1, Math.ceil(matching.length / size));
+    page = Math.max(1, Math.min(page, pages));
+    const visible = new Set(matching.slice((page - 1) * size, page * size));
+    cards.forEach(card => { card.hidden = !visible.has(card); });
+    const active = selected.source.size || selected.category.size || region.value || keyword.value.trim();
+    const start = matching.length ? (page - 1) * size + 1 : 0;
+    const end = Math.min(page * size, matching.length);
+    document.getElementById('result-count').textContent = (active ? '筛选到 ' : '共 ') + matching.length + ' 条公告' + (matching.length ? ' · 显示 ' + start + '–' + end + ' 条' : '');
+    document.getElementById('page-status').textContent = page + ' / ' + pages;
+    document.getElementById('empty').hidden = matching.length !== 0;
+    document.querySelector('.pagination').hidden = matching.length <= size;
+    previous.disabled = page === 1;
+    next.disabled = page === pages;
+    for (const chip of chips) {
+      const { group, value } = chip.dataset;
+      chip.setAttribute('aria-pressed', String(value ? selected[group].has(value) : !selected[group].size));
+      chip.querySelector('.count').textContent = cards.filter(card => matches(card, group) && (!value || card.dataset[group] === value)).length;
+    }
+  }
+  for (const chip of chips) chip.addEventListener('click', () => {
+    const { group, value } = chip.dataset;
+    if (!value) selected[group].clear();
+    else if (selected[group].has(value)) selected[group].delete(value);
+    else selected[group].add(value);
+    page = 1; render();
+  });
+  keyword.addEventListener('input', () => { page = 1; render(); });
+  region.addEventListener('change', () => { page = 1; render(); });
+  pageSize.addEventListener('change', () => { page = 1; render(); });
+  document.getElementById('reset').addEventListener('click', () => {
+    selected.source.clear(); selected.category.clear(); keyword.value = ''; region.value = ''; page = 1; render();
+  });
+  previous.addEventListener('click', () => { page -= 1; render(); document.getElementById('result-count').scrollIntoView({block:'start'}); });
+  next.addEventListener('click', () => { page += 1; render(); document.getElementById('result-count').scrollIntoView({block:'start'}); });
+  render();
+})();
+</script></body></html>
